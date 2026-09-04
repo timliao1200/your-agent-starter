@@ -142,11 +142,36 @@
 
 ## 0-4 建家，然後把自己搬過去
 
-建立 `[X]-agent` 資料夾，**把這份檔案複製一份進去**：
+建立 `[X]-agent` 資料夾，**把這份檔案複製一份進去，命名為 `CLAUDE.md`**。
 
-- Claude Code → `[X]-agent/CLAUDE.md`
-- Codex → `[X]-agent/AGENTS.md`
-- 判斷不出來 → 兩個都放
+這份就是 **`RULE_FILE`**——之後整份流程講到規則檔，都是指它：
+
+```
+[X]-agent/CLAUDE.md      ← RULE_FILE，唯一的本尊
+```
+
+**然後建一個 symlink 給 Codex**，不要複製第二份：
+
+```bash
+# Mac
+cd [AGENT_HOME] && ln -s CLAUDE.md AGENTS.md
+```
+
+```powershell
+# Windows（系統管理員身分）
+New-Item -ItemType SymbolicLink -Path "[AGENT_HOME]\AGENTS.md" -Target "[AGENT_HOME]\CLAUDE.md"
+```
+
+**為什麼不複製兩份**：Claude Code 讀 `CLAUDE.md`、Codex 讀 `AGENTS.md`。
+複製的話，第 1 段寫規則檔只會蓋掉其中一份——**另一份還是這份起始腳本**，
+下次他開 Codex，我會以為他是新來的，整套從頭再跑一次。
+
+symlink 建不起來就**只留 `CLAUDE.md`**，並告訴他：
+
+> 你這台建不了捷徑，所以我只放一份 `CLAUDE.md`。
+> 你如果之後要用 Codex，跟我說一聲，我幫你複製過去。
+
+（第 2 段會再用一次 symlink，那時候我會把原理講清楚。）
 
 ### 然後建 `onboarding.md`——這是你的命脈
 
@@ -338,7 +363,7 @@
 
 你現在讀的這份檔案，就是要被取代的對象。
 
-**先確認**：打開 `RULE_FILE`，看它是不是這份起始腳本（開頭有「⚡ 這份檔案是一段要你執行的流程」）。
+**先確認**：打開 `RULE_FILE`（＝ `[AGENT_HOME]/CLAUDE.md`），看它是不是這份起始腳本（開頭有「⚡ 這份檔案是一段要你執行的流程」）。
 
 - **是** → 用下面的內容**整份覆蓋**。起始腳本任務完成，不需要留著
 - **不是**（他原本就有自己的規則檔）→ **不要覆蓋**。接在既有內容後面，用 `<!-- agent-starter:START -->` / `<!-- agent-starter:END -->` 包起來
@@ -1378,6 +1403,8 @@ args = ["-y", "obsidian-mcp@2", "serve", "--vault", "notes=[AGENT_HOME]/knowledg
 
 **第 0 段**
 - [ ] `onboarding.md` 建好了——**這份沒建，你之後就回不來**
+- [ ] 規則檔**只有一份本尊**（`CLAUDE.md`），`AGENTS.md` 是 symlink 或不存在——
+      **絕不能有兩份實體檔**，否則第 1 段覆蓋後會分岔，Codex 那邊會重跑整套
 
 **第 1 段以上**
 - [ ] 他**自己動手改過**規則檔，而且**重開對話驗證過**差異
