@@ -1095,4 +1095,4 @@ args = ["-y", "obsidian-mcp@2", "serve", "--vault", "notes=[AGENT_HOME]/knowledg
 
 ---
 
-*這份腳本可以自由使用與修改。*
+*課程教材，供學員個人使用。歡迎依需求修改，請勿轉載或商業使用。© Tim（廖敬提）保留一切權利。*
