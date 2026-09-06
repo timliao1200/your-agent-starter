@@ -191,34 +191,37 @@ curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main
 抓不下來也不要卡住——**跳過這一步繼續往下跑**，之後需要腳本再回去讀網址就好。
 （這一份的用途是讓你之後接得回進度，不是現在馬上要用。）
 
-這份就是 **`RULE_FILE`**——之後整份流程講到規則檔，都是指它：
+**先看他用哪個平台，這決定檔名**——弄錯的話他的規則檔不會被自動讀進來：
+
+| 他用的 | `RULE_FILE` 叫什麼 |
+|---|---|
+| **Codex** | `AGENTS.md` |
+| **Claude Code** | `CLAUDE.md` |
+| 看不出來 / 兩個都用 | 先建 `CLAUDE.md`，下面再補一個 `AGENTS.md` 捷徑 |
 
 ```
-user-agent/CLAUDE.md      ← RULE_FILE，唯一的本尊
+user-agent/[RULE_FILE]      ← 唯一的本尊，之後整份流程講到規則檔都是指它
 ```
 
-**然後建一個 symlink 給 Codex**，不要複製第二份：
+**然後幫另一個平台補一個捷徑**，這樣兩邊讀到的是同一份：
 
 ```bash
-# Mac
+# Mac：假設本尊是 CLAUDE.md，補 AGENTS.md 給 Codex（反過來就把兩個名字對調）
 cd [AGENT_HOME] && ln -s CLAUDE.md AGENTS.md
 ```
 
 ```powershell
-# Windows（系統管理員身分）
+# Windows（要用系統管理員身分開 PowerShell）
 New-Item -ItemType SymbolicLink -Path "[AGENT_HOME]\AGENTS.md" -Target "[AGENT_HOME]\CLAUDE.md"
 ```
 
-**為什麼不複製兩份**：Claude Code 讀 `CLAUDE.md`、Codex 讀 `AGENTS.md`。
-複製的話，第 1 段寫規則檔只會蓋掉其中一份——**另一份還是這份起始腳本**，
-下次他開 Codex，我會以為他是新來的，整套從頭再跑一次。
+**捷徑建不起來就算了，不要卡住**——他今天只會用一個平台，本尊那份對就好。
+跟他說一句：「你之後如果要換另一個平台，跟我說，我幫你補一份過去。」
 
-symlink 建不起來就**只留 `CLAUDE.md`**，並告訴他：
+**絕對不要複製成兩份實體檔。** 複製的話，第 1 段寫規則檔只會蓋掉其中一份，
+另一份還是這份起始腳本——下次他開另一個平台，我會以為他是新來的，整套從頭再跑一次。
 
-> 你這台建不了捷徑，所以我只放一份 `CLAUDE.md`。
-> 你如果之後要用 Codex，跟我說一聲，我幫你複製過去。
 
-（第 2 段會再用一次 symlink，那時候我會把原理講清楚。）
 
 ### 然後建 `onboarding.md`——這是你的命脈
 
