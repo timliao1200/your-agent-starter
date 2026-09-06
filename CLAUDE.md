@@ -179,13 +179,13 @@
 ## 0-4 建家，然後把自己搬過去
 
 建立資料夾，名字是 **`<他的英文名>-agent`**（本文一律寫成 `user-agent`，動手時換成實際名字），
-然後**把這份腳本放一份進去，命名為 `CLAUDE.md`**：
+然後**把這份腳本放一份進去，檔名用下面那張表決定的 `RULE_FILE`**：
 
 - **他是把檔案給你的** → 直接複製一份進去
-- **他是貼網址給你的** → 用終端機抓下來：
+- **他是貼網址給你的** → 用終端機抓下來（`AGENTS.md` 或 `CLAUDE.md`，看平台）：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md -o CLAUDE.md
+curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md -o AGENTS.md
 ```
 
 抓不下來也不要卡住——**跳過這一步繼續往下跑**，之後需要腳本再回去讀網址就好。
