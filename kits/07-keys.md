@@ -52,9 +52,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
-| 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
@@ -65,17 +65,18 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`。用絕對路徑在那裡讀寫；開口第一句「我找到你的家：`[路徑]`」 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/` 但名字不像 `-agent` | 可能是別的方式建的家 → 問一題選項：這是你的 AI 資料夾嗎？（1. 是，就用它（推薦） 2. 不是，另外建 3. 其他） |
 | 沒有 | 停。跟他說：「這一包要先有家，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」 |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
@@ -148,7 +149,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 
 **A-7｜收尾**
 > 這一包做完了，要繼續嗎？
-1. 繼續（推薦）——我直接開始第 08 包
+1. 繼續（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓第 08 包
 2. 先到這裡，下次再說
 
 ## Section B · 動手
@@ -543,7 +544,7 @@ Google 的個資一律走 OAuth 或原廠連接器，不要貼 API Key；不用�
 >
 > 下一包是 **第 08 包 · 專案員工**：拿你手上真的一個案子，開第一間辦公室。記得帶一份你真的想交給我做的東西。
 >
-> 1. 現在就接下一包（推薦）——我直接開始
+> 1. 現在就接下一包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
@@ -571,6 +572,8 @@ if (Test-Path knowledge\.obsidian) { "✅ vault 開過了（Obsidian 這半做�
 最後更新 `[AGENT_HOME]/onboarding.md`：**07 那行打勾**、「這一包做到哪」寫一句（裝了哪幾把鑰匙、流程叫什麼）；「我學到什麼」加一條：
 
 > - **07 包**：MCP 是鑰匙。做過一次的事寫成流程放 `workflows/`（我叫它才跑），再包成招式就變成它自己認得。鑰匙三種（免鑰匙／API Key／OAuth）、通道四種；先問是不是 Google、只讀還是要寫。
+
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

@@ -52,9 +52,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/06-fi
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
-| 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
@@ -65,17 +65,18 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/06-fi
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`。用絕對路徑在那裡讀寫；開口第一句「我找到你的家：`[路徑]`」 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/` 但名字不像 `-agent` | 可能是別的方式建的家 → 問一題選項：這是你的 AI 資料夾嗎？（1. 是，就用它（推薦） 2. 不是，另外建 3. 其他） |
 | 沒有 | **停**，跟他說：「這一包要先有一個家，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」 |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
@@ -316,6 +317,7 @@ description: 收工寫日誌。當他說「收工」「今天先這樣」「下�
 **這一包對 `RULE_FILE` 做兩件事，寫之前先把要加的內容列給他看一眼：**
 
 1. **把舊的「每天收工前」整節刪掉**——第 03 包寫的那一節（在 `tt:kit-03` 標記裡）有十幾行程序，那些已經搬進 `skills/daily-log/SKILL.md` 了。**只刪這一節**，同一個標記裡的其他條目（上工先讀什麼、待辦怎麼維護）一個字都不要動。
+   **找不到 `tt:kit-03` 標記**（v1.0 的家沒有這組標記）→ 用小節標題「每天收工前」比對，找到就刪那一節；**還是找不到就不刪**，只在 `tt:kit-06` 區塊第一行註明「本節取代舊的每天收工前」。
 2. **在檔尾加一個 `tt:kit-06` 區塊**，內容如下。「每次上工先做的事」那一節如果已經有「翻一下 `memory/daily/` 最近兩三天」這條，就不要重複寫，下面那行省略。
 
 ```markdown
@@ -385,7 +387,9 @@ description: 收工寫日誌。當他說「收工」「今天先這樣」「下�
 > 下一包是 **第 07 包 · 給它鑰匙**：讓我碰得到你電腦以外的東西，你做過一次的事以後一句話重跑。那一包是**第三堂的內容，這次不用跑**，你先把上面兩件做著。
 >
 > 1. 先到這裡，這幾天先練「收工」（推薦）——我們下次見
-> 2. 繼續，現在就接第 07 包——我直接開始
+> 2. 繼續，現在就接第 07 包——我會先回總機重新盤點一次家裡有什麼，再抓下一包
+
+**這一包的推薦刻意是「先到這裡」**（第 07 包是第三堂才做），**不要套其他包「接下一包（推薦）」的模板順序**——把推薦標在選項 1、接下一包留在選項 2。
 
 **不要以 tt 的身份下班**——後面還有站，你還在。下次他開對話，照入口檔的「先判斷」接下去。
 
@@ -429,6 +433,8 @@ if (Test-Path "memory\daily\$d.md") { "✅ 今天的日誌" } else { "❌ 今天
 ```
 第二站完成。第三站（鑰匙與員工）下次上課開始。
 ```
+
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

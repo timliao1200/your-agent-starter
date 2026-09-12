@@ -53,9 +53,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/04-to
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
-| 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
@@ -66,17 +66,18 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/04-to
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`。用絕對路徑在那裡讀寫；開口第一句「我找到你的家：`[路徑]`」 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/` 但名字不像 `-agent` | 可能是別的方式建的家 → 問一題選項：這是你的 AI 資料夾嗎？（1. 是，就用它（推薦） 2. 不是，另外建 3. 其他） |
 | 沒有 | **停**，跟他說：「這一包要先有一個家，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」 |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
@@ -111,6 +112,7 @@ question：你工作上最常碰的是哪一種？（可以複選，我等一下
 2. **Word／文件**——我會挑套印、合約、獎狀那幾個例子講
 3. **簡報**——我會挑大綱變投影片、整份換字型那幾個例子講
 4. **PDF**——我會挑合併、拆頁、浮水印、抽頁轉圖那幾個例子講
+5. 其他（我自己說）——你講你最常碰的，我照那個舉例
 
 （他複選就都記下來，Q1 的答案決定 B-3 要重點講哪幾列。都不選就四種各講一個。）
 
@@ -121,6 +123,7 @@ question：給我一個很亂、一直想整理的資料夾，我示範一次怎
 2. **桌面**——桌面上的檔案我來分類
 3. **我貼路徑或把資料夾拖進來**——你指定哪一個
 4. **先跳過**——直接做成品，這個練習之後再說
+5. 其他（我自己說）
 
 **Q3（B-5 練習二之前問）** — header：要出的第一份成品
 question：出一份真的檔案。挑一件你真的會做的事，有自己的檔案最好，等一下貼路徑給我。
@@ -269,7 +272,7 @@ tools\.venv\Scripts\python.exe tools\verify_core.py
 
 1. `winget` 不行 → 改用 PowerShell 那行 `irm ... | iex`（不需要管理員）
 2. 兩個都不行 → 用系統的 Python。Mac 通常有 `python3`；Windows 到 **python.org** 下載安裝，**安裝時勾 Add python.exe to PATH**，裝完關掉終端機重開
-3. 連 Python 都裝不了（被公司鎖） → **記進 `onboarding.md` 的「卡住的地方」，跳過這一包往下走**，跟他說：「工具這段回去用自己的電腦再裝，其他包不需要它。」
+3. 連 Python 都裝不了（被公司鎖） → **記進 `onboarding.md` 的「卡住的地方」，並在 `[AGENT_HOME]/tools/SKIPPED.md` 寫一行為什麼跳過**（例如「2026-09-13 公司電腦鎖住安裝權限，`uv` 與 python.org 都裝不了」）——**總機看到這個檔就不會再叫你跑 04**——然後往下走，跟他說：「工具這段回去用自己的電腦再裝，其他包不需要它。裝好之後把 `tools/SKIPPED.md` 刪掉，我就會重跑這一包。」
 
 用系統 Python 的做法：
 
@@ -342,8 +345,14 @@ Windows 把 `tools/.venv/bin/python` 換成 `tools\.venv\Scripts\python.exe`。
 
 問 **Q4**。他要裝就裝進同一個環境：
 
+**Mac**
 ```bash
-uv pip install --python tools/.venv yt-dlp
+uv pip install --python tools/.venv/bin/python yt-dlp
+```
+
+**Windows（PowerShell）**
+```powershell
+uv pip install --python tools\.venv\Scripts\python.exe yt-dlp
 ```
 
 要合併影片和聲音需要 `ffmpeg`（Mac：`brew install ffmpeg`；Windows：`winget install Gyan.FFmpeg`），**沒裝也能抓純音訊或字幕**，先不用強求。裝了就在 `tools/README.md` 的「已裝」補一行。
@@ -359,7 +368,7 @@ uv pip install --python tools/.venv yt-dlp
   ```
   重跑這一包時，只替換標記之間的內容；標記外面一個字都不動。
 
-**裝完寫 `[AGENT_HOME]/tools/README.md`：**
+**裝完寫 `[AGENT_HOME]/tools/README.md`**（**已存在就只補缺的段落，不整份覆蓋**——他可能自己加過工具或註記）：
 
 ```markdown
 # tools/
@@ -430,9 +439,9 @@ uv pip install --python tools/.venv yt-dlp
 
 > **下次只要記住三步：新增對話 → 選 `[AGENT_HOME]` → 派任務。**
 >
-> 明天的作業：找一份你真的要處理的檔案，貼路徑給我，叫我做一件今天那張表上的事——二十分鐘就有成品。下一包是 **第 05 包 · 第二大腦**：把知識放到規則檔外面，要用才查，規則檔才不會越長越肥。
+> 明天的作業：找一份你真的要處理的檔案，貼路徑給我，叫我做一件今天那張表上的事——二十分鐘就有成品。下一包是 **第 05 包 · 知識庫**：把知識放到規則檔外面，要用才查，規則檔才不會越長越肥。
 >
-> 1. 現在就接下一包（推薦）——我直接開始
+> 1. 現在就接下一包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
@@ -456,10 +465,14 @@ tools\.venv\Scripts\python.exe tools\verify_core.py | Select-Object -Last 1
 if (Select-String -Path core-rules.md -Pattern 'tt:kit-04' -Quiet) { "✅ 規則檔有 kit-04 標記" } else { "❌ 規則檔標記" }
 ```
 
+**`tools/SKIPPED.md` 存在也算完成（跳過）**——那代表這台電腦裝不了，不要再跑一次安裝，直接更新 `onboarding.md` 打勾（註明跳過）往下走。
+
 驗證最後一行要是 `10/10 可用`。全綠 → 跟他說「✅ 第 04 包裝好了」＋Section D。有 ❌ → 修，不要問他；修不動就記進 `onboarding.md` 的「卡住的地方」，照實跟他說缺哪一個、少了會少做什麼。
 最後更新 `[AGENT_HOME]/onboarding.md`：這一包那行打勾、寫一句做到哪；「我學到什麼」加一條：
 
 > - **第 04 包**：Agent 叫代理，是因為它有手腳——讀、處理、抓、產出。工具裝在 `tools/`，一台電腦裝一次。貼路徑比塞檔案便宜。大動作先列計畫、只搬不刪。
+
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

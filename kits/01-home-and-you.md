@@ -52,9 +52,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-ho
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
-| 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **名字有兩個，不要混**：`AGENT_HOME` 資料夾的名字（例如 `ming-agent`）給的是**他**的稱呼——你叫他 **ming**。**分身自己叫什麼，是 Section A 第 1 題才取的**，在那之前不要自己取名、不要給建議。
 
@@ -67,18 +67,19 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-ho
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`。用絕對路徑在那裡讀寫；開口第一句「我找到你的家：`[路徑]`」。**可能是別的 bootstrap 建的，沒關係——只要叫 `<名字>-agent` 就算。** 缺什麼檔案 Section B 補上去 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
-| 沒有 | 走 **0-3b 建家**（下面），不要停 |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/` 但名字不像 `-agent` | 可能是別的方式建的家 → 問一題選項：這是你的 AI 資料夾嗎？（1. 是，就用它（推薦） 2. 不是，另外建 3. 其他） |
+| 沒有 | **先問一題選項再動手建**：「你之前建過 AI 分身的資料夾嗎？」（1. 沒有，幫我建一個（推薦） 2. 有，我貼路徑或拖進來 3. 不確定）。選 1 或 3 → 走 **0-3b 建家**（下面）；選 2 → 等他給路徑，拿到就當 `AGENT_HOME`。不要停 |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
 `user-agent` 的 `user` 是他的英文名小寫；實際資料夾叫 `ming-agent` 這種，**永遠不要建一個真的叫 `user-agent` 的資料夾**。
@@ -93,7 +94,12 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-ho
 >
 > 建好之後，它會記得你是誰、你的工作習慣、你受不了什麼——你不用每次開新對話都重講一遍。
 >
-> 我們先從最基本的開始：**幫你的分身找個地方住。** 先問一件事：**你的英文名字是什麼？**（沒有的話，用你習慣的英文拼音也可以，例如 ming、chen）
+> 我們先從最基本的開始：**幫你的分身找個地方住。** 先問一件事：**資料夾要用哪個名字？**（這會變成資料夾名，所以只能用英文）
+>
+> 1. **用我的英文名（我打字）**（推薦）——最好認，例如 ming、chen
+> 2. **用中文名的拼音（我打字）**——沒有英文名就用這個，例如 jingti
+> 3. **我沒有，先用 `my`，之後再改**——資料夾會叫 `my-agent`，之後想改隨時可以
+> 4. 其他（我自己說）
 
 拿到名字轉小寫，資料夾叫 `<他的名字>-agent`。
 
@@ -106,7 +112,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-ho
   > 我放在你的**個人資料夾**底下——就是 Finder 側邊欄那個房子圖示的地方。
   > 為什麼不放桌面？這個資料夾之後會長大，裡面會有你的筆記、草稿、日誌、素材。**桌面適合放暫時的東西，這個是要長住的。**
 
-- **Windows** → **優先 C 槽以外的磁碟，通常是 D**。先跑 `Get-PSDrive -PSProvider FileSystem | Select-Object Name, Root`：有 D／E 就放那顆的根目錄 `D:\[名字]-agent`；只有 C 槽就放 `C:\Users\<使用者名稱>\[名字]-agent`。
+- **Windows** → **優先 C 槽以外的磁碟，通常是 D**。先跑 `Get-PSDrive -PSProvider FileSystem | Select-Object Name, Root` 看有哪些碟，**但只挑本機固定磁碟**——用 `Get-CimInstance Win32_LogicalDisk -Filter "DriveType=3" | Select-Object DeviceID, VolumeName, FreeSpace` 確認，**不要選隨身碟（DriveType=2）或網路磁碟機（DriveType=4）**，拔掉或斷線家就不見了。固定磁碟裡有 D／E 就放那顆的根目錄 `D:\[名字]-agent`；只有 C 槽就放 `C:\Users\<使用者名稱>\[名字]-agent`。
 
   > 這個資料夾會越長越大。C 槽通常是系統碟，空間比較緊，塞滿了整台電腦都會變慢。**放 D 槽比較安全，長期也不用搬家。**
 
@@ -152,16 +158,25 @@ New-Item -ItemType Directory -Force -Path "[決定好的完整路徑]"
 > 我要問六件事：**1 我叫什麼 · 2 你是誰 · 3 你的規矩 · 4 你的地雷 · 5 我該長什麼樣 · 6 我們要去哪**。
 > 一題一題來，多數是選項題，沒有標準答案。**你的答案跟別人不一樣才是對的。**
 
-### 第 1 題 · 稱呼（短開放）
+### 第 1 題 · 稱呼（拆成兩小題，一次問一題）
 
-> header：稱呼
-> question：你想怎麼稱呼我？我該怎麼稱呼你？
+**1a 我該怎麼稱呼你**（選項題）：
+
+> header：怎麼叫你
+> question：我該怎麼稱呼你？
+
+1. **用資料夾名字那個**（推薦）——你的資料夾叫 `[名字]-agent`，那我就叫你 `[名字]`
+2. 其他（我自己說）——你想被叫什麼都行，中文也可以
+
+**1b 你想怎麼稱呼我**（開放）：
+
+> 那你想叫我什麼？**這個名字要你取，我不會自己取。**
 
 **你不可以自己取名字，也不要給建議。** 他反問「你想叫什麼」就回：「這個要你決定——**名字是你給的，這個助理才是你的。**」
 
-fallback 選項（他想不出來才給）：
-1. 用資料夾名字那個（推薦）——你的資料夾叫 `[名字]-agent`，那我叫你 `[名字]`，分身的名字之後想到再改
-2. 其他（我自己說）
+fallback（他真的想不出來才給，仍然不要替他選一個）：
+
+> **先叫 tt 以外的任何名字都行**，例如小助、阿福、阿力——隨便挑一個順口的，之後隨時可以改。
 
 ### 第 2 題 · 你是誰
 
@@ -174,15 +189,14 @@ fallback 選項（他想不出來才給）：
 4. **接案的**——多個客戶。我會幫你分開記每個客戶的背景，不要串在一起
 5. 其他（我自己說）
 
-選完**追問一句開放題**：
+選完**追問一題，選項直接連同題目一起給**（不要先問開放題、等他答不出來才補選項）：
 
 > 那你平常花最多時間在哪一件事？
-
-答不出來的 fallback 選項：
-1. 產出東西（寫、做、拍）
-2. 溝通協調（會議、回訊息、對客戶）
-3. 找資料、想方向
-4. 其他（我自己說）
+>
+> 1. 產出東西（寫、做、拍）
+> 2. 溝通協調（會議、回訊息、對客戶）
+> 3. 找資料、想方向
+> 4. 其他（我自己說）
 
 ### 第 3 題 · 你的規矩（最重要）
 
@@ -463,17 +477,9 @@ irm https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS
 >
 > 從下一個對話開始，我就會照這幾行做。**這就是一份 `.md` 改變 AI 行為的方式。**
 
-**想親眼看到變化（選做，不要卡在這裡）**——四件事一次講完：
+接著補一句就好，**不要叫他重開對話驗證**：
 
-> **目標**：讓你親眼看到那幾行真的生效。
-> **步驟**：1. 關掉這個對話 2. 開新對話，資料夾選 `[AGENT_HOME]` 3. 隨便問一句跟你剛才改的內容有關的事
-> **回來說什麼**：看到了說「看到了」；沒變說「沒變」
-> **做不到怎麼辦**：不想現在做也可以，跳過不影響進度
->
-> 1. 先跳過，繼續往下（推薦）
-> 2. 我現在就去試
-
-他回來不管說什麼都當作做完。
+> 你不用現在重開來看——下次你開新對話它自然就照這幾行做。
 
 ## Section D · 秀給他看
 
@@ -497,7 +503,7 @@ irm https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS
 >
 > 明天的作業：**跑第 02 包 · 到處都認得你**，15 分鐘，處理的就是這件事。
 >
-> 1. 現在就接第 02 包（推薦）——我直接開始
+> 1. 現在就接第 02 包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
@@ -509,7 +515,7 @@ H="[AGENT_HOME]"
 [ "$(grep -c . "$H/CLAUDE.md")" -eq 1 ] && echo "✅ CLAUDE.md 只有一行" || echo "❌ CLAUDE.md 不是一行"
 [ -f "$H/AGENTS.md" ] && echo "✅ AGENTS.md 存在" || echo "❌ AGENTS.md"
 [ -f "$H/onboarding.md" ] && echo "✅ onboarding.md 存在" || echo "❌ onboarding.md"
-grep -qE '\[[^]]+\]' "$H/core-rules.md" && echo "❌ core-rules 還有方括號 placeholder 沒換" || echo "✅ 沒有殘留方括號"
+grep -qE '\[(AGENT_HOME|分身的名字|名字|實際名字)\]' "$H/core-rules.md" && echo "❌ core-rules 還有 placeholder 沒換" || echo "✅ placeholder 都換掉了"
 ```
 ```powershell
 # Windows
@@ -518,13 +524,17 @@ if ((Get-Item "$H\core-rules.md" -EA SilentlyContinue).Length -gt 0) { "✅ core
 if ((Get-Content "$H\CLAUDE.md" | Where-Object { $_ -match '\S' }).Count -eq 1) { "✅ CLAUDE.md 只有一行" } else { "❌ CLAUDE.md 不是一行" }
 if (Test-Path "$H\AGENTS.md") { "✅ AGENTS.md 存在" } else { "❌ AGENTS.md" }
 if (Test-Path "$H\onboarding.md") { "✅ onboarding.md 存在" } else { "❌ onboarding.md" }
-if (Select-String -Path "$H\core-rules.md" -Pattern '\[[^\]]+\]' -Quiet) { "❌ core-rules 還有方括號 placeholder 沒換" } else { "✅ 沒有殘留方括號" }
+if (Select-String -Path "$H\core-rules.md" -Pattern '\[(AGENT_HOME|分身的名字|名字|實際名字)\]' -Quiet) { "❌ core-rules 還有 placeholder 沒換" } else { "✅ placeholder 都換掉了" }
 ```
+
+> **只比對這四個固定 placeholder**：`[AGENT_HOME]`、`[分身的名字]`、`[名字]`、`[實際名字]`。不要用萬用 regex 掃所有方括號——學員自己寫的 `[ ]`、連結、清單符號都會被誤判成 ❌。
 
 全綠 → 跟他說「✅ 第 01 包裝好了」＋Section D。有 ❌ → 修，不要問他。
 最後更新 `[AGENT_HOME]/onboarding.md`：01 那行打勾；「這一包做到哪」寫「家建好、規則檔生成、他自己改過一段，接著跑第 02 包」；「我學到什麼」加一條：
 
 > - **01 包**：分身要有自己的資料夾，位置要能長大、路徑不要有中文。一份 `.md` 就能改變 AI 講話的方式——我自己改了 [他改的那一區]。
+
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

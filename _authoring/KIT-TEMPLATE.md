@@ -54,8 +54,8 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；兩個入口都建，這個平台實際讀的是 `CLAUDE.md` |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；兩個入口都建，這個平台實際讀的是 `AGENTS.md` |
 | 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
@@ -67,11 +67,11 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
@@ -134,7 +134,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 >
 > 明天的作業：{{一件事，20 分鐘內}}。下一包是 **第 {{NN+1}} 包 · {{名字}}**：{{一句}}。
 >
-> 1. 現在就接下一包（推薦）——我直接開始
+> 1. 現在就接下一包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
@@ -150,6 +150,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 
 全綠 → 跟他說「✅ 第 {{NN}} 包裝好了」＋Section D。有 ❌ → 修，不要問他。
 最後更新 `[AGENT_HOME]/onboarding.md`：這一包那行打勾、寫一句做到哪；「我學到什麼」加一條：{{原 station 那句}}。
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
+
+下一包對照：01→02 到處都認得你、02→03 讓它記得、03→04 給它工具、04→05 知識庫、05→06 第一招＋用講的、06→07 給它鑰匙、07→08 專案員工、08→09 跨電腦。
 
 ## 踩坑紀錄（給 Tim）
 

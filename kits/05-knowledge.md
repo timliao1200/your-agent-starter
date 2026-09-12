@@ -51,9 +51,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
-| 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
@@ -64,17 +64,18 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`。用絕對路徑在那裡讀寫；開口第一句「我找到你的家：`[路徑]`」 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/` 但名字不像 `-agent` | 可能是別的方式建的家 → 問一題選項：這是你的 AI 資料夾嗎？（1. 是，就用它（推薦） 2. 不是，另外建 3. 其他） |
 | 沒有 | **停**。跟他說：「這一包要先有你的家跟規則檔，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」然後結束，不要自己建家 |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
@@ -87,7 +88,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 | `[AGENT_HOME]/core-rules.md` 存在且有實質內容 | **停**：「這一包要先有你的規則檔，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」 |
 | `[AGENT_HOME]/raw/`、`knowledge/` 存在 | **不用停**，這一包自己建（`mkdir -p`） |
 | `[AGENT_HOME]/memory/MEMORY.md` 存在 | **不用停**。沒有就記住：B-6 健檢的第 1 項改成「這台還沒有記憶檔，跳過」，並在 Section C 的健檢規矩裡照樣寫進去（他之後跑第 03 包就會有：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/03-memory.md`） |
-| `[AGENT_HOME]/memory/todo.md` 存在 | 沒有就把 B-1 那行 Obsidian 待辦改記到 `onboarding.md` 的「卡住的地方」下方，不要為了它去建整個 `memory/` |
+| `[AGENT_HOME]/memory/todo.md` 存在 | 沒有就把 B-1 那行 Obsidian 待辦改記到 `onboarding.md` 的「**這一包做到哪**」（那不是卡住，是還沒排的事），不要為了它去建整個 `memory/` |
 
 **0-5 開口**（找到家、前提也有，才開口）：
 
@@ -215,7 +216,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 > **今天先不裝。** 現在知識庫還是空的，裝了也只會看到一張白紙。回家有空的時候到 obsidian.md 下載，打開它選「Open folder as vault」，指到 `[AGENT_HOME]/knowledge`。之後我再幫你把它跟我接起來。
 
 在 `[AGENT_HOME]/memory/todo.md` 的「想到但還沒排的」加一行：`- [ ] 裝 Obsidian，把 knowledge/ 開成 vault`。
-**備援**：沒有 `memory/todo.md` 就記到 `onboarding.md`。**然後往下走，不要在這裡停。**
+**備援**：沒有 `memory/todo.md` 就記到 `onboarding.md` 的「**這一包做到哪**」，不要寫進「卡住的地方」。**然後往下走，不要在這裡停。**
 
 ### B-2 建資料夾與 schema
 
@@ -339,6 +340,8 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 
 ### C-1 `[AGENT_HOME]/knowledge/AGENTS.md`（schema 本尊）
 
+**`knowledge/AGENTS.md` 已存在就只補缺的段落，不整份覆蓋**——他可能已經加過自己的分類或規矩。
+
 ```markdown
 # 這個知識庫怎麼維護
 
@@ -386,6 +389,8 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 **檔名為什麼是 `AGENTS.md`**：子資料夾裡的規矩，Codex 讀 `AGENTS.md`、Claude Code 讀 `CLAUDE.md`。跟根目錄一樣的做法——**一份本尊、一個薄入口**，不用 symlink：本尊叫 `AGENTS.md`（這是跨 Agent 的開放標準檔名），旁邊放一個一行的 `CLAUDE.md`，Claude Code 開場會自動把它展開。他只用 Codex 也照放，多一個一行的檔不礙事，哪天換工具不用重做。
 
 ### C-2 `[AGENT_HOME]/knowledge/CLAUDE.md`（只有一行）
+
+**寫之前先 `Read`**：既有的 `knowledge/CLAUDE.md` 若**超過一行**，那是舊版的 schema 本尊（v1.0 把規矩寫在這裡）→ **先把它改名成 `knowledge/AGENTS.md`**（`AGENTS.md` 已存在就把內容併進去，不要覆蓋），再寫下面這一行入口。**不要直接一行蓋掉，那會把他整份 schema 刪掉。**
 
 ```markdown
 @AGENTS.md
@@ -492,7 +497,7 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 > 明天的作業：**找一份你真的想讀的東西丟進 `raw/`，順便跟我講那三件事。** 20 分鐘就夠。
 > 下一包是 **第 06 包 · 第一招＋用講的**：把「收工寫日誌」包成它的第一招，順便讓你可以用講的、錯字不用改。
 >
-> 1. 現在就接下一包（推薦）——我直接開始
+> 1. 現在就接下一包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
@@ -521,6 +526,8 @@ if (Select-String -Path "$H\core-rules.md" -Pattern "tt:kit-05" -Quiet) { "✅ �
 
 > - **第 05 包**：LLM Wiki 三層——`raw/` 原料、`knowledge/` 整理過的、`knowledge/AGENTS.md` 定義怎麼組織（schema）。第三層就是「專案規矩」套在知識庫上。
 > - **第 05 包**：收料要帶自己的看法——「內容重點」誰都查得到，「你的看法」只有你有。知識庫會爛掉而且不會報錯，所以要定期健檢，「記憶檔停超過 7 天」最要命。
+
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

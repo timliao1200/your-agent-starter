@@ -59,39 +59,44 @@
 
 ```bash
 # Mac
-find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
 ```
 
 ```powershell
 # Windows
-Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
 ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`，往 0-4 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
-| 沒有 | 第一次見面 → **抓第 01 包**照做（它會自己建家） |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/`，名字不像 `-agent` | 可能是別的方式建的家 → 問一題：「這是你的 AI 資料夾嗎？1. 是，就用它（推薦）2. 不是，另外建 3. 其他」 |
+| 沒有 | 先問一題：「你之前建過 AI 分身的資料夾嗎？1. 沒有，幫我建一個（推薦）2. 有，我貼路徑或拖進來 3. 不確定」→ 選 1 或 3 就**抓第 01 包**照做（它會自己建家） |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
-**0-4 盤點家裡有什麼**（只讀，`ls` 一遍），對照這張表決定**下一包**——以檔案為準，不看進度表也不問他：
+**0-4 盤點家裡有什麼**（只讀，`ls` 一遍）。**先看一件事再對表**：
+
+- 家裡**沒有 `core-rules.md`**，但有 `CLAUDE.md`／`AGENTS.md` 寫著實質規矩、或根目錄有 `daily/`、`memory/`（v1.0 的家、別的 bootstrap 建的家都長這樣）→ **抓升級包**，不要往下對表、不要跑 01
+- 家裡是空的（或只有 `.DS_Store`、`.obsidian`）→ 抓第 01 包
+- 有 `core-rules.md` → 對下面這張表決定**下一包**，以檔案為準，不看進度表也不問他：
 
 | 看到 | 代表做過 |
 |---|---|
 | `core-rules.md` 有實質內容、`CLAUDE.md` 只有 `@core-rules.md`、`AGENTS.md` 只有幾行指過去 | 01 |
 | `~/.codex/AGENTS.md` 或 `~/.claude/CLAUDE.md` 指到這個家的 `core-rules.md` | 02 |
 | `memory/daily/` 有日誌、`memory/MEMORY.md` | 03 |
-| `tools/.venv` | 04 |
+| `tools/.venv`（或 `tools/SKIPPED.md`：裝不了而跳過） | 04 |
 | `knowledge/AGENTS.md`（舊版只有 `knowledge/CLAUDE.md` 也算）且 `knowledge/topics/` 有檔 | 05 |
 | `skills/daily-log/` | 06 |
-| `workflows/` 有流程，或 `claude mcp list`／`codex mcp list` 有 youtube | 07 |
+| `workflows/video-summary.md` 存在，**且** `claude mcp list`／`codex mcp list` 有 youtube | 07 |
 | `projects/` 底下有帶 `handoff.md` 的資料夾 | 08 |
+| `onboarding.md` 的 09 那行打了勾（09 沒有專屬檔案，以進度表為準） | 09 |
 
 - **下一包＝順序 01→09 裡第一個沒做過的**；做過的一律跳過，不管順序（在家自己跑過後面的人只做他還沒有的）
-- 家裡有東西但**不是這結構**（規矩直接寫在 `CLAUDE.md`／`AGENTS.md` 裡、根目錄有 `daily/`、沒有 `core-rules.md`）→ **抓升級包**，不要跑 01
 - 九包都有 → **不要再扮 tt**，你就是他的分身，正常工作
 
-**0-5 進度表**：`[AGENT_HOME]/onboarding.md` 是給他看的進度表，不是你的判斷依據。有就讀「這一包做到哪」；是舊格式（寫「七段」或「三站十二段」）就整份改寫成下面的九包格式，做過的段落對到包打勾（0+1→01、2→02、4→03、7→04、5+6→05、8+9→06、3→07、10→08、11→09），其他區塊原封不動保留。沒有這份也沒關係，第 01 包或升級包會建。
+**0-5 進度表**：`[AGENT_HOME]/onboarding.md` 是給他看的進度表，不是你的判斷依據。有就讀「這一包做到哪」；**進度區沒有 `01 ·`～`09 ·` 這九個標題就是舊格式**，整份改寫成下面的九包格式，做過的段落對到包打勾（0+1→01、2→02、4→03、7→04、5+6→05、8+9→06、3→07、10→08、11→09），其他區塊原封不動保留。沒有這份也沒關係，第 01 包或升級包會建。
 
 ## 開口，然後抓包
 

@@ -51,9 +51,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/02-gl
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
-| 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
@@ -64,17 +64,18 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/02-gl
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`。用絕對路徑在那裡讀寫；開口第一句「我找到你的家：`[路徑]`」 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/` 但名字不像 `-agent` | 可能是別的方式建的家 → 問一題選項：這是你的 AI 資料夾嗎？（1. 是，就用它（推薦） 2. 不是，另外建 3. 其他） |
 | 沒有 | **停**。跟他說一句：「這一包要先有一個分身的家，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」然後停下來等他 |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
@@ -180,7 +181,7 @@ Get-ChildItem "$env:USERPROFILE\.claude\CLAUDE.md","$env:USERPROFILE\.codex\AGEN
 >
 > 1. 併進 `core-rules.md`（推薦）——這些設定跟著你走，換工具也不會掉
 > 2. 先備份不併——原本的內容留在 `.bak`，新的入口直接覆蓋上去
-> 3. 我看一下再說——我先停著，你看完告訴我
+> 3. 我看一下再說——我先停著。**看完回我「併」或「不併」**；看不懂就回我「你決定」，我會選「備份不併」
 
 ## Section B · 動手
 
@@ -259,6 +260,8 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude","$env:USERP
 
 `[AGENT_HOME]` 換成完整絕對路徑（例如 `/Users/ming/ming-agent`、`D:\ming-agent`），**不要留 `~`、不要留方括號**。
 
+**Windows 路徑全部用反斜線 `\`**（例 `@D:\ming-agent\core-rules.md`），不要留範本裡的 `/`。
+
 ### 驗證：你自己驗，不要叫他去別的對話測
 
 三件事你自己做完，把結果秀給他：
@@ -320,17 +323,23 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude","$env:USERP
 > 2. **兩個入口都指到**：`[AGENT_HOME]/core-rules.md`，我剛才從那個路徑讀回來過
 > 3. **意思是**：你在任何資料夾開對話，我都認得你
 
-**看一次魔術（選做，不要卡在這裡）**——四件事一次講完：
+**不要叫他關掉對話去別的資料夾測。** 改成你自己把證據擺出來：把兩個全域入口的內容原樣印出來，再用那個路徑把 `core-rules.md` 讀回來，秀前三行：
 
-> **目標**：親眼看到「到處都認得你」。
-> **步驟**：1. 關掉這個對話 2. 開新對話，**資料夾隨便選一個別的**（桌面就好）3. 問它「我叫什麼名字？」
-> **回來說什麼**：答得出來說「認出來了」；答不出來說「沒認出我」
-> **做不到怎麼辦**：不想現在做也沒關係，我已經驗過了，不影響進度
+> `~/.claude/CLAUDE.md` 裡面是這一行：
 >
-> 1. 先跳過，繼續往下（推薦）
-> 2. 我現在就去試
+> > [印出內容]
+>
+> `~/.codex/AGENTS.md` 裡面是這幾行：
+>
+> > [印出內容]
+>
+> 我剛才照那個路徑讀回來，你的規矩開頭是：
+>
+> > [引 core-rules.md 前三行]
+>
+> **下次你在任何資料夾開新對話，它都會先讀到這份。**
 
-他回來不管說什麼都當作做完。然後：
+然後：
 
 > **下次只要記住三步：新增對話 → 選 `[AGENT_HOME]` → 派任務。**
 > （現在就算選別的資料夾也認得你，只是家裡的東西比較齊。）
@@ -339,10 +348,12 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude","$env:USERP
 >
 > 明天的作業：**跑第 03 包 · 讓它記得**——現在它認得你，但每次對話結束就忘光了。那一包處理記憶。
 >
-> 1. 現在就接第 03 包（推薦）——我直接開始
+> 1. 現在就接第 03 包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
+
+**A-2 選 2（先不要接全域）的人整段跳過，直接視為完成，不要回頭建。** 更新 `onboarding.md`（02 打勾、註明跳過全域入口）就好。
 
 ```bash
 # Mac
@@ -368,6 +379,8 @@ foreach ($f in @("$env:USERPROFILE\.claude\CLAUDE.md", "$env:USERPROFILE\.codex\
 最後更新 `[AGENT_HOME]/onboarding.md`：02 那行打勾；「這一包做到哪」寫「全域兩個入口接好，第一站完成，等第 03 包」；「我學到什麼」加一條：
 
 > - **02 包**：每家 AI 公司都在我電腦的隱藏資料夾放自己的 `.md`。我在那兩個隱藏資料夾各放一個薄入口指回 `core-rules.md`，身份收回自己手上。全域＋專案兩層會疊加＝一個「在這個案子上班的員工」。
+
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

@@ -53,9 +53,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/03-me
 
 | 線索 | 設定 |
 |---|---|
-| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；規則檔入口叫 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；入口叫 `AGENTS.md` |
-| 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
+| 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
@@ -66,17 +66,18 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/03-me
 3. 全機搜：
    ```bash
    # Mac
-   find ~ -maxdepth 4 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' 2>/dev/null
+   find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' -not -path '*/node_modules/*' -not -path '*/.Trash/*' 2>/dev/null
    ```
    ```powershell
    # Windows
-   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 3 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+   Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
    ```
 
 | 結果 | 做法 |
 |---|---|
 | 一個 | 就是 `AGENT_HOME`。用絕對路徑在那裡讀寫；開口第一句「我找到你的家：`[路徑]`」 |
 | 多個 | 列出來（含最後修改時間）問一題選項：哪一個是現在要用的 |
+| 目前資料夾（或它的子資料夾）有 `CLAUDE.md`／`AGENTS.md`／`daily/` 但名字不像 `-agent` | 可能是別的方式建的家 → 問一題選項：這是你的 AI 資料夾嗎？（1. 是，就用它（推薦） 2. 不是，另外建 3. 其他） |
 | 沒有 | **停**，跟他說：「這一包要先有一個家，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」 |
 | 他說有但你沒找到 | 請他把資料夾拖進對話或貼路徑，不要猜 |
 
@@ -108,7 +109,9 @@ question：待辦清單要有第一件真的在跑的事，我用哪一件開場
 1. **用今天的事：把 AI 分身建完**（推薦）——最省事，等一下做完我自己勾掉
 2. **一件工作上的事**——你說，我記進去（例如下週要交的報表、還沒回的一封信）
 3. **一件家裡的事**——你說，我記進去（例如要整理的資料夾、要繳的帳單）
-4. **先不要，之後再加**——清單先留空，你哪天想到再跟我說
+4. 其他（我自己說）
+
+（**不想現在加也可以**，直接回我「先不要，之後再加」——清單先留空的結構，你哪天想到再跟我說，我自己補進去。）
 
 **Q2（在 B-7 傳 log 之前問；不是課程學員就不要問這題）** — header：這篇 log 怎麼傳
 question：傳上去的時候，這篇要用哪一種？
@@ -212,7 +215,7 @@ cd "[AGENT_HOME]"; 'memory\daily','knowledge','raw','projects','skills','workflo
 備援：指令不通就用你自己的建檔工具一個一個建，不要叫他去終端機打。
 （`workflows/` 已經有的話不用重建。已經存在的資料夾一律保留裡面的東西。）
 
-**每個空資料夾放一個 `README.md`**，兩三句話說明放什麼、舉一個例子。空資料夾會讓人不知道要幹嘛。
+**這六個資料夾（`memory/`、`knowledge/`、`raw/`、`projects/`、`skills/`、`workflows/`）一律各放一份 `README.md`**（已經有的不覆蓋），兩三句話說明放什麼、舉一個例子。空資料夾會讓人不知道要幹嘛，Section E 也會逐一檢查這六份。
 `skills/` 先建空的加一份 `README.md` 就好——**那是之後的事**，但位置先留著，他才知道招式要往哪放。
 
 `projects/README.md` 要寫清楚，不要讓它變成一個看不懂的空資料夾：
@@ -293,7 +296,7 @@ updated: [今天日期]
 - **怎麼檢查**：每次讀的時候看 `updated`。超過一週沒動就是壞了——當場用日誌補到最新，並告訴你一聲
 ```
 
-然後問 **Q1**（Section A 那題），拿到答案再建 `memory/todo.md`。選 1 就寫「把 AI 分身建完」，選 4 就只留空的結構、跟他說一句「你哪天想到再跟我說，我自己補進去」。
+然後問 **Q1**（Section A 那題），拿到答案再建 `memory/todo.md`。選 1 就寫「把 AI 分身建完」，他說「先不要」就只留空的結構、跟他說一句「你哪天想到再跟我說，我自己補進去」。
 
 ```markdown
 # 待辦
@@ -426,7 +429,7 @@ updated: [今天日期]
 >
 > 明天的作業：跟我說一次「收工」，讓我幫你寫第二篇日誌——五分鐘就好。下一包是 **第 04 包 · 給它工具**：裝十個工具，讓我會做 Word、Excel、簡報、PDF，不再只是回你一段文字。
 >
-> 1. 現在就接下一包（推薦）——我直接開始
+> 1. 現在就接下一包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
@@ -453,10 +456,14 @@ if (Select-String -Path core-rules.md -Pattern 'tt:kit-03' -Quiet) { "✅ 規則
 if (Test-Path .joylearn\token) { "✅ 學習平台已登入" } else { "－ 學習平台未登入（不是課程學員就忽略）" }
 ```
 
+> `.joylearn/token` **這個檔由 `share.md` 的流程自己產生**；沒有就代表沒傳，標「－」不算 ❌，**不要自己建**。
+
 全綠 → 跟他說「✅ 第 03 包裝好了」＋Section D。有 ❌ → 修，不要問他。
 最後更新 `[AGENT_HOME]/onboarding.md`：這一包那行打勾、寫一句做到哪；「我學到什麼」加一條：
 
 > - **第 03 包**：AI 的記憶不在 AI 身上，在我的硬碟裡。三種——規矩（全部讀）、日記（讀最近）、知識（要用才查）。規矩不能養太肥，因為每次都全載。
+
+他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 
