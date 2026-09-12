@@ -299,8 +299,6 @@ updated: [今天日期]
 
 ---
 
----
-
 # 第 7 段 · 給它工具
 
 **這一段的目標**——開場講給他聽：
@@ -723,8 +721,6 @@ ls -a [AGENT_HOME]/knowledge/.obsidian
 > - **5 段**：LLM Wiki 三層——`raw/` 原料、`knowledge/` 整理過的、`knowledge/CLAUDE.md` 定義怎麼組織（schema）。第三層就是「專案規矩」套在知識庫上。
 
 > 第五段完成。下一段：**讓我幫你讀第一份東西**。要繼續嗎？
-
----
 
 ---
 
