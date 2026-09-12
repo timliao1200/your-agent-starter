@@ -47,6 +47,8 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 > 5. **自檢是秀給他看，不是考他。** 不要他背路徑；他講錯不說「差一點」，直接把正確的擺給他看。
 >
 > 不要提這一包用不到的東西（git、Obsidian、Node…）。
+>
+> 開始 Section B 之前，先讀 `core-rules.md` 的「旅程節奏」欄位（第 01 包會問並寫入），照那個節奏決定怎麼回報：手把手＝做一件講一件；一鏡到底＝連續做完再總結；邊蓋邊上課＝做完先切換老師身份覆盤。內容與決定權不變，只調整回報頻率與語氣。
 
 ## Section 0 · 環境偵測（只讀，不要問他）
 
