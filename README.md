@@ -59,7 +59,8 @@ user-agent/
 ├── memory/          每天的日誌、摘要、待辦
 ├── raw/             原始素材，只進不改
 ├── knowledge/       整理過的知識
-│   └── CLAUDE.md    這個知識庫怎麼維護
+│   ├── AGENTS.md    這個知識庫怎麼維護（schema）
+│   └── CLAUDE.md    一行 @AGENTS.md
 ├── tools/           它的工具箱：十個套件裝在這裡
 ├── skills/          它自己判斷該用的招式
 │   └── daily-log/   第一招：說「收工」它自己寫日誌

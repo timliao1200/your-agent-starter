@@ -384,14 +384,14 @@ args = ["-y", "obsidian-mcp@2", "serve", "--vault", "notes=[AGENT_HOME]/knowledg
 
 ```
 projects/<name>/
-├── CLAUDE.md      ← 這個案子的規矩（Claude Code 讀）
-├── AGENTS.md      ← 同一份，指令式（Codex 讀）
+├── AGENTS.md      ← 這個案子的規矩（本尊；Codex 讀）
+├── CLAUDE.md      ← 一行 @AGENTS.md（Claude Code 讀）
 ├── handoff.md     ← 交接：做到哪、下一步、注意事項
 └── （他帶來的檔案）
 ```
 
-`CLAUDE.md` 用 `@../../core-rules.md` 疊上全域規矩，再寫這個案子的：**目標／限制／資料夾怎麼放／目前做到哪**。
-`AGENTS.md` 寫「先讀 `../../core-rules.md`，再讀這份」。
+`AGENTS.md` 是本尊：第一行寫「先讀 `../../core-rules.md`」疊上全域規矩，再寫這個案子的：**目標／限制／資料夾怎麼放／目前做到哪**。
+`CLAUDE.md` 只有一行 `@AGENTS.md`（跟 `knowledge/` 同一招，不用 symlink）。
 
 ## 10-2 交接檔 handoff.md
 

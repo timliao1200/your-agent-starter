@@ -574,7 +574,7 @@ uv pip install --python tools/.venv yt-dlp
 > |---|---|---|---|
 > | **① 原料** | `raw/` | PDF、逐字稿、文章 | 你丟進來，**我只讀不改** |
 > | **② 知識** | `knowledge/` | 我整理出來的知識，互相有連結 | 我寫、我維護 |
-> | **③ 規格** | `knowledge/CLAUDE.md` | **定義這個知識庫怎麼組織** | 你我一起維護 |
+> | **③ 規格** | `knowledge/AGENTS.md` | **定義這個知識庫怎麼組織** | 你我一起維護 |
 
 **第三層最容易被跳過，但少了它整套不會運轉**——一定要講：
 
@@ -589,7 +589,7 @@ uv pip install --python tools/.venv yt-dlp
 
 > 而且這個東西你已經見過了。**還記得「全域規矩」跟「專案規矩」嗎？**
 >
-> `knowledge/CLAUDE.md` 就是**專案規矩**——只是這個「專案」是你的知識庫。
+> `knowledge/AGENTS.md` 就是**專案規矩**——只是這個「專案」是你的知識庫。
 > 它會疊在 `core-rules.md` 上面：我在知識庫裡做事的時候，同時知道「你是誰」跟「這個知識庫怎麼維護」。
 >
 > **你以後每開一個 `projects/` 底下的資料夾，都是同一招。**
@@ -653,7 +653,12 @@ ls -a [AGENT_HOME]/knowledge/.obsidian
 
 **這是第三層。前面兩層是資料夾，這一層是規矩。**
 
-建立 `[AGENT_HOME]/knowledge/CLAUDE.md`：
+**檔名為什麼是 `AGENTS.md`**：子資料夾裡的規矩，Codex 讀 `AGENTS.md`、Claude Code 讀 `CLAUDE.md`。
+跟根目錄一樣的做法——**一份本尊、一個薄入口**，不用 symlink：本尊叫 `AGENTS.md`（這是跨 Agent 的開放標準檔名），
+旁邊放一個一行的 `CLAUDE.md` 寫 `@AGENTS.md`，Claude Code 開場會自動把它展開。
+他只用 Codex 也照放，多一個一行的檔不礙事，哪天換工具不用重做。
+
+建立 `[AGENT_HOME]/knowledge/AGENTS.md`：
 
 ```markdown
 # 這個知識庫怎麼維護
@@ -699,6 +704,12 @@ ls -a [AGENT_HOME]/knowledge/.obsidian
 見 `core-rules.md` 的「定期健檢」那一節，六項。
 ```
 
+然後建 `[AGENT_HOME]/knowledge/CLAUDE.md`，只有一行：
+
+```markdown
+@AGENTS.md
+```
+
 **建完給他看，並且點明這件事**：
 
 > 建好了。你注意到了嗎——**這份檔案本身就是「專案規則檔」的例子**。
@@ -718,7 +729,7 @@ ls -a [AGENT_HOME]/knowledge/.obsidian
 
 更新 `onboarding.md`：第 5 段打勾，「我學到什麼」加：
 
-> - **5 段**：LLM Wiki 三層——`raw/` 原料、`knowledge/` 整理過的、`knowledge/CLAUDE.md` 定義怎麼組織（schema）。第三層就是「專案規矩」套在知識庫上。
+> - **5 段**：LLM Wiki 三層——`raw/` 原料、`knowledge/` 整理過的、`knowledge/AGENTS.md` 定義怎麼組織（schema）。第三層就是「專案規矩」套在知識庫上。
 
 > 第五段完成。下一段：**讓我幫你讀第一份東西**。要繼續嗎？
 
@@ -768,7 +779,7 @@ https://joylearnos.tierliao.workers.dev/shared/ai-employee-day1-recap.md
 >
 > 今天先開 topics 這一個，其他等你有內容再開。
 
-建立 `knowledge/topics/ai-employee-day1.md`，**照 schema 的格式**（`knowledge/CLAUDE.md` 規定的那六區）：
+建立 `knowledge/topics/ai-employee-day1.md`，**照 schema 的格式**（`knowledge/AGENTS.md` 規定的那六區）：
 
 ```markdown
 ---
@@ -1235,7 +1246,7 @@ description: 收工寫日誌。當他說「收工」「今天先這樣」「下�
 - [ ] 教過「貼路徑，不要塞檔案」
 
 **第 5、6 段**
-- [ ] `knowledge/CLAUDE.md`（schema）建好了
+- [ ] `knowledge/AGENTS.md`（schema）建好了，旁邊有一行的 `knowledge/CLAUDE.md`
 - [ ] `knowledge/` 被 Obsidian 開成 vault，`.obsidian/` 存在
 - [ ] 第一份知識進去了（Day 1 回顧或他自己的素材），裡面有「他的看法」那一區
 - [ ] 教過收料三問；健檢示範跑過一次，六項規則寫進規則檔

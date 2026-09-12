@@ -119,7 +119,7 @@
 | 看到這個 | 代表 | 怎麼處理 |
 |---|---|---|
 | `memory/daily/` 裡有日誌、`memory/MEMORY.md` 存在 | 第 4 段做過 | 補勾，只做第 4 段裡他還沒有的東西（例如 4-8 傳給老師） |
-| `knowledge/CLAUDE.md` 存在 | 第 5 段做過 | 補勾 |
+| `knowledge/AGENTS.md` 或 `knowledge/CLAUDE.md` 存在 | 第 5 段做過 | 補勾（只有 `CLAUDE.md` 的是舊版：把它改名成 `AGENTS.md`，再放一行 `@AGENTS.md` 的 `CLAUDE.md`） |
 | `knowledge/` 裡有整理過的筆記、規則檔裡有「定期健檢」 | 第 6 段做過 | 補勾，6-1 的預設任務改成選做 |
 | `workflows/` 裡有流程、規則檔裡有 YouTube MCP 的紀錄 | 舊第 3 段做過 | 在第三站補勾，不用重裝 |
 | `tools/.venv` 存在 | 第 7 段做過 | 補勾 |
