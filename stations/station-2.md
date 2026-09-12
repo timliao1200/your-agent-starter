@@ -1,6 +1,6 @@
 # 第二站 · 記憶與手腳
 
-<!-- tt-version: v2.0 · 段 4 → 7 → 5 → 6 → 8 → 9 -->
+<!-- tt-version: v2.1 · 段 4 → 7 → 5 → 6 → 8 → 9 -->
 
 > 這是 tt 三站流程的第二站。入口與判斷規則在 `AGENTS.md`；**進這一站之前先做過「以檔案為準」那張表。**
 > 順序是 4 → 7 → 5 → 6 → 8 → 9，照這份檔案由上往下走就對了。
@@ -16,7 +16,7 @@
 
 **這一段的目標**——開場講給他聽：
 
-> **現在要做什麼**：建四個資料夾、寫摘要跟待辦、寫今天第一篇日誌，最後傳一份給老師。大概 40 分鐘，中間我只問你一個問題。
+> **現在要做什麼**：建幾個資料夾、寫摘要跟待辦、寫今天第一篇日誌，最後傳一份給老師。大概 40 分鐘，中間我只問你一個問題。
 >
 > 這一段你會知道**一件很多人搞錯的事**：AI 的「記憶」根本不在 AI 身上，在你的硬碟裡。
 >
@@ -233,7 +233,8 @@ updated: [今天日期]
 
 ## 4-6 把規則寫進規則檔
 
-在 `RULE_FILE` 補上：
+**`RULE_FILE` 第 1 段已經有「每次上工先做的事」那一節**（裡面那條「看一眼 `onboarding.md`」是你回得來的命脈，**要保留**）。
+把下面 1–4 條**接在那一節後面**，不要重寫整節；「每天收工前」跟「待辦清單怎麼維護」是新加的小節：
 
 ```markdown
 ## 每次上工先做的事
@@ -281,7 +282,7 @@ updated: [今天日期]
 
 ## 4-8 傳一份給老師
 
-**他在上課的話，這一步一定要做；自己在家跑也可以做。**
+**他在上課的話，這一步一定要做；自己在家跑也可以做。不是課程學員（沒有報名的 email）就跳過，日誌留在自己電腦，跟他說一句「這步是給上課的人的」就好。**
 
 > 老師那邊有一個平台，收每個人的學習 log。今天這篇我幫你傳一份上去——**留在你電腦的是原稿，傳上去的是副本。**
 >
@@ -356,7 +357,7 @@ updated: [今天日期]
 >
 > 過程中會跳出幾次「允許執行」，你按同意就好。**可以嗎？**
 
-### 六條規則（照三師爸的做法，經過驗證）
+### 六條規則（照三師爸——一位教老師用 Agent 的 YouTuber——的做法，經過驗證）
 
 1. **只在 `[AGENT_HOME]/tools/` 裡工作**，不要去搜別的磁碟、別的資料夾
 2. **只裝核心的十個**，下面「選裝」那些不要自動裝，除非他明確點名
@@ -395,12 +396,19 @@ uv --version
 
 **第二步：建環境、裝套件**（在 `[AGENT_HOME]` 底下執行）：
 
+**Mac**
 ```bash
 uv venv tools/.venv --python 3.12
-uv pip install --python tools/.venv -r tools/requirements-core.txt
+uv pip install --python tools/.venv/bin/python -r tools/requirements-core.txt
 ```
 
-Windows 的 `--python` 路徑寫 `tools\.venv\Scripts\python.exe`；Mac 寫 `tools/.venv/bin/python`。`uv` 找不到 3.12 會自己下載，不用他做事。
+**Windows（PowerShell）**
+```powershell
+uv venv tools\.venv --python 3.12
+uv pip install --python tools\.venv\Scripts\python.exe -r tools\requirements-core.txt
+```
+
+`uv` 找不到 3.12 會自己下載，不用他做事。
 
 **第三步：驗證**——建 `[AGENT_HOME]/tools/verify_core.py`：
 
@@ -418,7 +426,19 @@ for name, mod in mods.items():
 print(f"{ok}/{len(mods)} 可用")
 ```
 
-用 `tools/.venv` 的 Python 跑它。**十個都 ok 才算完成。** 有 FAIL 的，重試一次；還不行就記進 `onboarding.md` 的「卡住的地方」，繼續往下（缺一兩個不影響今天）。
+跑它：
+
+**Mac**
+```bash
+tools/.venv/bin/python tools/verify_core.py
+```
+
+**Windows**
+```powershell
+tools\.venv\Scripts\python.exe tools\verify_core.py
+```
+
+**十個都 ok 才算完成。** 有 FAIL 的，重試一次；還不行就記進 `onboarding.md` 的「卡住的地方」，繼續往下（缺一兩個不影響今天）。
 
 ### 備援：`uv` 真的裝不起來
 
@@ -472,7 +492,7 @@ Windows 把 `tools/.venv/bin/python` 換成 `tools\.venv\Scripts\python.exe`。
 - 驗證：`verify_core.py`
 ```
 
-**然後在規則檔加一行索引**（`RULE_FILE` 的「環境速查」或最後面）：
+**然後在規則檔加一小節索引**（接在 `RULE_FILE` 最後面）：
 
 ```markdown
 ## 我的工具
@@ -639,7 +659,7 @@ uv pip install --python tools/.venv yt-dlp
 
 在 `memory/todo.md` 的「想到但還沒排的」加一行：`- [ ] 裝 Obsidian，把 knowledge/ 開成 vault`。**然後往下走，不要在這裡停。**
 
-## 5-4 建立 schema：知識庫自己的規則檔
+## 5-3 建立 schema：知識庫自己的規則檔
 
 **這是第三層。前面兩層是資料夾，這一層是規矩。**
 
@@ -691,7 +711,7 @@ uv pip install --python tools/.venv yt-dlp
 
 ## 定期健檢
 
-見 `core-rules.md` 的「定期健檢」那一節，六項。
+六項：記憶檔沒跟上（`MEMORY.md` 超過 7 天）、孤兒頁面、知識缺口、過時內容（60 天）、重複頁面、`raw/` 裡有沒讀的。做法第 6 段會寫進 `core-rules.md` 的「定期健檢」那一節。
 ```
 
 然後建 `[AGENT_HOME]/knowledge/CLAUDE.md`，只有一行：
@@ -707,7 +727,7 @@ uv pip install --python tools/.venv yt-dlp
 > 它只在我處理知識庫的時候生效，跟你的全域規矩疊在一起。
 > 以後你每開一個新專案，都是同一招。
 
-## 5-5 知識庫還是空的
+## 5-4 知識庫還是空的
 
 > 規矩寫好了，但裡面一頁都還沒有。**下一段就放第一份進去**——你會看到一份原料變成一頁知識的過程。
 
@@ -757,6 +777,8 @@ https://joylearnos.tierliao.workers.dev/shared/ai-employee-day1-recap.md
 
 他有帶一份真的想讀的 PDF、文章、報告——**照他的做**，同樣先問三題，放進 `raw/`。課堂回顧那份可以之後再收。
 
+**他沒上過這門課、手邊也沒東西**：請他挑任何一篇想讀但一直沒空讀的長文或網址，一樣三題。
+
 ## 6-2 寫進 knowledge/topics/
 
 **這一步順便教他分類的概念。**
@@ -798,7 +820,7 @@ https://joylearnos.tierliao.workers.dev/shared/ai-employee-day1-recap.md
 > 我問我自己三題，你看答得對不對：
 > 1. 全域規矩跟專案規矩差在哪？
 > 2. 為什麼規則檔不能一直長大？
-> 3. 流程跟招式，誰記得要用？
+> 3. 知識為什麼要放在規則檔外面，不寫進規矩？
 
 答得出來、而且用的是課堂上的講法，就是成功了：
 
@@ -887,14 +909,14 @@ https://joylearnos.tierliao.workers.dev/shared/ai-employee-day1-recap.md
 
 | 查什麼 | 怎麼查 | 找到了怎麼辦 |
 |---|---|---|
+| **記憶檔沒跟上** | `MEMORY.md` 的日期距今超過 **7 天** | **當場用日誌補到最新**，然後告訴他一句 |
 | **孤兒頁面** | `knowledge/` 裡沒有被任何頁面連到的 | 補上連結，或問他還要不要留 |
 | **知識缺口** | 有連結指過去、但那一頁不存在 | 列給他看，問要不要補 |
 | **過時內容** | 超過 **60 天**沒動過的頁面 | 標出來，問他還算不算數 |
 | **重複頁面** | 兩頁在講同一件事 | 建議合併，他點頭再動 |
-| **記憶檔沒跟上** | `MEMORY.md` 的日期距今超過 **7 天** | **當場用日誌補到最新**，然後告訴他一句 |
 | **raw 裡有沒讀的** | `raw/` 有檔案，但 `knowledge/` 沒有對應的筆記 | 列給他看，問要不要現在讀 |
 
-最後一項最重要，**要特別跟他講**：
+第一項最重要，**要特別跟他講**：
 
 > 這六項裡面，**第一項是最會出事的**。
 >
@@ -1081,7 +1103,7 @@ description: 收工寫日誌。當他說「收工」「今天先這樣」「下�
 
 > 你看規則檔——「收工」那一節從十幾行變成兩行。程序搬去招式了。
 >
-> 這件事三師爸（一位教老師用 Agent 的 YouTuber）也做，他的做法是把「收工」寫進每個專案的規則檔，專案檔就會越寫越長。我們把它寫進日記，**規則檔永遠是薄的。**
+> 這件事三師爸也做，他的做法是把「收工」寫進每個專案的規則檔，專案檔就會越寫越長。我們把它寫進日記，**規則檔永遠是薄的。**
 
 ## 8-4 當場測一次
 

@@ -1,6 +1,6 @@
 # 第一站 · 建家
 
-<!-- tt-version: v2.0 · 段 0、1、2 -->
+<!-- tt-version: v2.1 · 段 0、1、2 -->
 
 > 這是 tt 三站流程的第一站。入口與判斷規則在 `AGENTS.md`，先讀過那份再照這裡做。
 
@@ -80,7 +80,11 @@
 >
 > C 槽通常是系統碟，空間比較緊，塞滿了整台電腦都會變慢。**放 D 槽比較安全，長期也不用搬家。**
 
-判斷順序：
+判斷順序（先跑這行看有哪些磁碟）：
+
+```powershell
+Get-PSDrive -PSProvider FileSystem | Select-Object Name, Root
+```
 
 1. 先確認有沒有 C 以外的磁碟（`D:`、`E:` 都行）
 2. **有** → 放那顆磁碟的根目錄：`D:\user-agent`
@@ -111,7 +115,8 @@ mkdir -p [決定好的路徑]/[名字]-agent
 > **第一步**：關掉現在這個對話。
 > **第二步**：重新指定資料夾，選 `[名字]-agent`。
 > ——Claude Code：畫面上那排點資料夾名字，重新選
-> ——Codex：建立一個新專案，來源資料夾指到 `[名字]-agent`
+> ——Codex 桌面版：建立一個新專案，來源資料夾指到 `[名字]-agent`
+> ——Codex 命令列：先 `cd` 進那個資料夾，再重新啟動 `codex`
 > **第三步**：開新對話，**把你剛才貼給我的那段話再貼一次**。我看到資料夾名字就知道是你，會直接接下去。
 
 **停在這裡，什麼都不要建。** 他回來的時候是全新的對話，你會從 0-1 的短版開始——這是設計好的，不是重來。
@@ -180,7 +185,7 @@ user-agent/
 | 平台 | [Claude Code / Codex] |
 | 開始 | [今天日期] |
 | tt 的腳本 | `tt-script.md`（全部跑完就可以刪）|
-| 腳本版本 | v2.0 · 三站版 |
+| 腳本版本 | v2.1 · 三站版 |
 
 > **弄丟 `tt-script.md` 了？** 到 github.com/timliao1200/your-agent-starter 重新下載 `CLAUDE.md`，
 > 存成 `tt-script.md` 放回這個資料夾就好——進度不會掉，這份還在。
@@ -188,14 +193,14 @@ user-agent/
 ## 進度
 
 ### 第一站 · 建家
-- [x] **0 · 進場與建家**
+- [ ] **0 · 進場與建家**
 - [ ] **1 · 認識你** — 訪談六題，寫出你的規則檔
 - [ ] **2 · 兩層規則檔** — 讓它在任何資料夾都認得你
 
 ### 第二站 · 記憶與手腳
 - [ ] **4 · 讓它記得** — 日誌、摘要、待辦；第一篇 log 傳給老師
 - [ ] **7 · 給它工具** — 十個套件、整理一個資料夾、出一份成品
-- [ ] **5 · 第二大腦** — LLM Wiki 與 Obsidian
+- [ ] **5 · 第二大腦** — LLM Wiki 與 schema
 - [ ] **6 · 第一次自主學習** — 讀第一份東西，學會定期健檢
 - [ ] **8 · 第一招** — daily-log，說「收工」它自己動
 - [ ] **9 · 用講的** — 語音輸入不用改字
@@ -233,8 +238,14 @@ user-agent/
 
 把入口那份存到 `[AGENT_HOME]/tt-script.md`——他是貼網址給你的就抓下來：
 
+**Mac**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md -o tt-script.md
+```
+
+**Windows（PowerShell 裡的 `curl` 不是同一個東西，用這行）**
+```powershell
+irm https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md -OutFile tt-script.md
 ```
 
 抓不下來就跳過，不要卡住——`onboarding.md` 裡有救援網址。
@@ -272,6 +283,8 @@ curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main
 **先確認位置對不對**。目前資料夾不是 `user-agent` 的話：
 
 > 等一下，現在的資料夾是 `[目前的名字]`，不是我們建的 `user-agent`。麻煩重新選一下——不然檔案會寫錯地方。
+
+（**升級既有的家不適用**：他自己建的家名字不是 `-agent` 也不用換，`onboarding.md` 在哪、家就在哪。）
 
 記下路徑 = `AGENT_HOME`。
 
@@ -376,27 +389,9 @@ curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main
 
 ## 1-3 寫入規則檔
 
-### 動筆前先確認：自己存下來了嗎
+### 動筆前先確認：`tt-script.md` 在不在
 
-**這一步漏掉，整趟就會斷在這裡。** 0-4 應該已經存過 `tt-script.md`；沒有的話現在補。
-
-後面兩站的做法在網址上，但**入口只有這一份**——他今天做完第 1 段就去忙了，兩週後回來，
-`onboarding.md` 會告訴我「還有哪幾段沒做完」，但**沒人記得該去哪裡拿流程**。
-
-所以先把自己存一份到：
-
-```
-[AGENT_HOME]/tt-script.md
-```
-
-- **他是把檔案給你的** → 直接複製過去
-- **他是貼網址給你的** → 抓下來：
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md -o tt-script.md
-```
-
-抓不下來就跳過，不要卡住——`onboarding.md` 裡有救援網址。
+**這一步漏掉，整趟就會斷在這裡。** 0-4 應該已經存過；`ls` 看一眼，沒有就現在補（指令見 0-4「把自己存下來」）。抓不下來就跳過——`onboarding.md` 裡有救援網址。
 
 ### 然後寫 `core-rules.md`
 
@@ -460,7 +455,7 @@ curl -fsSL https://raw.githubusercontent.com/timliao1200/your-agent-starter/main
 
 寫完：
 
-> 好了。**那份起始腳本已經被換掉了**——現在 `[RULE_FILE]` 裡面是你自己的規則，每一句都是你剛才講的話。
+> 好了。**那份起始腳本已經被換掉了**——現在 `core-rules.md` 裡面是你自己的規則，每一句都是你剛才講的話。
 >
 > **接下來最重要的一件事：關掉這個對話，重新開一個。** 然後隨便問我一句，你會發現我講話的方式變了——因為我每次開始工作都會先讀這份檔案。
 
@@ -537,7 +532,7 @@ ls -d ~/.claude ~/.codex ~/.cursor ~/.gemini 2>/dev/null
 
 ```powershell
 # Windows
-dir /a:d %USERPROFILE%\.claude %USERPROFILE%\.codex %USERPROFILE%\.cursor %USERPROFILE%\.gemini
+Get-ChildItem -Force -Directory $env:USERPROFILE | Where-Object Name -in '.claude','.codex','.cursor','.gemini'
 ```
 
 **看到幾個就講幾個**，不要講他沒有的：
@@ -567,7 +562,7 @@ ls ~/.claude/CLAUDE.md ~/.codex/AGENTS.md 2>/dev/null
 
 > 我們剛才建的 `user-agent`，就是要解決這件事。
 >
-> **你的身份放在你自己的資料夾裡**，然後在那些廠商資料夾裡各放一個**捷徑**指回來。
+> **你的身份放在你自己的資料夾裡**，然後在那些廠商資料夾裡各放一個**薄入口**指回來。
 >
 > 這樣一來——換工具不用重教，因為大家讀的是同一份。
 > 而且那份在你手上，你隨時打得開、看得懂、改得動。
@@ -580,7 +575,7 @@ ls ~/.claude/CLAUDE.md ~/.codex/AGENTS.md 2>/dev/null
 
 > 沒問題，我就只在 `user-agent` 裡認得你。**之後想改隨時說。**
 
-（照樣更新 `onboarding.md`，註明這一段跳過了捷徑。）
+（照樣更新 `onboarding.md`，註明這一段跳過了全域入口。）
 
 ## 2-3 全域也用同一招：薄入口指回本尊
 
@@ -624,6 +619,10 @@ ls -la ~/.claude/CLAUDE.md ~/.codex/AGENTS.md 2>/dev/null
   問他要不要併進 `core-rules.md`
 - **已經是 symlink** → 告訴他早就接好了，指向哪裡
 
+### 備援：寫不進去的時候
+
+沒有權限、或他不讓你動家目錄——**把兩個檔案的內容印出來請他自己貼**（Mac：Finder 按 Cmd＋Shift＋G 輸入 `~/.claude`；Windows：檔案總管網址列輸入 `%USERPROFILE%\.claude`），貼完照下面驗證。在 `onboarding.md` 記一行走了備援。
+
 ### 為什麼不用 symlink
 
 **這句要講，因為他可能在別的地方看過 symlink 的做法：**
@@ -635,12 +634,12 @@ ls -la ~/.claude/CLAUDE.md ~/.codex/AGENTS.md 2>/dev/null
 
 ### 驗證
 
-**這一步不能省。** 叫他關掉對話重開，然後問一句只有規則檔裡才有的事：
+**這一步不能省，而且要到別的資料夾測**——留在 `user-agent` 裡測不出來，因為這裡本來就讀得到規矩：
 
-> 重開之後隨便問我一句——比如「我叫你什麼名字？」
-> 答得出來就是接上了。
+> 我們測一下全域有沒有接上：**換到桌面（或任何別的資料夾）開一個新對話**，然後問我「我叫你什麼名字？」
+> 答得出來就是接上了——那個資料夾裡什麼都沒有，它是從全域找到你的。
 
-答不出來的話，回去檢查那兩個檔案的路徑對不對（**要絕對路徑，不能用 `~`**）。
+答不出來的話，回去檢查那兩個檔案的路徑對不對（**要絕對路徑，不能用 `~`**）。測完請他換回 `user-agent`。這一題也就是這一站自檢的第 3 題，做過就不用再問。
 
 ## 2-4 兩層規則檔：這就是「員工模式」
 
@@ -682,7 +681,7 @@ ls -la ~/.claude/CLAUDE.md ~/.codex/AGENTS.md 2>/dev/null
 
 更新 `onboarding.md`：第 2 段打勾，「我學到什麼」加：
 
-> - **2 段**：每家 AI 公司都在我電腦的隱藏資料夾放自己的 `.md`。我用 symlink 把它們指回 `user-agent`，身份收回自己手上。全域＋專案兩層會疊加＝一個「在這個案子上班的員工」。
+> - **2 段**：每家 AI 公司都在我電腦的隱藏資料夾放自己的 `.md`。我在那兩個隱藏資料夾各放一個薄入口指回 `core-rules.md`，身份收回自己手上。全域＋專案兩層會疊加＝一個「在這個案子上班的員工」。
 
 > 第二段完成，你的分身現在到處都認得你了。
 >
@@ -732,7 +731,7 @@ ls -la ~/.claude/CLAUDE.md ~/.codex/AGENTS.md 2>/dev/null
 
 **第 2 段**
 - [ ] **帶他看過那些隱藏資料夾**，不是用講的
-- [ ] 全域兩個薄入口建好（或明確走了備援，而且規矩裡寫了同步提醒）
+- [ ] 全域兩個薄入口建好（或明確走了備援：他自己貼的）
 - [ ] 重開對話驗證過：問一句只有規則檔裡才有的事，答得出來
 - [ ] 三題自檢問過，寫進「我做得到什麼」
 
