@@ -423,7 +423,7 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 讀於: [今天日期]
 ---
 
-# AI 數位員工設計師班 · 第一堂
+# AI 數位員工設計與企業 Agent 應用實務班 · 第一堂
 
 ## 為什麼讀這個
 [A-3 他說的，用他自己的話]
