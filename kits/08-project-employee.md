@@ -438,7 +438,7 @@ question：這份成品，有沒有哪裡「不是你會做的樣子」？你說
 >
 > 明天的作業：真的用它做一次，**然後糾正它一次**——看它會不會問你要不要記下來。
 >
-> 1. 接下一包（推薦）——第 09 包 · 跨電腦：換電腦、換 Agent 都接得上
+> 1. 接下一包（推薦）——我先看一眼你家裡還缺哪一包，再直接抓
 > 2. 再開一間辦公室——手上還有別的案子
 > 3. 先到這裡
 
@@ -455,7 +455,7 @@ grep -q '我從合作中學到的你' "$P/AGENTS.md" && echo "✅ 學到的你�
 grep -q '## 資料清單' "$P/AGENTS.md" && grep -q '## 做到什麼算成功' "$P/AGENTS.md" && echo "✅ 交接完整（背景、資料清單、成功標準）" || echo "❌ 交接缺欄位"
 grep -q 'projects/<名稱>/' "$H/core-rules.md" && echo "✅ 總規矩有登記" || echo "❌ 總規矩沒登記"
 grep -c 'tt:kit-08 START' "$H/core-rules.md" | grep -qx 1 && echo "✅ 標記只有一組" || echo "❌ 標記重複或不見"
-grep -qE '\[(案子名稱|目標|他的稱呼|YYYY|A-[0-9])' "$P/AGENTS.md" "$P/handoff.md" && echo "❌ 還有空格沒填" || echo "✅ 沒有空格殘留"
+grep -qE '\[(案子名稱|目標|他的稱呼|YYYY|A-[0-9]|B-4|原話|RUNTIME|一句|引 )' "$P/AGENTS.md" "$P/handoff.md" && echo "❌ 還有空格沒填" || echo "✅ 沒有空格殘留"
 grep -q '\- \[x\] \*\*08' "$H/onboarding.md" && echo "✅ 進度表打勾" || echo "❌ 08 還沒打勾"
 ```
 ```powershell
@@ -469,7 +469,7 @@ if (Select-String -Path "$P\AGENTS.md" -Pattern '我從合作中學到的你' -Q
 if ((Select-String -Path "$P\AGENTS.md" -Pattern '## 資料清單' -Quiet) -and (Select-String -Path "$P\AGENTS.md" -Pattern '## 做到什麼算成功' -Quiet)) { "✅ 交接完整" } else { "❌ 交接缺欄位" }
 if (Select-String -Path "$H\core-rules.md" -Pattern 'projects/<名稱>/' -SimpleMatch -Quiet) { "✅ 總規矩有登記" } else { "❌ 總規矩沒登記" }
 if ((Select-String -Path "$H\core-rules.md" -Pattern 'tt:kit-08 START').Count -eq 1) { "✅ 標記只有一組" } else { "❌ 標記重複或不見" }
-if (Select-String -Path "$P\AGENTS.md","$P\handoff.md" -Pattern '\[(案子名稱|目標|他的稱呼|YYYY|A-[0-9])' -Quiet) { "❌ 還有空格沒填" } else { "✅ 沒有空格殘留" }
+if (Select-String -Path "$P\AGENTS.md","$P\handoff.md" -Pattern '\[(案子名稱|目標|他的稱呼|YYYY|A-[0-9]|B-4|原話|RUNTIME|一句|引 )' -Quiet) { "❌ 還有空格沒填" } else { "✅ 沒有空格殘留" }
 if (Select-String -Path "$H\onboarding.md" -Pattern '- \[x\] \*\*08' -Quiet) { "✅ 進度表打勾" } else { "❌ 08 還沒打勾" }
 ```
 

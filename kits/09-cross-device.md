@@ -94,8 +94,11 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/09-cr
 |---|---|
 | 找到家，家裡**沒有** `.git` | **存檔點**（第一台電腦） |
 | 找到家，家裡**有** `.git`、**有** `local.md` | 已經做過 → 只跑 E 的檢查，全綠就直接進 D 收工儀式 |
-| 找到家，家裡**有** `.git`、**沒有** `local.md` | **新電腦報到**（這台是剛從 GitHub 拿下來的，還沒設定） |
-| 找不到家 | 先問一題（選項）：「這台電腦還沒有你的數位員工。你是在另一台電腦做過、而且存到 GitHub 了嗎？ 1. 對，我存過了（推薦）——我幫你接過來 2. 沒有，這是我第一次用——請先跑新人報到 3. 其他」→ 1 走**新電腦報到**；2 就給總機網址 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 然後停 |
+| 找到家，家裡**有** `.git` 但**沒有遠端倉庫**（`git remote get-url origin` 沒東西） | **存檔點**（他自己用過 git，但還沒存到 GitHub；B-5 跳過 `git init`） |
+| 找到家，家裡**有** `.git`、有遠端倉庫、**沒有** `local.md`，而且這台的全域入口（`~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md`）**沒有**指到這個家 | **新電腦報到**（這台是剛從 GitHub 拿下來的，還沒設定） |
+| 找到家，家裡**有** `.git`、有遠端倉庫、**沒有** `local.md`，但全域入口**已經**指到這個家 | 這就是第一台電腦，只是還沒有 `local.md`（例如升級包留下的 `.git`）→ 走**存檔點**，但跳過已經做好的步驟：只補 C-1～C-4 缺的檔，再從 B-5 的安全檢查開始 |
+| 找不到家 | **對話裡他剛說過「在別台做過、存到 GitHub 了」（例如從新人報到選了那一項）就不要再問，直接走新電腦報到。** 沒說過才問一題（選項）：「這台電腦還沒有你的數位員工。你是在另一台電腦做過、而且存到 GitHub 了嗎？ 1. 對，我存過了（推薦）——我幫你接過來 2. 沒有，這是我第一次用——請先跑新人報到 3. 其他」→ 1 走**新電腦報到**；2 就給總機網址 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 然後停 |
+| 他一開口就說「回到昨天的版本」「把某個檔還原」 | 找到家之後直接跳 **Section R · 還原**，不跑其他節 |
 
 **0-3b 看家在不在同步資料夾裡**（只讀）：`AGENT_HOME` 的路徑含 `CloudStorage`、`Google Drive`、`GoogleDrive`、`我的雲端硬碟`、`OneDrive`、`Dropbox`、`iCloud`、`Mobile Documents` 任何一個 → 記下 `IN_SYNC=yes`（舊版第 09 包教過把家搬進雲端硬碟；**GitHub 的存檔資料放在同步資料夾裡會壞掉**，B-2 要先搬回本機）。
 
@@ -117,7 +120,7 @@ git --version; gh --version; gh auth status
 
 ## Section A · 訪談（全部選擇題，一次一題）
 
-**A-1 GitHub 帳號** — header：GitHub
+**A-1 GitHub 帳號**（新電腦報到不問——他一定有帳號）— header：GitHub
 question：這一包要用 GitHub 存你的數位員工（像雲端的存檔點，只有你看得到）。你有 GitHub 帳號嗎？
 
 1. **有**（推薦）——等一下在瀏覽器登入就好
@@ -151,21 +154,30 @@ question：你現在有另一台電腦，等一下就要接上嗎？
 
 > 你的家現在放在 [雲端硬碟名稱] 裡。以前的做法是這樣沒錯，但今天要用 GitHub 存檔，**存檔的資料放在雲端硬碟裡會被同步弄壞**。我們先把家搬回這台電腦本機，雲端硬碟改用來放大檔。
 
-列計畫（新位置：Mac `~/[名字]-agent`、Windows `%USERPROFILE%\[名字]-agent`；會改哪些入口與設定），**他點頭才搬**：
+列計畫（新位置：Mac `~/[名字]-agent`、Windows `%USERPROFILE%\[名字]-agent`；會改哪些入口與設定），並先講清楚一件事：
+
+> **如果你另一台電腦也是用雲端硬碟裡這同一個家**：搬走之後，那台會找不到家。沒關係——等這台存到 GitHub，那台貼第 09 包那段話做「新電腦報到」就接回來了。
+
+**他點頭才動**。做法是**先複製、確認完整，再請他自己決定何時刪雲端那份**（不要直接搬，搬到一半雲端硬碟在同步會出事）：
 
 ```bash
 # Mac（先確認新位置不存在）
-test -e ~/[名字]-agent && echo "新位置已經有東西，先停" || mv "[AGENT_HOME]" ~/[名字]-agent
+test -e ~/[名字]-agent && echo "新位置已經有東西，先停" || cp -R "[AGENT_HOME]" ~/[名字]-agent
+diff -rq "[AGENT_HOME]" ~/[名字]-agent | head    # 沒有輸出＝複製完整
 ```
 ```powershell
 # Windows
-if (Test-Path "$env:USERPROFILE\[名字]-agent") { "新位置已經有東西，先停" } else { Move-Item "[AGENT_HOME]" "$env:USERPROFILE\[名字]-agent" }
+if (Test-Path "$env:USERPROFILE\[名字]-agent") { "新位置已經有東西，先停" } else { robocopy "[AGENT_HOME]" "$env:USERPROFILE\[名字]-agent" /E | Out-Null }
+(Get-ChildItem "[AGENT_HOME]" -Recurse -File).Count; (Get-ChildItem "$env:USERPROFILE\[名字]-agent" -Recurse -File).Count   # 兩個數字要一樣
 ```
+
+備援：複製失敗或數量對不上 → 停下來，請他用檔案總管／Finder 把整個資料夾拖到新位置，回來說一聲。雲端那份**先留著**：跟他說「確認新位置用了一週都沒問題，再把雲端硬碟那份刪掉」，並記一行到 `memory/todo.md`。
 
 搬完 `AGENT_HOME` 換成新路徑，並且：
 - 兩個全域入口（`~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md`）裡指向舊路徑的那一行改成新路徑
 - `claude mcp list`／`codex mcp list` 裡有舊路徑的外接服務（例如 obsidian 的 vault），照第 05 包 B-7 的指令用新路徑重接
 - 讀一次新路徑的 `core-rules.md` 確認讀得到
+- 他有用 Obsidian 打開第二大腦的話，提醒一句：「Obsidian 要重新 Open folder as vault，指到新位置的 `knowledge`」
 
 ### B-3 裝 git 與 GitHub 小工具（缺哪個補哪個）
 
@@ -184,7 +196,11 @@ winget install --id GitHub.cli -e --source winget
 # 裝完要關掉終端機（或這個對話）重開，新指令才找得到
 ```
 
-備援：`winget` 不能用 → 請他到 **git-scm.com** 與 **cli.github.com** 下載安裝檔，一路按下一步。裝完重開對話回來說「裝好了」（照規則 2 把四件事講清楚）。
+備援：`winget` 不能用 → 請他到 **git-scm.com** 與 **cli.github.com** 下載安裝檔，一路按下一步。裝完要重開對話，照四件事講清楚：
+
+> **目標**：讓新裝的兩個小工具生效。
+> **步驟**：1. 關掉這個對話 2. 新開一個，一樣選 `[AGENT_HOME]` 3. 跟我說「裝好了」
+> **做不到怎麼辦**：如果重開之後我好像忘了在幹嘛，貼這句給我——「我在跑第 09 包，剛裝好 git 和 gh，接下去」
 
 ### B-4 登入 GitHub（他要在瀏覽器輸入一組碼）
 
@@ -212,22 +228,27 @@ git config --global user.email "[GitHub 帳號名]@users.noreply.github.com"
 
 ```bash
 cd "[AGENT_HOME]"
-git init -b main
+git init -b main          # 已經有 .git 就跳過這行
 git add -A
-git status --short | head -50
-git status --ignored --short | grep '^!!' | head -30
+git status --short
+git status --ignored --short
 ```
+（這幾行 Mac、Windows 都一樣。清單很長就只看開頭幾十行；`!!` 開頭的是「不會上傳」的。）
 
 **上傳前先做兩個安全檢查**（你自己跑，有問題才講）：
 
 ```bash
-# 1. 有沒有看起來像密碼、金鑰的東西會被傳上去
-git grep -nE "sk-[A-Za-z0-9]{20,}|jl_[0-9a-f]{40,}|api[_-]?key\s*[:=]|password\s*[:=]|BEGIN (RSA|OPENSSH) PRIVATE KEY" -- . ':!*.md' | head
-git grep -nE "jl_[0-9a-f]{40,}|sk-[A-Za-z0-9]{20,}" | head
-# 2. 有沒有超過 20MB 的大檔
+# 1. 有沒有看起來像金鑰、密碼的東西（Mac、Windows 同一行；只看有沒有輸出）
+git grep --cached -nIE "sk-[A-Za-z0-9_-]{20,}|sk-(ant|proj)-|ghp_[A-Za-z0-9]{30,}|github_pat_|gho_|AIza[0-9A-Za-z_-]{30,}|xox[abprs]-|jl_[0-9a-f]{40,}|BEGIN [A-Z ]*PRIVATE KEY|(api[_-]?key|password|passwd|secret|token).{0,3}[:=].{0,3}[A-Za-z0-9_-]{8,}"
+```
+```bash
+# 2. 有沒有超過 20MB 的大檔（Mac）
 git ls-files -z | xargs -0 du -k 2>/dev/null | awk '$1 > 20000'
 ```
-（Windows 用 `git ls-files | ForEach-Object { Get-Item $_ } | Where-Object Length -gt 20MB`。）
+```powershell
+# 2. 有沒有超過 20MB 的大檔（Windows）
+git ls-files | ForEach-Object { Get-Item -LiteralPath $_ -ErrorAction SilentlyContinue } | Where-Object Length -gt 20MB | Select-Object FullName, Length
+```
 
 有找到 → 把那個檔加進 `.gitignore`（或請他決定搬到雲端硬碟），`git rm --cached <檔>`，再跑一次。
 
@@ -238,7 +259,7 @@ git ls-files -z | xargs -0 du -k 2>/dev/null | awk '$1 > 20000'
 > - 記憶：[N] 篇日記、摘要、待辦
 > - 招式與流程：[列名字]
 > - 第二大腦：[N] 頁筆記、目錄、日誌
-> - 專案：[列辦公室名]，**只有規矩與交接檔**，你帶進去的素材不上傳
+> - 專案：[列辦公室名]，**規矩與交接檔**；素材照你剛才選的處理
 >
 > **不會上傳的**：
 > - 你的登入資料（`.joylearn/`）、這台電腦的設定（`local.md`）
@@ -246,6 +267,18 @@ git ls-files -z | xargs -0 du -k 2>/dev/null | awk '$1 > 20000'
 > - 專案裡的素材、原始檔、影音大檔、備份資料夾
 >
 > 這樣可以嗎？
+
+**辦公室裡有素材或成品的話，先問一題**（這是他的資料，他決定）— header：辦公室的素材
+
+> 你的辦公室裡有 [N] 份素材和成品（[列幾個檔名]）。預設**不上傳**——常常有客戶資料。但這樣另一台電腦就看不到它們。你想怎麼放？
+
+1. **留在這台電腦就好**（推薦，有客戶或公司資料時選這個）——另一台電腦看得到規矩和交接，看不到檔案
+2. **搬到雲端硬碟，兩台都看得到**——我搬到雲端硬碟的 `agent-files/[案名]/`，資料清單改記新位置
+3. **一起存進 GitHub**（確定沒有客戶資料才選）——我在 `.gitignore` 放行這個辦公室
+4. 其他（我自己說）
+
+- 選 2：搬過去（先複製、確認完整，原本的放進 `_archive/`），`local.md` 寫上雲端硬碟在這台的路徑，辦公室 `AGENTS.md` 的資料清單「在哪」欄改寫成 `〔雲端硬碟〕/agent-files/[案名]/[檔名]`——**用〔雲端硬碟〕這個代號，不寫死路徑**，每台電腦照自己 `local.md` 的路徑去找。
+- 選 3：在 `.gitignore` 最後加 `!projects/[案名]/*`，再跑一次 `git add -A`。
 
 選項 — header：可以上傳嗎
 1. **可以，存第一版**（推薦）
@@ -286,11 +319,12 @@ git log --oneline -5
 
 **N-1 裝工具、登入**：照 B-3、B-4 做（缺哪個補哪個）。
 
-**N-2 選倉庫、拿下來**：
+**N-2 選倉庫、拿下來**（這台**已經有**那個家——例如剛才找到的——就跳過這步，直接 N-3）：
 
 ```bash
-gh repo list --limit 30 | grep -i agent
+gh repo list --limit 30
 ```
+（Mac、Windows 同一行；從清單裡挑名字有 `agent` 的。）
 
 選項題列出找到的倉庫（最多 3 個＋「其他」）— header：哪一個是你的數位員工。然後：
 
@@ -314,7 +348,7 @@ Windows 路徑一律寫成 `/`（例：`C:/Users/ming/ming-agent`）。
 
 **N-4 這台電腦自己的東西重建**（只裝，不重教）：
 - 工具：`core-rules.md` 有「我的工具」那節（第 04 包）→ 照第 04 包 B 節**安裝的那幾步**在 `tools/.venv` 重裝，跑 `tools/verify_core.py` 要 10/10；裝不了就寫 `tools/SKIPPED.md`
-- 外接服務：`core-rules.md` 的「我接上的外部服務（MCP）」表列了哪些，就照第 07 包（YouTube）、第 05 包 B-7（Obsidian，路徑換成這台的）的指令接回來
+- 外接服務：先 `node --version`（外接工具大多要 Node；沒有就請他到 **nodejs.org** 裝 LTS 版，裝完重開對話）。再看 `core-rules.md` 的「我接上的外部服務（MCP）」表（舊版叫「我的鑰匙」）列了哪些，照第 07 包 B-2（YouTube）、第 05 包 B-7（Obsidian，vault 路徑換成這台的 `[AGENT_HOME]/knowledge`）的指令接回來。接完 `claude mcp list`／`codex mcp list` 要看到它們是連上的（不是 Failed）
 - 享學平台：不用現在做，下次傳心得或健檢時它會自己請你登入一次
 
 **N-5 寫這台的 `local.md`**（C-3），然後 `git pull` 確認是最新的。
@@ -322,6 +356,16 @@ Windows 路徑一律寫成 `/`（例：`C:/Users/ming/ming-agent`）。
 > 接好了。這台電腦現在跟另一台是**同一位數位員工**：同樣的規矩、同樣的記憶。兩台都是收工時存、開工時拿最新的。
 
 跳到 Section E 的「新電腦」清單。
+
+## Section R · 還原（他說「回到昨天的版本」「把某個檔還原」時）
+
+1. 先存一版現在的樣子（`git add -A`、`git commit -m "還原前先存一版"`），這樣還原錯了也回得來。
+2. 找存檔點：`git log --oneline -15`（要找某個檔就 `git log --oneline -10 -- [檔名]`），用白話列給他看：「9/18 收工、9/19 收工…」，選項題問要回到哪一個（最多 3 個＋其他）。
+3. **先給他看那一版長什麼樣**：`git show [存檔點]:[檔名]`，或 `git diff [存檔點] -- [檔名]` 講差在哪。
+4. 他點頭才還原：
+   - 只還原一個檔：`git restore --source [存檔點] -- [檔名]`
+   - 整個家回到那天：**不要用 reset**。用 `git restore --source [存檔點] -- .` 再存一版 `git commit -m "回到 [日期] 的版本"`——舊的紀錄都還在，想反悔還回得來
+5. 存一版、傳上去，跟他說一句「回到 [日期] 了，想反悔跟我說」。
 
 ## Section C · 寫檔（直接寫，邊寫邊教）
 
@@ -405,15 +449,20 @@ memory/daily/*.md merge=union
 <!-- tt:kit-09 END -->
 ```
 
-**C-5｜`skills/daily-log/SKILL.md`**（有才改）：步驟最後加一行「最後照 `core-rules.md` 的『跨電腦與存檔』存一版、傳到倉庫」。
+**C-5｜`skills/daily-log/SKILL.md`**（有才改）：先看裡面有沒有「存一版」那一步（新版第 06 包已經寫好了）；**沒有才**在步驟最後加一行「最後照 `core-rules.md` 的『跨電腦與存檔』存一版、傳到倉庫」。
 
 **C-6｜全域入口加一行**（存檔點與新電腦報到都做）：`~/.codex/AGENTS.md` 在指向 `core-rules.md` 那行後面加「再讀同資料夾的 `local.md`」——Codex 不會自動展開 `@`，要寫成一句話。
 
 **C-7｜改 `core-rules.md` 裡那條「怎麼接回這個系列」的規矩**（整個系列唯一一次改既有文字）：第 01 包寫的「看一眼 `onboarding.md`，沒打勾的包就讀 `tt-script.md` 接著做」，**只有九包都打勾了**才改成：
 
 ```markdown
-`onboarding.md` 九包都打勾了就不用管；想健檢說「tt 幫我健檢」、想回顧日記說「回顧日記」、要開新專案說「開一個新專案」。
+`onboarding.md` 九包都打勾了就不用管。以後：
+- 「tt 幫我健檢」→ 讀 https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/checkup.md 照做
+- 「回顧日記」→ 讀 https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/diary-review.md 照做
+- 「開一個新專案」→ 讀 https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/08-project-employee.md 照做
 ```
+
+找不到那條原文（例如舊版第 09 包已經改過了）→ 不要硬找，把上面這段放進 `tt:kit-09` 標記的最後面就好。
 
 **C-8｜`onboarding.md`**：09 那行打勾（A-1 選 3 的不打勾）；「我學到什麼」加一條：
 
@@ -473,11 +522,12 @@ if (git remote get-url origin 2>$null) { "✅ 接上 GitHub 倉庫" } else { "�
 if ((gh repo view --json visibility -q .visibility) -eq "PRIVATE") { "✅ 倉庫是私人的" } else { "❌ 倉庫不是私人的（立刻改）" }
 if (-not (git ls-files .joylearn local.md tools/.venv)) { "✅ 登入資料與本機設定沒被上傳" } else { "❌ 有不該上傳的檔在倉庫裡" }
 if (-not (git status --porcelain)) { "✅ 全部存好了" } else { "❌ 還有沒存的變更" }
+if (-not (git log origin/main..HEAD --oneline 2>$null)) { "✅ 都傳上去了" } else { "❌ 有存了但沒傳上去的" }
 if (Test-Path local.md) { "✅ local.md" } else { "❌ local.md" }
 if (Select-String -Path core-rules.md -Pattern 'tt:kit-09' -Quiet) { "✅ 規矩有存檔流程" } else { "❌ core-rules 沒寫" }
 ```
 
-**新電腦報到**：上面第 1、2、7 項，加上：兩個全域入口都指到這台的 `AGENT_HOME`；`tools/.venv` 或 `tools/SKIPPED.md` 至少一個；`claude mcp list`／`codex mcp list` 有 core-rules 表裡列的外接服務。
+**新電腦報到**：上面「存檔功能開好了」「接上 GitHub 倉庫」「local.md」三項，加上：兩個全域入口都指到這台的 `AGENT_HOME`；`tools/.venv` 或 `tools/SKIPPED.md` 至少一個；`claude mcp list`／`codex mcp list` 有 core-rules 表裡列的外接服務。
 
 全綠 → 「✅ 第 09 包做好了」＋ Section D。有 ❌ → 修，不要問他（「倉庫不是私人的」要立刻修並告訴他）。
 
@@ -496,7 +546,7 @@ if (Select-String -Path core-rules.md -Pattern 'tt:kit-09' -Quiet) { "✅ 規矩
 - **「我的日記會被別人看到嗎？」** 不會。倉庫是私人的，只有你登入的帳號看得到；做完這一包我會當場確認給你看。
 - **「另一台電腦要重新跑九包嗎？」** 不用。貼第 09 包那段話，它會把你的數位員工拿下來、只重裝這台自己需要的工具，大約 20 分鐘。
 - **「兩台電腦同一天都用會怎樣？」** 收工存、開工拿最新的就不會打架；日記會自動合併。真的撞到，它會先唸給你聽兩邊差在哪，你決定。
-- **「換成 Codex（或 Claude Code）要重來嗎？」** 不用。兩個工具讀的是同一份 `core-rules.md`，在新工具裡貼新人報到那段，它會發現你已經有家，只補那個工具的入口。
+- **「換成 Codex（或 Claude Code）要重來嗎？」** 不用。兩個工具讀的是同一份 `core-rules.md`，在新工具裡貼新人報到那段，它會發現你已經有家，只補那個工具的入口。**外接服務（YouTube、Obsidian）要在新工具裡重接一次**——跟它說「照第 09 包 N-4 把外接服務接回來」就好。
 - **「客戶的檔案呢？」** 留在你電腦或雲端硬碟，不會上傳；專案的「資料清單」記著它在哪。
 - **`tt-script.md` 真的可以刪嗎？** 可以，它只是腳本，規矩都已經寫進 `core-rules.md` 了。
 

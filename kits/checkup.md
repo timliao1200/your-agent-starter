@@ -143,7 +143,7 @@ PY
 |---|---|---|---|---|
 | H1 | `skills/` | 每個招式資料夾都有 `SKILL.md`，開頭有 `name:` 跟 `description:` | 有招式缺 `description:`（它不知道什麼時候該用） | 有招式資料夾是空的或沒有 `SKILL.md` |
 | H2 | 工具 | `tools/.venv` 存在，或有 `tools/SKIPPED.md` 說明為什麼沒裝 | — | 都沒有（第 04 包沒做完） |
-| H3 | 鑰匙 | `claude mcp list`／`codex mcp list` 跑得出來，列得出它現在有哪些鑰匙 | 指令跑不動（只記下來，不算病） | — |
+| H3 | 外接服務（MCP） | `claude mcp list`／`codex mcp list` 跑得出來，列得出它現在接了哪些外部服務，而且不是 Failed | 指令跑不動（只記下來，不算病） | — |
 | H4 | 專案 | `projects/` 底下每個案子都有 `AGENTS.md`（第一行指回 `../../core-rules.md`）跟 `handoff.md`，而且 `core-rules.md` 的「我的專案」表裡有登記 | 有案子沒登記、或缺 `handoff.md` | 有案子的 `AGENTS.md` 沒指回全域規矩（那個專案員工不認得他） |
 
 **👀 看得懂（整潔：他自己一眼看不看得懂——這是 Tim 最在意的一項）**
@@ -163,7 +163,7 @@ PY
 | # | 檢查 | 怎麼查 | 有問題的話 |
 |---|---|---|---|
 | G1 | 倉庫是私人的 | `gh repo view --json visibility -q .visibility` 是 `PRIVATE` | **是 PUBLIC 就是最嚴重的一條**：他的日記和規矩全世界看得到，建議第一條就修 |
-| G2 | 都存好、都傳上去了 | `git status --porcelain` 是空的；`git log @{u}..HEAD --oneline` 是空的 | 「有 [N] 個變更還沒存」／「存了但還沒傳上去」 |
+| G2 | 都存好、都傳上去了 | `git status --porcelain` 是空的；`git log '@{u}..HEAD' --oneline` 是空的（`@{u}` 一定要加引號，PowerShell 才不會出錯） | 「有 [N] 個變更還沒存」／「存了但還沒傳上去」 |
 | G3 | 不該上傳的沒被上傳 | `git ls-files .joylearn local.md tools/.venv` 是空的；`git ls-files` 裡沒有超過 20MB 的檔 | 「你的登入資料被存進倉庫了」→ 建議從倉庫移除（檔案本身留著） |
 | G4 | 家不在雲端同步資料夾裡 | 路徑不含 `CloudStorage`、`Google Drive`、`OneDrive`、`Dropbox`、`iCloud` | 「存檔資料放在同步資料夾裡會壞」→ 建議跑第 09 包搬回本機 |
 | G5 | 沒有合併到一半的檔 | `git grep -n '^<<<<<<< '` 是空的；沒有 `(1)`、`衝突` 這類雲端副本 | 「[檔名] 裡有兩個版本擠在一起」→ 建議唸給他聽兩邊差在哪再合併 |

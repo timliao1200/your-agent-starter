@@ -157,7 +157,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 最後更新 `[AGENT_HOME]/onboarding.md`：這一包那行打勾、寫一句做到哪；「我學到什麼」加一條：{{原 station 那句}}。
 他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
-下一包對照：01→02 到處都認得你、02→03 讓它記得、03→04 給它工具、04→05 知識庫、05→06 第一招＋用講的、06→07 給它鑰匙、07→08 專案員工、08→09 跨電腦。
+下一包對照：01→02 到處都認得你、02→03 讓它記得、03→04 基礎辦公工具、04→05 第二大腦、05→06 收工一句話、06→07 YouTube 學習、07→08 專案員工、08→09 跨電腦。
 
 ## 踩坑紀錄（給 Tim）
 

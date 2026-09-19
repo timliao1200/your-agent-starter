@@ -45,7 +45,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 > 5. **自檢是秀給他看，不是考他。** 不要他背路徑；他講錯不說「差一點」，直接把正確的擺給他看。
 > 6. **說人話，不要用內部流程詞跟他對話。** 「盤點」「分類計畫」「執行流程」是講給你自己聽的規劃用語，不是講給他聽的。要開始一個練習或動作前，先用一句大白話說「我們現在要做什麼」，像老師介紹練習——例如「好，我們現在來做個練習：讓你的分身幫你整理一個資料夾」，不要說「接下來我會先盤點並提出分類計畫」。
 >
-> 不要提這一包用不到的東西（git、Node 除了查版本那一次、資料庫…）。
+> 不要提這一包用不到的東西（git、Obsidian、資料庫…）。Node 只在 B-2 裝之前查一次版本。
 
 ## Section 0 · 環境偵測（只讀，不要問他）
 
@@ -165,6 +165,8 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 **選這個當第一把，因為它不用註冊、不用申請金鑰，而且效果馬上看得到。**
 
 要裝的套件：`@kimtaeyoon83/mcp-server-youtube-transcript`（靠 yt-dlp 抓字幕，不需要 API key）。
+
+**先查一次 Node**（這個外接工具要靠它跑）：`node --version`。沒有、或版本低於 18 → 請他到 **nodejs.org** 下載 LTS 版安裝，裝完重開對話再回來（目標、步驟、回來說什麼、做不到怎麼辦照老規矩講）。
 
 看他用哪個平台，直接執行對應的指令，不用等他回話。
 
@@ -330,7 +332,7 @@ args = ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
 
 一句話帶過就好，不要在這一包裝：
 
-> 影片的重點我存成文字檔了。想把它們畫成一張知識網、用 Obsidian 打開來看，那是**第 05 包 · 第二大腦**的事——做那一包的時候會一起帶你裝。
+> 影片的重點我存成文字檔了，會放進你的第二大腦。你做第 05 包時如果有用 Obsidian 打開第二大腦，就看得到它；當時跳過了的話，跟我說「用 Obsidian 打開第二大腦」，我照第 05 包 B-7 帶你裝。
 
 ### B-8 以後想接別的服務，先問兩句
 
@@ -391,7 +393,9 @@ args = ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
 
 流程都放在 `workflows/`。他講的話對得上某個流程的觸發條件，就先去讀那份檔案再動手。
 不確定有沒有對應的流程，就先 `ls workflows/` 看一眼。
+<!-- tt:kit-07 END -->
 
+<!-- tt:mcp START -->
 ## 我接上的外部服務（MCP）
 
 | 服務 | 我能做什麼 | 權限 |
@@ -400,7 +404,7 @@ args = ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
 
 要接新東西先問兩句：是不是 Google 家的？只要讀還是要寫？
 Google 的個資一律走授權登入或原廠連接器，不要貼金鑰；不用的要撤；來路不明的 MCP 不裝。
-<!-- tt:kit-07 END -->
+<!-- tt:mcp END -->
 ```
 
 
@@ -460,15 +464,15 @@ Google 的個資一律走授權登入或原廠連接器，不要貼金鑰；不�
 ```bash
 # Mac
 cd "[AGENT_HOME]"
-(claude mcp list 2>/dev/null; codex mcp list 2>/dev/null) | grep -qi youtube && echo "✅ YouTube 接上了" || echo "❌ YouTube 沒接上"
+(claude mcp list 2>/dev/null; codex mcp list 2>/dev/null) | grep -i youtube | grep -qvi failed && echo "✅ YouTube 接上了" || echo "❌ YouTube 沒接上（或顯示 Failed）"
 test -f workflows/video-summary.md && echo "✅ 流程檔在" || echo "❌ 流程檔沒建"
 ls skills/ 2>/dev/null | grep -qi 'video\|summary' && echo "✅ 招式建好了" || echo "❌ 招式沒建"
-grep -q 'tt:kit-07' core-rules.md && echo "✅ 規則檔有流程索引跟外部服務表" || echo "❌ 規則檔沒寫進去"
+grep -q 'tt:kit-07' core-rules.md && grep -q 'tt:mcp' core-rules.md && echo "✅ 規則檔有流程索引跟外部服務表" || echo "❌ 規則檔沒寫進去"
 ```
 ```powershell
 # Windows
 Set-Location "[AGENT_HOME]"
-if ((claude mcp list 2>$null) + (codex mcp list 2>$null) -match 'youtube') { "✅ YouTube 接上了" } else { "❌ YouTube 沒接上" }
+if (((claude mcp list 2>$null) + (codex mcp list 2>$null)) | Select-String 'youtube' | Where-Object { $_ -notmatch 'failed' }) { "✅ YouTube 接上了" } else { "❌ YouTube 沒接上（或顯示 Failed）" }
 if (Test-Path workflows\video-summary.md) { "✅ 流程檔在" } else { "❌ 流程檔沒建" }
 if (Get-ChildItem skills -ErrorAction SilentlyContinue | Where-Object Name -match 'video|summary') { "✅ 招式建好了" } else { "❌ 招式沒建" }
 if (Select-String -Path core-rules.md -Pattern 'tt:kit-07' -Quiet) { "✅ 規則檔有流程索引跟外部服務表" } else { "❌ 規則檔沒寫進去" }
