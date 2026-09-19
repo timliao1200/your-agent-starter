@@ -4,6 +4,31 @@
 > 「內容照我們的」：教材文字從 `stations/station-*.md` 對應段落**原文搬**，只改互動方式與骨架。
 > 檔案裡出現的資料夾名一律英文；不寫日期、地點、電腦設備型號。
 
+## 相容性憲法（2026-09-20 Tim 拍板）：每一包都要四格全通
+
+| | Mac | Windows |
+|---|---|---|
+| **Claude Code** | ✅ 必須能跑 | ✅ 必須能跑 |
+| **Codex** | ✅ 必須能跑 | ✅ 必須能跑 |
+
+寫或改任何一包，都要守這幾條：
+
+1. **不能為了讓一邊更好用，把另一邊弄壞。** 改完要說得出這次改動在四格各是什麼結果；只測了一邊，就標「另一邊待實測」，不要假設沒事。
+2. **平台差異一律寫成分支，不刪另一邊。**
+   - 選項題：Claude Code 用 AskUserQuestion；Codex 用編號純文字（「回我數字，或直接打字」）。
+   - 入口：Claude Code 讀 `CLAUDE.md`（會展開 `@`）；Codex 讀 `AGENTS.md`（**不會**展開 `@`，要寫成一句話「先讀 xxx」）。兩個都建，本尊只有一份。
+   - 外接服務：`claude mcp add --scope user …` 與 `codex mcp add …` 兩行都寫；手貼設定時 JSON（`~/.claude.json`）與 TOML（`~/.codex/config.toml`）兩份都給。
+   - 招式：Claude Code 有 `/skill-creator`；Codex 沒有，就手寫 `skills/<名字>/SKILL.md`。
+   - 重開對話、權限請求：兩邊的說法都要涵蓋（Codex 會跳「允許連網／寫檔」，先提醒他按同意）。
+3. **系統指令一律兩組**：Mac（bash）一組、Windows（PowerShell）一組。能寫成兩邊同一行的（`git`、`gh`、`npx`）就只寫一行並註明「Mac、Windows 同一行」。
+   - PowerShell 沒有 `head`、`grep`、`xargs`、`awk`——用 `Select-Object -First`、`Select-String`、`ForEach-Object`
+   - `@{u}` 這類符號在 PowerShell 要加引號
+   - Windows 路徑寫進設定檔一律用 `/`（JSON／TOML 的單一 `\` 會壞）
+   - 中文寫檔一律用 Agent 自己的檔案工具（UTF-8），不用 `echo >`、`Out-File`
+   - 不用 symlink（Windows 要開發人員模式）；每台電腦不同的路徑寫進 `local.md`
+4. **判斷「做過沒」只看兩邊都會有的東西**（檔案、`mcp list` 的輸出），不看某一邊獨有的狀態。
+5. **每包的完成清單（Section E）要有 Mac 與 Windows 兩組**，而且兩組檢查的項目一樣多、名稱一樣。
+
 ---
 
 # 第 {{NN}} 包 · {{名字}} by tt
