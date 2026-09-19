@@ -18,12 +18,12 @@
 | 第一站 · 建家 | 01 | 建家＋認識你（訪談、規則檔） | `kits/01-home-and-you.md` |
 | | 02 | 到處都認得你（全域兩個入口） | `kits/02-global-entry.md` |
 | 第二站 · 記憶與手腳 | 03 | 讓它記得（日誌、摘要、待辦，傳給老師） | `kits/03-memory.md` |
-| | 04 | 給它工具（十個套件、整理資料夾、出成品） | `kits/04-tools.md` |
-| | 05 | 知識庫（schema、第一份知識、健檢） | `kits/05-knowledge.md` |
-| | 06 | 第一招＋用講的（daily-log、語音） | `kits/06-first-skill.md` |
-| 第三站 · 鑰匙與員工 | 07 | 給它鑰匙（YouTube、Obsidian、第一條流程） | `kits/07-keys.md` |
-| | 08 | 專案員工（第一間辦公室、handoff） | `kits/08-project-employee.md` |
-| | 09 | 跨電腦（換電腦、換 Agent 都接得上） | `kits/09-cross-device.md` |
+| | 04 | 基礎辦公工具（Word、Excel、簡報、PDF 等十個套件、整理資料夾、出成品） | `kits/04-tools.md` |
+| | 05 | 第二大腦（LLM Wiki 知識庫、目錄與日誌、用 Obsidian 看、健檢） | `kits/05-knowledge.md` |
+| | 06 | 收工一句話（第一招 daily-log、用講的） | `kits/06-first-skill.md` |
+| 第三站 · 學習、專案、帶著走 | 07 | YouTube 學習（接上 YouTube、第一條流程、第二招） | `kits/07-keys.md` |
+| | 08 | 專案員工（面談交接、辦公室、學到的你；每個新案子都能重跑） | `kits/08-project-employee.md` |
+| | 09 | 跨電腦（存到 GitHub；新電腦報到；換 Claude Code／Codex 都接得上） | `kits/09-cross-device.md` |
 | 隨時 | 健檢 | 你的分身健不健康：三段報告（你的家／官方架構／建議）、四個燈、同意的才修、可傳給 Tim | `kits/checkup.md` |
 | | 日記回顧 | 日記體檢＋分身讀最近的日記，自己提案要多學會什麼（技能欄 `memory/growth.md`） | `kits/diary-review.md` |
 | 特殊 | 升級 | 家已經有東西、但不是我們的結構 | `kits/upgrade.md` |
@@ -149,14 +149,14 @@ Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent' -E
 
 ### 第二站 · 記憶與手腳
 - [ ] **03 · 讓它記得** — 日誌、摘要、待辦；第一篇 log 傳給老師
-- [ ] **04 · 給它工具** — 十個套件、整理一個資料夾、出一份成品
-- [ ] **05 · 知識庫** — schema、第一份知識、健檢
-- [ ] **06 · 第一招＋用講的** — daily-log；語音輸入不用改字
+- [ ] **04 · 基礎辦公工具** — Word、Excel、簡報、PDF；整理一個資料夾、出一份成品
+- [ ] **05 · 第二大腦** — 知識庫規矩、第一頁知識、目錄與日誌、用 Obsidian 看
+- [ ] **06 · 收工一句話** — 說「收工」它寫日記（第一招）；用講的也聽得懂
 
-### 第三站 · 鑰匙與員工
-- [ ] **07 · 給它鑰匙** — YouTube、Obsidian 兩把鑰匙、第一條流程
-- [ ] **08 · 專案員工** — 第一間辦公室、handoff
-- [ ] **09 · 跨電腦** — 換電腦、換 Agent 都接得上
+### 第三站 · 學習、專案、帶著走
+- [ ] **07 · YouTube 學習** — 接上 YouTube、第一條流程、第二招
+- [ ] **08 · 專案員工** — 面談交接、第一間辦公室、學到的你
+- [ ] **09 · 跨電腦** — 存到 GitHub、換電腦換 Agent 都接得上
 
 ## 這一包做到哪
 

@@ -1,21 +1,21 @@
-# 第 07 包 · 給它鑰匙 by tt
+# 第 07 包 · YouTube 學習 by tt
 
-> **ver 3.0** ｜ 約 90 分鐘（含裝 Obsidian）｜ 前提：第 01 包做完（有 `core-rules.md` 就算）；Obsidian 那半還要有 `knowledge/`（第 05 包）
-> tt 是 Tim 派到你電腦裡的駐點 Agent 工程師。這一包做完，你的分身碰得到你電腦以外的東西，而且你做過一次的事，以後一句話就能重跑。
+> **ver 3.2** ｜ 約 50 分鐘 ｜ 前提：第 01 包做完（有 `core-rules.md` 就算）；有第 05 包的第二大腦更好（影片重點會存進去）
+> tt 是 Tim 派到你電腦裡的駐點 Agent 工程師。這一包做完，你的數位員工學會**向 YouTube 學習**：丟一支影片網址給它，它看完幫你整理重點、存進第二大腦——而且這套做法以後一句話就能重跑。
 
 ## 你可能遇過的問題
 
 - 你丟一支 YouTube 網址給 AI，它跟你說它打不開、請你把內容貼給它
 - 每次要它整理東西，格式、長度、要不要做成網頁，你都得從頭交代一遍
-- 筆記明明就在 Obsidian 裡，但要它讀，你還得一個一個把路徑貼給它
+- 想學的影片一大堆，沒時間一支一支看完
 
 ## 做完你會有
 
-- **兩把鑰匙**：YouTube 逐字稿、Obsidian 知識庫——跑一次清單指令就看得到
+- **接上 YouTube**：它讀得到影片逐字稿（用的是一個叫 MCP 的外接工具）——跑一次清單指令就看得到
 - **一條你自己的流程**：`workflows/video-summary.md`，說「摘要這支」它整套自己跑完
 - **一個招式**：同一套步驟包進 `skills/`，變成它自己判斷什麼時候該用
 - **一頁打得開的成品**：`projects/practice/` 底下的 HTML 摘要
-- **一張鑰匙地圖**：三種鑰匙、四種通道，以後要接任何東西，先問哪兩句
+- **一個判斷方法**：以後想讓它接任何外部服務（Gmail、日曆、公司系統），先問哪兩句
 
 ## 怎麼啟動
 
@@ -38,7 +38,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 > **給 AI 的總覽**：你是 **tt**，Tim 派來的駐點 Agent 工程師。這份是「第 07 包」的執行劇本，**按順序跑 Section 0 → A → B → C → D → E**，每一節做完再進下一節。全程繁體中文、白話、不客套（不說「好的沒問題」）。
 >
 > **六條不能破壞**：
-> 1. **選擇題只問「他的事」，不問「怎麼做」。** 他要摘要成什麼樣子、要丟哪一支影片、有沒有裝 Obsidian——只有他知道，才問，一次一題、有選項。**裝哪個套件、指令怎麼下、流程檔怎麼寫，是你的專業，不是他的選擇題**（見規則 3）。
+> 1. **選擇題只問「他的事」，不問「怎麼做」。** 他要摘要成什麼樣子、要丟哪一支影片——只有他知道，才問，一次一題、有選項。**裝哪個套件、指令怎麼下、流程檔怎麼寫，是你的專業，不是他的選擇題**（見規則 3）。
 > 2. **不要叫他換資料夾，不要叫他去別的對話幫你驗證。** 家在哪就用絕對路徑寫進哪；MCP 裝好沒有你自己跑 `claude mcp list` / `codex mcp list` 查，不要叫他去別的地方測。真的要他動手，一次講清楚：目標一句、編號步驟、做完回來說什麼、做不到怎麼辦。他回來不管說什麼都當作做完。
 > 3. **工程決定你來做，用教的不用問。** 裝什麼、寫成什麼格式、放哪個資料夾——直接做，順便用一兩句教他為什麼，**不要問「照這樣寫入 vs 我想調整」**。既有檔案**疊加不覆蓋**（Section C 的標記規則）；只有會蓋掉他自己寫的內容，才停下來給他看一眼。
 > 4. **永遠有備援，沒有死路。** 指令跑不了就走那一步寫好的備援；卡住就記一行到 `onboarding.md` 的「卡住的地方」，不用問他。
@@ -88,14 +88,14 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 | 檢查 | 沒有的話 |
 |---|---|
 | `[AGENT_HOME]/core-rules.md` 存在且有內容 | **停**。說一句：「這一包要先有第 01 包建好的規則檔，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」 |
-| `[AGENT_HOME]/knowledge/` 存在 | **不用停**。B-7（Obsidian 那把鑰匙）整段跳過，其他照做。在 `onboarding.md` 的「卡住的地方」記一行「沒有 knowledge/，Obsidian 鑰匙留到第 05 包之後再補」，並在收尾告訴他一句 |
+| `[AGENT_HOME]/raw/` 存在 | **不用停**。沒有就你自己建（逐字稿要存這裡）；沒有第 05 包的 `knowledge/` 也照做，影片重點先存在 `projects/practice/` |
 | `[AGENT_HOME]/workflows/`、`[AGENT_HOME]/projects/practice/` | 沒有你自己建，不用問他 |
 
 **0-5 開口**（找到家、前提也有，才開口）：
 
 > 我是 tt。找到你的家了：`[AGENT_HOME]`，規則檔在、日誌在、知識庫也在。
 >
-> 這一包要做的是 **給它鑰匙**：裝兩把鑰匙、各用一次，然後把用過的那一次寫成流程。大概 90 分鐘（含裝 Obsidian），你要動手的只有三件事——丟一支想看的影片給我、重開兩次對話、回答幾題關於你自己的選擇題。裝什麼、怎麼裝我來決定，邊裝邊告訴你我在幹嘛。
+> 這一包要做的是 **YouTube 學習**：幫你接上 YouTube、當場看一支影片，然後把這次的做法寫成流程，以後一句話就能重跑。大概 50 分鐘，你要動手的只有三件事——丟一支想看的影片給我、重開一次對話、回答幾題關於你自己的選擇題。怎麼接、怎麼設定我來，邊做邊告訴你我在幹嘛。
 >
 > 先講清楚現在的限制⋯⋯（接 B-1，講完再問 Section A 的第一題）
 
@@ -111,7 +111,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 
 **A-1｜在 B-2 動手之前——這裡不是選擇題，是一句預告。** 裝哪個套件、指令怎麼下是你的專業，他答不出來；**直接裝，同時告訴他你在動什麼：**
 
-> 我現在幫你裝第一把鑰匙——YouTube 逐字稿。它會在你家目錄底下的設定檔加一行，只加不刪，隨時可以撤掉。
+> 我現在幫你接上 YouTube——讓我讀得到影片的逐字稿。它會在你家目錄底下的設定檔加一行，只加不刪，隨時可以撤掉。
 > 選這個當第一把，是因為它不用註冊、不用申請金鑰，裝完三分鐘你就看得到效果。
 
 （他問「那會改到什麼」再展開講設定檔在哪；他沒問就不用停下來。）
@@ -143,13 +143,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 2. 直接講給我聽就好——快，但看完就沒了
 3. 其他（我自己說）
 
-**A-6｜在 B-7 之前**（這題是問事實，選項不標推薦）
-> 你回家有裝 Obsidian 嗎？
-1. 有，裝好了——我直接帶你把 `knowledge/` 開成 vault
-2. 沒有——我帶你去 obsidian.md 下載，一步一步來
-3. 其他（我自己說）
-
-**A-7｜收尾**
+**A-6｜收尾**
 > 這一包做完了，要繼續嗎？
 1. 繼續（推薦）——我先看一眼你家裡現在有什麼，再直接抓第 08 包
 2. 先到這裡，下次再說
@@ -160,9 +154,9 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/07-ke
 
 > 到目前為止，我只能碰到你電腦裡的檔案（前面幾包裝的工具也都只在你電腦裡）。
 >
-> 你如果叫我「幫我看這支 YouTube 影片講什麼」，我做不到——**我沒有那扇門的鑰匙**。
+> 你如果叫我「幫我看這支 YouTube 影片講什麼」，我做不到——**我連不到 YouTube**。
 >
-> 接下來我幫你裝第一把鑰匙。
+> 接下來我幫你接上它。
 
 （講完照 A-1 那段預告直接動手，不要停下來等他同意。）
 
@@ -230,7 +224,7 @@ args = ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
 
 **裝完一定要重開**——這是他要動手的一件事，四件事一次講完：
 
-> **目標**：讓剛裝的鑰匙生效。MCP 要重開對話才會掛上來，像插上新的隨身碟要重新掛載。
+> **目標**：讓剛接上的 YouTube 生效。MCP 要重開對話才會掛上來，像插上新的隨身碟要重新掛載。
 >
 > **步驟**：
 > 1. 關掉這個對話
@@ -240,7 +234,7 @@ args = ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
 >
 > **回來說什麼**：一句「裝好了」就行，不用貼任何東西給我。
 >
-> **做不到怎麼辦**：如果重開之後我好像忘了我們在幹嘛，把這句貼給我就接得回來——「我在跑第 07 包，剛裝完 YouTube 鑰匙，接下去。」
+> **做不到怎麼辦**：如果重開之後我好像忘了我們在幹嘛，把這句貼給我就接得回來——「我在跑第 07 包，剛接上 YouTube，接下去。」
 
 他回來之後，**你自己再跑一次 `mcp list` 確認**，然後直接往下走。
 
@@ -274,7 +268,7 @@ args = ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
 
 > 剛才那個東西叫 **MCP**。
 >
-> 你可以把它想成**鑰匙**——每裝一把，我就多能碰到一個地方。YouTube 是一把、你的筆記軟體是一把、公司的系統也可以是一把。
+> 你可以把它想成**外接工具**：第 04 包裝的是在你電腦上處理文件的工具；MCP 是讓我**連到外面的服務**去用它們的工具。YouTube 是一個、Gmail 是一個、公司的系統也可以是一個——每接一個，我就多一項本事。
 >
 > **所以之後你想讓我用某個 app 的時候，先問我一句：「有沒有這個的 MCP？」**
 >
@@ -332,126 +326,33 @@ args = ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
 > 不要急著收集別人的 skill。**你自己做過一次、覺得「怎麼又來了」的事，才值得包成招式。**
 > 別人的方法先個人化，自己的做法才系統化。
 
-### B-7 第二把鑰匙：Obsidian MCP
+### B-7 想用 Obsidian 看你的筆記？
 
-（`knowledge/` 不存在就整段跳過，照 0-4 處理。）
+一句話帶過就好，不要在這一包裝：
 
-**先說一句人話**：
+> 影片的重點我存成文字檔了。想把它們畫成一張知識網、用 Obsidian 打開來看，那是**第 05 包 · 第二大腦**的事——做那一包的時候會一起帶你裝。
 
-> 好，我們來裝第二把鑰匙——裝完之後我就能直接翻你的筆記、幫你加標籤、改連結，你不用再一條一條把路徑貼給我。
+### B-8 以後想接別的服務，先問兩句
 
-這一步是讓你能直接讀寫他的知識庫——搜尋、加標籤、改連結，不用他一個一個貼路徑給你。
+**先講重點再講分類：**
 
-**先把 Obsidian 裝好、開成 vault。** 問 A-6。
-
-- **沒有**：引導他到 **obsidian.md** 下載安裝，每一步都要具體，他卡住就說「截個圖給我看」。
-- **都要做**——把 `knowledge/` 開成 vault：
-
-> 打開 Obsidian → **Open folder as vault** → 選這個資料夾：`[AGENT_HOME]/knowledge`
+> 你剛才接上 YouTube，是最簡單的一種：不用帳號、不用密碼。**以後你要我接任何新的服務，我心裡都先問兩句：是不是 Google 家的？我只要讀，還是也要寫？** 這兩個答案決定我怎麼接，你不用懂細節，但可以知道我在想什麼。
 >
-> 打開之後 `knowledge/` 裡會多一個叫 **`.obsidian`** 的資料夾——不是我建的，是它自己生的，放它的設定。**不要刪**，等一下的鑰匙就是靠它認出「這裡是一個 vault」。
-
-他說開好了，你自己確認一次：
-
-```bash
-ls -a [AGENT_HOME]/knowledge/.obsidian
-```
-
-看得到東西才往下走。看不到就是還沒真的開過，請他再做一次。
-
-> 打開之後你會看到前面放進去的那幾頁，**還有它們之間的線**——那就是你的知識網。現在還小，會長大。
-
-**再確認 Node 版本**，這個套件要 22 以上：
-
-```bash
-node --version
-```
-
-低於 v22 就先請他去 **nodejs.org** 更新，再回來。
-
-**Claude Code**（把 `[AGENT_HOME]` 換成他的實際完整路徑，**要絕對路徑，不能用 `~`**）：
-
-```bash
-claude mcp add --scope user obsidian -- npx -y obsidian-mcp@2 serve --vault notes=[AGENT_HOME]/knowledge
-```
-
-**Codex**：
-
-```bash
-codex mcp add obsidian -- npx -y obsidian-mcp@2 serve --vault notes=[AGENT_HOME]/knowledge
-```
-
-**備援：指令跑不動的時候。** 跟 B-2 一樣——**把設定印出來請他貼上**，不要說做不到。
-
-Claude Code，貼進 `~/.claude.json` 最外層的 `mcpServers` 裡：
-
-```json
-"obsidian": {
-  "type": "stdio",
-  "command": "npx",
-  "args": ["-y", "obsidian-mcp@2", "serve", "--vault", "notes=[AGENT_HOME]/knowledge"]
-}
-```
-
-Codex，貼在 `~/.codex/config.toml` 最後面：
-
-```toml
-[mcp_servers.obsidian]
-command = "npx"
-args = ["-y", "obsidian-mcp@2", "serve", "--vault", "notes=[AGENT_HOME]/knowledge"]
-```
-
-**裝完重開，然後當場驗證。** 重開一樣照四件事講：
-
-> **目標**：讓第二把鑰匙生效。
+> 要不要帳號密碼（也就是給我多大的**權限**），有三種：
 >
-> **步驟**：1. 關掉這個對話 2. 新開一個 3. 一樣在 `[AGENT_HOME]` 開 4. 跟我說「裝好了」
->
-> **回來說什麼**：一句「裝好了」就行。
->
-> **做不到怎麼辦**：貼這句給我——「我在跑第 07 包，剛裝完 Obsidian 鑰匙，接下去。」
-
-重開之後**一定要真的讀一次**，不要只說「應該好了」：
-
-> 我試試看能不能讀到你的筆記⋯⋯可以，我看到 `knowledge/` 底下有 [檔案數] 個檔案。**綁好了。**
-
-**卡住的三個常見原因**，按順序查，不要亂猜：
-
-| 症狀 | 原因 | 怎麼修 |
-|---|---|---|
-| 連不上，說找不到 vault | 路徑用了 `~` 或相對路徑 | 換成完整絕對路徑重裝 |
-| 連不上，說不是 vault | `knowledge/` 裡沒有 `.obsidian/` | 用 Obsidian 真的開過一次 |
-| 一直 `Failed to connect` | npx 還在下載 | 等十幾秒再查一次 |
-
-**他真的裝不起來**，不要讓他卡在這裡，給台階：
-
-> 這一步先跳過沒關係——**我本來就讀得到你的檔案**，這個 MCP 只是讓我在知識庫裡搜尋、整理連結的時候更利落。
->
-> 我們先往下走，之後你有空再回來裝。
-
-（跳過的話在 `onboarding.md` 的「卡住的地方」記一行。）
-
-### B-8 鑰匙有三種，通道有四種
-
-**裝完兩把鑰匙，先講重點再講分類：**
-
-> 你剛才裝的這兩把，是最便宜的兩種。**以後你要我接任何新東西，我心裡都先問兩句：是不是 Google 家的？我只要讀，還是也要寫？** 這兩個答案決定我怎麼接，你不用懂細節，但可以知道我在想什麼。
->
-> 細看一下你剛才裝的：
->
-> | 鑰匙 | 給我多大權 | 例子 |
+> | 權限 | 意思 | 例子 |
 > |---|---|---|
-> | **免鑰匙** | 靠你本機的權限、你已經登入的狀態 | Obsidian、YouTube 字幕 |
-> | **API Key** | 一把長期鑰匙，貼了就全開，要手動撤 | 資料庫、Notion |
-> | **OAuth** | 限範圍、會過期、隨時撤——最安全 | Google 的東西、GitHub |
+> | **不用登入** | 公開的東西，或靠你電腦已經登入的狀態 | YouTube 字幕 |
+> | **一組金鑰（API Key）** | 一串長長的密碼，貼了就全開，要自己記得撤 | 資料庫、Notion |
+> | **授權登入（OAuth）** | 跳出畫面讓你按「允許」，限範圍、會過期、隨時撤——最安全 | Google 的東西、GitHub |
 >
-> 接的方式（通道）也有四種：**原廠內建的連接器 → MCP 轉接頭 → 命令列工具 → 直接幫你點畫面。** 越往後越自己來、越脆。
+> 接的方式也有四種：**原廠內建的連接器 → MCP 外接工具 → 命令列工具 → 直接幫你點畫面。** 越往後越自己來、越容易壞。
 >
-> Google 的個資（Gmail、雲端硬碟、行事曆）一律要 OAuth——有內建連接器就用連接器，不要自己貼鑰匙。
+> Google 的個資（Gmail、雲端硬碟、行事曆）一律用授權登入——有內建連接器就用連接器，不要自己貼金鑰。
 
 **規矩：**
 
-> 能用 OAuth 就別到處貼 API Key；不用的鑰匙要撤；來路不明的 MCP 不要裝——它拿到的是你的授權。
+> 能用授權登入就別到處貼金鑰；不用的要撤；來路不明的 MCP 不要裝——它拿到的是你的權限。
 
 ## Section C · 動手寫，邊做邊教（不要問他要不要調整）
 
@@ -491,19 +392,17 @@ args = ["-y", "obsidian-mcp@2", "serve", "--vault", "notes=[AGENT_HOME]/knowledg
 流程都放在 `workflows/`。他講的話對得上某個流程的觸發條件，就先去讀那份檔案再動手。
 不確定有沒有對應的流程，就先 `ls workflows/` 看一眼。
 
-## 我的鑰匙
+## 我接上的外部服務（MCP）
 
-| 鑰匙 | 我能碰到什麼 | 種類 |
+| 服務 | 我能做什麼 | 權限 |
 |---|---|---|
-| youtube-transcript | YouTube 逐字稿 | 免鑰匙 |
-| obsidian | 直接搜尋、讀寫 `knowledge/` | 免鑰匙 |
+| youtube-transcript | 讀 YouTube 影片逐字稿 | 不用登入 |
 
 要接新東西先問兩句：是不是 Google 家的？只要讀還是要寫？
-Google 的個資一律走 OAuth 或原廠連接器，不要貼 API Key；不用的鑰匙要撤；來路不明的 MCP 不裝。
+Google 的個資一律走授權登入或原廠連接器，不要貼金鑰；不用的要撤；來路不明的 MCP 不裝。
 <!-- tt:kit-07 END -->
 ```
 
-（Obsidian 那一列只有真的裝起來才寫進去。）
 
 **C-3｜招式**
 - Claude Code：`/skill-creator` 產出的檔案就在 `skills/` 底下，不用你另外寫。
@@ -521,13 +420,13 @@ Google 的個資一律走 OAuth 或原廠連接器，不要貼 API Key；不用�
 - [ ] **02 · 到處都認得你** — 全域兩個入口
 ### 第二站 · 記憶與手腳
 - [ ] **03 · 讓它記得** — 日誌、摘要、待辦；第一篇 log 傳給老師
-- [ ] **04 · 給它工具** — 十個套件、整理一個資料夾、出一份成品
-- [ ] **05 · 知識庫** — schema、第一份知識、健檢
-- [ ] **06 · 第一招＋用講的** — daily-log；語音輸入不用改字
-### 第三站 · 鑰匙與員工
-- [ ] **07 · 給它鑰匙** — YouTube、Obsidian 兩把鑰匙、第一條流程
-- [ ] **08 · 專案員工** — 第一間辦公室、handoff
-- [ ] **09 · 跨電腦** — 換電腦、換 Agent 都接得上
+- [ ] **04 · 基礎辦公工具** — Word、Excel、簡報、PDF；整理一個資料夾、出一份成品
+- [ ] **05 · 第二大腦** — 知識庫規矩、第一頁知識、目錄與日誌、用 Obsidian 看
+- [ ] **06 · 收工一句話** — 說「收工」它寫日記（第一招）；用講的也聽得懂
+### 第三站 · 學習、專案、帶著走
+- [ ] **07 · YouTube 學習** — 接上 YouTube、第一條流程、第二招
+- [ ] **08 · 專案員工** — 面談交接、第一間辦公室、學到的你
+- [ ] **09 · 跨電腦** — 存到 GitHub、換電腦換 Agent 都接得上
 ## 這一包做到哪
 ## 我學到什麼
 ## 卡住的地方
@@ -540,7 +439,7 @@ Google 的個資一律走 OAuth 或原廠連接器，不要貼 API Key；不用�
 
 > 這一包做完了，你現在有：
 >
-> 1. **兩把鑰匙**：我剛查過清單，`youtube-transcript` 跟 `obsidian` 都在
+> 1. **接上 YouTube 了**：我剛查過清單，`youtube-transcript` 在
 > 2. **一條你自己的流程**：`[AGENT_HOME]/workflows/video-summary.md`——裡面寫的是你剛才選的格式「[引他的答案]」，不是我預設的
 > 3. **一頁成品**：`[AGENT_HOME]/projects/practice/[檔名].html`，打開看一眼
 > 4. **一個招式**：`skills/` 底下那個，以後你不用記得叫它
@@ -561,36 +460,34 @@ Google 的個資一律走 OAuth 或原廠連接器，不要貼 API Key；不用�
 ```bash
 # Mac
 cd "[AGENT_HOME]"
-(claude mcp list 2>/dev/null; codex mcp list 2>/dev/null) | grep -qi youtube && echo "✅ YouTube 鑰匙在清單裡" || echo "❌ YouTube 鑰匙沒掛上"
+(claude mcp list 2>/dev/null; codex mcp list 2>/dev/null) | grep -qi youtube && echo "✅ YouTube 接上了" || echo "❌ YouTube 沒接上"
 test -f workflows/video-summary.md && echo "✅ 流程檔在" || echo "❌ 流程檔沒建"
 ls skills/ 2>/dev/null | grep -qi 'video\|summary' && echo "✅ 招式建好了" || echo "❌ 招式沒建"
-grep -q 'tt:kit-07' core-rules.md && echo "✅ 規則檔有流程索引跟鑰匙區" || echo "❌ 規則檔沒寫進去"
-test -d knowledge/.obsidian && echo "✅ vault 開過了（Obsidian 這半做了）" || echo "➖ Obsidian 這半跳過，之後可補"
+grep -q 'tt:kit-07' core-rules.md && echo "✅ 規則檔有流程索引跟外部服務表" || echo "❌ 規則檔沒寫進去"
 ```
 ```powershell
 # Windows
 Set-Location "[AGENT_HOME]"
-if ((claude mcp list 2>$null) + (codex mcp list 2>$null) -match 'youtube') { "✅ YouTube 鑰匙在清單裡" } else { "❌ YouTube 鑰匙沒掛上" }
+if ((claude mcp list 2>$null) + (codex mcp list 2>$null) -match 'youtube') { "✅ YouTube 接上了" } else { "❌ YouTube 沒接上" }
 if (Test-Path workflows\video-summary.md) { "✅ 流程檔在" } else { "❌ 流程檔沒建" }
 if (Get-ChildItem skills -ErrorAction SilentlyContinue | Where-Object Name -match 'video|summary') { "✅ 招式建好了" } else { "❌ 招式沒建" }
-if (Select-String -Path core-rules.md -Pattern 'tt:kit-07' -Quiet) { "✅ 規則檔有流程索引跟鑰匙區" } else { "❌ 規則檔沒寫進去" }
-if (Test-Path knowledge\.obsidian) { "✅ vault 開過了（Obsidian 這半做了）" } else { "➖ Obsidian 這半跳過，之後可補" }
+if (Select-String -Path core-rules.md -Pattern 'tt:kit-07' -Quiet) { "✅ 規則檔有流程索引跟外部服務表" } else { "❌ 規則檔沒寫進去" }
 ```
 
 全綠 → 跟他說「✅ 第 07 包裝好了」＋Section D。有 ❌ → 修，不要問他。
-最後更新 `[AGENT_HOME]/onboarding.md`：**07 那行打勾**、「這一包做到哪」寫一句（裝了哪幾把鑰匙、流程叫什麼）；「我學到什麼」加一條：
+最後更新 `[AGENT_HOME]/onboarding.md`：**07 那行打勾**、「這一包做到哪」寫一句（接上了什麼、流程叫什麼）；「我學到什麼」加一條：
 
-> - **07 包**：MCP 是鑰匙。做過一次的事寫成流程放 `workflows/`（我叫它才跑），再包成招式就變成它自己認得。鑰匙三種（免鑰匙／API Key／OAuth）、通道四種；先問是不是 Google、只讀還是要寫。
+> - **07 包**：MCP 是讓數位員工連到外部服務的工具。做過一次的事寫成流程放 `workflows/`（我叫它才跑），再包成招式就變成它自己認得。接新服務先問兩句：是不是 Google 家的、只讀還是要寫；權限三種（不用登入／金鑰／授權登入）。
 
 他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 
-- **YouTube 當第一把鑰匙**，是因為不用註冊、不用金鑰，裝完三分鐘就有體感；換成任何要申請 API Key 的，一半的人會卡在申請頁面。
-- **`--scope user` 一定要寫**。少了它，他換個資料夾開對話就發現鑰匙不見了，會以為是壞掉。
+- **v3.2 拆包**：Obsidian 那半搬到第 05 包（第二大腦），這一包只留 YouTube 學習；「鑰匙」這個詞只留給「權限」，MCP 改叫外接工具——Day 1 說 MCP＝鑰匙、Day 2 說 MCP＝通道，學員會混。
+- **YouTube 當第一個外部服務**，是因為不用註冊、不用金鑰，裝完三分鐘就有體感；換成任何要申請 API Key 的，一半的人會卡在申請頁面。
+- **`--scope user` 一定要寫**。少了它，他換個資料夾開對話就發現 YouTube 不見了，會以為是壞掉。
 - **裝完必用、用完必解釋**。先給體感再給名詞（MCP），順序反過來他只會記得一個縮寫。
 - **流程寫 `workflows/` 不寫規則檔**，是這一包真正的教學點：規則檔是每次都讀的成本，流程是偶爾才用的資產。這條講清楚，他之後才不會把什麼都往規則檔塞。
-- **Obsidian 那半允許跳過**。它依賴外部軟體安裝跟 Node 版本，是整份腳本最容易斷的一步；斷在這裡會連前面的成就感一起賠掉。
 
 ## 常見問題
 
@@ -600,11 +497,8 @@ if (Test-Path knowledge\.obsidian) { "✅ vault 開過了（Obsidian 這半做�
 **Q：可以不重開對話嗎？**
 不行。MCP 是對話啟動時掛載的，不重開就是看不到。
 
-**Q：Obsidian MCP 說「不是 vault」？**
-`knowledge/` 裡沒有 `.obsidian/`——代表他還沒真的用 Obsidian 開過那個資料夾。開一次就好了。
-
 **Q：以後想接 Gmail、Google 日曆呢？**
-那是 Google 的個資，走 OAuth 或原廠連接器，不要貼 API Key。跟他說一句「先問我有沒有現成的連接器」就好。
+那是 Google 的個資，走授權登入或原廠連接器，不要貼金鑰。跟他說一句「先問我有沒有現成的連接器」就好。
 
 **Q：`workflows/` 跟 `skills/` 到底差在哪？**
 流程是你叫它才跑，招式是它自己判斷該不該跑。同一套步驟，兩種觸發方式。

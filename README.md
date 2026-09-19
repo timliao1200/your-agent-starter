@@ -50,12 +50,12 @@ tt 幫你把這件事反過來——**身份放在你自己的資料夾，廠商
 | **第一站 · 建家** | [01 建家＋認識你](kits/01-home-and-you.md) | 建資料夾、六題訪談、你親手改一段規矩、選旅程節奏 | 35 | 無 | Day 1 |
 | | [02 到處都認得你](kits/02-global-entry.md) | 廠商隱藏資料夾裡放薄入口，到處都認得你 | 15 | 01 | Day 1 |
 | **第二站 · 記憶與手腳** | [03 讓它記得](kits/03-memory.md) | 日誌、摘要、待辦；第一篇 log 傳給老師 | 40 | 01 | Day 2 關卡 14–16 |
-| | [04 給它工具](kits/04-tools.md) | 十個套件、整理一個資料夾、一句話出成品 | 45 | 01 | Day 2 關卡 17–19 |
-| | [05 知識庫](kits/05-knowledge.md) | schema、第一份知識、定期健檢 | 50 | 01 | Day 2 關卡 20 |
-| | [06 第一招＋用講的](kits/06-first-skill.md) | daily-log 招式、語音輸入不用改字 | 25 | 03 | Day 2 關卡 21–24 |
-| **第三站 · 鑰匙與員工** | [07 給它鑰匙](kits/07-keys.md) | YouTube、Obsidian 兩把鑰匙、第一條流程 | 90 | 01 | Day 3 |
-| | [08 專案員工](kits/08-project-employee.md) | 一個案子一間辦公室；總規矩登記；**越做越懂你的習慣** | 50 | 01＋你帶的素材 | Day 3 |
-| | [09 跨電腦](kits/09-cross-device.md) | 換電腦、換 Agent 都接得上；tt 下班 | 30 | 01 | Day 3 |
+| | [04 基礎辦公工具](kits/04-tools.md) | Word、Excel、簡報、PDF 等十個套件；整理一個資料夾、一句話出成品 | 45 | 01 | Day 2 關卡 17–19 |
+| | [05 第二大腦](kits/05-knowledge.md) | LLM Wiki 知識庫、目錄與日誌、用 Obsidian 看、定期健檢 | 60 | 01 | Day 2 關卡 20 |
+| | [06 收工一句話](kits/06-first-skill.md) | daily-log 招式、語音輸入不用改字 | 25 | 03 | Day 2 關卡 21–24 |
+| **第三站 · 學習、專案、帶著走** | [07 YouTube 學習](kits/07-keys.md) | 接上 YouTube、第一條流程、第二招 | 50 | 01 | Day 3 |
+| | [08 專案員工](kits/08-project-employee.md) | 面談交接案子、開辦公室、**越做越懂你的習慣**；每個新案子都來領一次 | 60 | 01＋你帶的素材 | Day 3 |
+| | [09 跨電腦](kits/09-cross-device.md) | 存到 GitHub；新電腦報到；換 Claude Code／Codex 都接得上 | 40 | 01 | Day 3 |
 | **隨時** | [健檢](kits/checkup.md) | 三段報告（你的家／官方架構／建議）、四個燈、你同意的才修；可傳給 Tim | 20 | 無 | Day 3 開場 |
 | | [日記回顧](kits/diary-review.md) | 日記體檢；分身讀你最近的日記，自己提案要多學會什麼；技能欄會升級 | 25 | 03＋3 篇日記 | Day 3 |
 | 特殊 | [升級既有的家](kits/upgrade.md) | 你本來就有自己的 AI 資料夾，整理成同一個結構 | 20 | — | — |

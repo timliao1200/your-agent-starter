@@ -1,7 +1,7 @@
-# 第 05 包 · 知識庫 by tt
+# 第 05 包 · 第二大腦 by tt
 
-> **ver 3.0** ｜ 約 50 分鐘 ｜ 前提：第 01 包做完（有 `core-rules.md` 就算）。有 `memory/`（第 03 包）更好，但不是必要
-> tt 是 Tim 派到你電腦裡的駐點 Agent 工程師。這一包做完，你會有一個**會長大的第二大腦**，而且它自己知道要定期健檢。
+> **ver 3.2** ｜ 約 60 分鐘（含 Obsidian）｜ 前提：第 01 包做完（有 `core-rules.md` 就算）。有 `memory/`（第 03 包）更好，但不是必要
+> tt 是 Tim 派到你電腦裡的駐點 Agent 工程師。這一包做完，你的數位員工會有一個**第二大腦**：你給它的資料，它整理成彼此連結的筆記（方法叫 LLM Wiki），要用時自己查；你用 **Obsidian** 打開，看得到一張知識網。它還自己知道要定期健檢。
 
 ## 你可能遇過的問題
 
@@ -14,6 +14,8 @@
 - `knowledge/AGENTS.md`——知識庫自己的規矩（schema），旁邊一個一行的 `knowledge/CLAUDE.md`
 - `raw/` 裡第一份原料，`knowledge/topics/` 裡第一頁整理過的知識
 - 那一頁裡有「他的看法」那一區：**你的原話，一個字沒改**
+- `knowledge/index.md`（目錄：它每次查資料先看這份）與 `knowledge/log.md`（日誌：哪天放進了什麼）
+- 用 **Obsidian** 打開你的第二大腦，看得到頁面之間的連線
 - 你說「健檢一下」，它會照六項跑一遍，查完只報告不亂動
 
 ## 怎麼啟動
@@ -44,7 +46,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 > 5. **自檢是秀給他看，不是考他。** 不要他背路徑；他講錯不說「差一點」，直接把正確的擺給他看。
 > 6. **說人話，不要用內部流程詞跟他對話。** 「盤點」「分類計畫」「執行流程」是講給你自己聽的規劃用語，不是講給他聽的。要開始一個練習或動作前，先用一句大白話說「我們現在要做什麼」，像老師介紹練習——例如「好，我們現在來做個練習：讓你的分身幫你整理一個資料夾」，不要說「接下來我會先盤點並提出分類計畫」。
 >
-> 不要提這一包用不到的東西（git、Node、版本控制…）。Obsidian 只在 B-1 出現一次，**今天不裝**。
+> 不要提這一包用不到的東西（git、版本控制…）。Obsidian 在 B-1 預告、B-7 才打開；Node 只在 B-7 他選「幫我裝」時才提。
 
 ## Section 0 · 環境偵測（只讀，不要問他）
 
@@ -89,7 +91,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 | `[AGENT_HOME]/core-rules.md` 存在且有實質內容 | **停**：「這一包要先有你的規則檔，請先跑第 01 包：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/01-home-and-you.md`」 |
 | `[AGENT_HOME]/raw/`、`knowledge/` 存在 | **不用停**，這一包自己建（`mkdir -p`） |
 | `[AGENT_HOME]/memory/MEMORY.md` 存在 | **不用停**。沒有就記住：B-6 健檢的第 1 項改成「這台還沒有記憶檔，跳過」，並在 Section C 的健檢規矩裡照樣寫進去（他之後跑第 03 包就會有：`https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/03-memory.md`） |
-| `[AGENT_HOME]/memory/todo.md` 存在 | 沒有就把 B-1 那行 Obsidian 待辦改記到 `onboarding.md` 的「**這一包做到哪**」（那不是卡住，是還沒排的事），不要為了它去建整個 `memory/` |
+| `[AGENT_HOME]/memory/todo.md` 存在 | 沒有就把 B-7 那行 Obsidian 待辦（他選「先不要」時）改記到 `onboarding.md` 的「**這一包做到哪**」（那不是卡住，是還沒排的事），不要為了它去建整個 `memory/` |
 
 **0-5 開口**（找到家、前提也有，才開口）：
 
@@ -213,14 +215,13 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 
 ## Section B · 動手
 
-### B-1 Obsidian：回家裝，今天不裝
+### B-1 先講這一包的兩個主角
 
-> 你的知識現在是一堆文字檔，看不出彼此的關係。有一個免費軟體叫 **Obsidian**，可以把它們畫成一張網——哪一頁連到哪一頁，一眼看得到。
+> 第二大腦有兩個主角：
+> - **我**負責整理：你給我的資料，我整理成一頁一頁的筆記，頁面之間互相連起來，要用的時候我自己查。
+> - **你**負責看：有一個免費軟體叫 **Obsidian**，可以把這些筆記畫成一張網——哪一頁連到哪一頁，一眼看得到。
 >
-> **今天先不裝。** 現在知識庫還是空的，裝了也只會看到一張白紙。回家有空的時候到 obsidian.md 下載，打開它選「Open folder as vault」，指到 `[AGENT_HOME]/knowledge`。之後我再幫你把它跟我接起來。
-
-在 `[AGENT_HOME]/memory/todo.md` 的「想到但還沒排的」加一行：`- [ ] 裝 Obsidian，把 knowledge/ 開成 vault`。
-**備援**：沒有 `memory/todo.md` 就記到 `onboarding.md` 的「**這一包做到哪**」，不要寫進「卡住的地方」。**然後往下走，不要在這裡停。**
+> 先把第一頁做出來，最後再用 Obsidian 打開它（B-7），不然現在打開只會看到一張白紙。
 
 ### B-2 建資料夾與 schema
 
@@ -281,7 +282,7 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 >
 > 今天先開 topics 這一個，其他等你有內容再開。
 
-照 **Section C-3** 寫那一頁，**六區格式一個都不能少**。
+照 **Section C-3** 寫那一頁，**六區格式一個都不能少**；同時照 **C-3b** 建好（或更新）`index.md` 和 `log.md`。
 
 ### B-5 自問自答三題（不是考他）
 
@@ -338,6 +339,66 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 
 然後照 **Section C-4** 把健檢六項寫進 `core-rules.md`。
 
+### B-7 用 Obsidian 打開你的第二大腦
+
+**先說一句人話**：
+
+> 第一頁做好了，現在我們用 Obsidian 把你的第二大腦打開來看看。
+
+**先問一題**（問事實，選項不標推薦）— header：有沒有 Obsidian
+> 你電腦裡有裝 Obsidian 嗎？
+1. 有，裝好了——我直接帶你把第二大腦打開
+2. 沒有——我帶你去 obsidian.md 下載，一步一步來
+3. 先不要，之後再裝——這一段跳過，第二大腦一樣會運作
+4. 其他（我自己說）
+
+- **沒有**：引導他到 **obsidian.md** 下載安裝，每一步都要具體，他卡住就說「截個圖給我看」。
+- **先不要**：記一行到 `memory/todo.md`（沒有就記到 `onboarding.md` 的「這一包做到哪」）：`- [ ] 裝 Obsidian，把 knowledge/ 打開來看`，然後往下走。
+- **都要做**——把 `knowledge/` 開成 vault：
+
+> 打開 Obsidian → **Open folder as vault** → 選這個資料夾：`[AGENT_HOME]/knowledge`
+>
+> 打開之後 `knowledge/` 裡會多一個叫 **`.obsidian`** 的資料夾——那是 Obsidian 自己生的設定，**不要刪**。
+
+他說開好了，你自己確認一次：
+
+```bash
+ls -a [AGENT_HOME]/knowledge/.obsidian
+```
+
+看得到東西才往下走。看不到就是還沒真的開過，請他再做一次。
+
+> 左邊看得到你的第一頁和目錄 `index`，打開**關係圖（Graph view）**，看得到它們連在一起——那就是你的知識網。現在還小，你每放一份資料進來，它就長大一點。
+
+**要不要再多一步：讓我在 Obsidian 裡直接搜尋、整理連結？**（選項題，他的事）— header：Obsidian 外接工具
+
+> 老實說：**我本來就讀得到這些檔案**，不裝也完全能用。裝了之後，我在第二大腦裡搜尋、加標籤、整理連結會更利落。它需要你的電腦有比較新的 Node（22 版以上）。
+
+1. **先不用**（推薦）——現在頁數少，我直接讀檔案就夠了
+2. **幫我裝**——我照下面的步驟裝，失敗就先跳過
+3. 其他（我自己說）
+
+選 2 才做：確認 `node --version` 是 v22 以上（低於就請他到 nodejs.org 更新），然後用**完整絕對路徑**（不能用 `~`）：
+
+Claude Code：
+```bash
+claude mcp add --scope user obsidian -- npx -y obsidian-mcp@2 serve --vault notes=[AGENT_HOME]/knowledge
+```
+Codex：
+```bash
+codex mcp add obsidian -- npx -y obsidian-mcp@2 serve --vault notes=[AGENT_HOME]/knowledge
+```
+
+指令跑不動就把設定印出來請他貼上（Claude Code 貼進 `~/.claude.json` 的 `mcpServers`；Codex 貼在 `~/.codex/config.toml` 最後面，Windows 路徑一律寫成 `/`）：
+
+```toml
+[mcp_servers.obsidian]
+command = "npx"
+args = ["-y", "obsidian-mcp@2", "serve", "--vault", "notes=[AGENT_HOME]/knowledge"]
+```
+
+裝完要重開對話才生效（目標、步驟、回來說什麼、做不到怎麼辦，照老規矩講清楚），重開後**真的讀一次**：「我看到 `knowledge/` 底下有 [N] 個檔案，接好了。」連不上就查：路徑用了 `~` → 換絕對路徑；說不是 vault → 用 Obsidian 真的開過一次；一直 `Failed to connect` → npx 還在下載，等十幾秒。**真的裝不起來就跳過**，在 `onboarding.md` 的「卡住的地方」記一行。
+
 ## Section C · 動手寫，邊做邊教（不要問他要不要調整）
 
 **這是你的專業判斷，不是他的選擇題。** schema 長什麼樣、知識頁分哪幾區、健檢查哪六項，這份劇本已經幫你想好了——**直接寫，同時用一兩句話教他為什麼**，不要把內容列出來再讓他選「照做／調整」，他多半答不出來、只會卡住。**他的原話（A-3、A-4）照抄不改**，那部分本來就是他的。
@@ -369,6 +430,12 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 | 知識 | 本資料夾 | 我整理的頁面，彼此用 `[[連結]]` 串起來 |
 | 規格 | 本檔案 | 定義下面這些規則 |
 
+## 目錄與日誌
+
+- `index.md`：**每一頁一行**（`- [[頁名]] — 一句話講它在說什麼`），按分類排。我要查資料時**先讀這份**，再打開需要的那幾頁，不要整個資料夾亂翻。
+- `log.md`：每做一件事追加一行 `- YYYY-MM-DD 放進／更新／合併了 [[頁名]]：一句話`。只往下加，不改舊的。
+- 每次放進新原料、建新頁、併頁，**兩份都要順手更新**。
+
 ## 一頁筆記長什麼樣
 
 每一頁都要有這幾區，順序固定：
@@ -396,7 +463,7 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 
 ## 定期健檢
 
-六項：記憶檔沒跟上（`memory/MEMORY.md` 超過 7 天）、孤兒頁面、知識缺口、過時內容（60 天）、重複頁面、`raw/` 裡有沒讀的。做法寫在 `core-rules.md` 的「定期健檢」那一節。
+六項：記憶檔沒跟上（`memory/MEMORY.md` 超過 7 天）、孤兒頁面（含 `index.md` 沒列到的頁）、知識缺口、過時內容（60 天）、重複頁面、`raw/` 裡有沒讀的。做法寫在 `core-rules.md` 的「定期健檢」那一節。
 ```
 
 **檔名為什麼是 `AGENTS.md`**：子資料夾裡的規矩，Codex 讀 `AGENTS.md`、Claude Code 讀 `CLAUDE.md`。跟根目錄一樣的做法——**一份本尊、一個薄入口**，不用 symlink：本尊叫 `AGENTS.md`（這是跨 Agent 的開放標準檔名），旁邊放一個一行的 `CLAUDE.md`，Claude Code 開場會自動把它展開。他只用 Codex 也照放，多一個一行的檔不礙事，哪天換工具不用重做。
@@ -438,7 +505,7 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 [我讀完發現、他沒提到的]
 
 ## 連到
-- [[core-rules]]（他的規矩本身就是這堂課的產物）
+- [[index]]（第二大腦的目錄）
 ```
 
 **為什麼要這樣分，寫完講給他聽：**
@@ -446,6 +513,33 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 > 你看這個結構——**「內容重點」是誰都查得到的，「你的看法」只有你有。**
 >
 > 半年後你回來看，真正有用的是下面那兩區。上面那區隨時可以重新整理，但你當時在想什麼，**沒記下來就沒了。**
+
+### C-3b `[AGENT_HOME]/knowledge/index.md` 與 `log.md`
+
+**直接建，順便講一句為什麼**：
+
+> 我多建了兩份小檔：`index.md` 是目錄，我每次查資料先看它，就不用把整個第二大腦翻一遍；`log.md` 是日誌，記哪天放進了什麼。這是 LLM Wiki 原本就有的設計——頁數一多，沒有目錄我會越找越慢。
+
+`index.md`：
+
+```markdown
+# 目錄
+
+> 每一頁一行。放進新東西時我會順手更新。
+
+## topics
+- [[ai-employee-day1]] — [一句話講它在說什麼]
+```
+
+`log.md`：
+
+```markdown
+# 日誌
+
+- [今天日期] 放進 [[ai-employee-day1]]：[一句話]
+```
+
+已經存在就只追加，不要覆蓋。
 
 ### C-4 `[AGENT_HOME]/core-rules.md` 追加「定期健檢」
 
@@ -458,7 +552,7 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 每個月做一次，或是他說「健檢一下」的時候做。查六項：
 
 1. **記憶檔沒跟上** — `memory/MEMORY.md` 的日期距今超過 7 天 → 當場用 `memory/daily/` 的日誌補到最新，然後告訴他一句。**這項先查，它壞掉不會報錯。**
-2. **孤兒頁面** — `knowledge/` 裡沒有被任何頁面連到的
+2. **孤兒頁面** — `knowledge/` 裡沒有被任何頁面連到、或 `index.md` 沒列到的
 3. **知識缺口** — 有連結指過去、但那一頁不存在
 4. **過時內容** — 超過 60 天沒動過的頁面
 5. **重複頁面** — 兩頁在講同一件事
@@ -501,18 +595,19 @@ Invoke-WebRequest -Uri "https://joylearnos.tierliao.workers.dev/shared/ai-employ
 > 這一包做完了，你現在有：
 >
 > 1. **第一頁知識**：`[AGENT_HOME]/knowledge/topics/[檔名].md`——**打開看一眼「他的看法」那一區，那是你剛才講的話，我一個字沒改。**
-> 2. **知識庫自己的規矩**：`[AGENT_HOME]/knowledge/AGENTS.md`——它只在我處理知識庫的時候生效，疊在你的全域規矩上面
-> 3. **健檢結果**：剛才那一遍查完是 `[一行：幾頁、幾項 OK、有沒有待辦]`
-> 4. **一句「健檢一下」我會做的事**：照六項跑一遍，查完只報告，不自己亂動
+> 2. **第二大腦自己的規矩**：`[AGENT_HOME]/knowledge/AGENTS.md`——它只在我處理知識的時候生效，疊在你的全域規矩上面
+> 3. **目錄與日誌**：`index.md` 我每次查資料先看；`log.md` 記哪天放進了什麼
+> 4. **健檢結果**：剛才那一遍查完是 `[一行：幾頁、幾項 OK、有沒有待辦]`
+> 5. **一句「健檢一下」我會做的事**：照六項跑一遍，查完只報告，不自己亂動
 >
-> 現在只有一頁。等你放進更多東西、頁面之間開始互連，回家裝了 Obsidian 就會看到一張網。
+> 現在只有一頁。等你放進更多東西、頁面之間開始互連，打開 Obsidian 的關係圖，就會看到一張網慢慢長大。
 
 然後：
 
 > **下次只要記住三步：新增對話 → 選 `[AGENT_HOME]` → 派任務。**
 >
 > 明天的作業：**找一份你真的想讀的東西丟進 `raw/`，順便跟我講那三件事。** 20 分鐘就夠。
-> 下一包是 **第 06 包 · 第一招＋用講的**：把「收工寫日誌」包成它的第一招，順便讓你可以用講的、錯字不用改。
+> 下一包是 **第 06 包 · 收工一句話**：把「收工寫日誌」包成它的第一招，順便讓你可以用講的、錯字不用改。
 >
 > 1. 現在就接下一包（推薦）——我先看一眼你家裡現在有什麼，再直接抓下一包
 > 2. 先到這裡，下次再說
@@ -527,6 +622,9 @@ grep -q "@AGENTS.md" "$H/knowledge/CLAUDE.md" 2>/dev/null && echo "✅ 一行入
 [ "$(ls -A "$H/raw" 2>/dev/null | wc -l)" -gt 0 ] && echo "✅ raw/ 有原料" || echo "❌ raw/ 是空的"
 [ "$(ls -A "$H/knowledge/topics" 2>/dev/null | wc -l)" -gt 0 ] && echo "✅ topics/ 有知識頁" || echo "❌ knowledge/topics/ 是空的"
 grep -q "tt:kit-05" "$H/core-rules.md" && echo "✅ 規矩有定期健檢" || echo "❌ core-rules.md 沒有 tt:kit-05"
+test -f "$H/knowledge/index.md" && test -f "$H/knowledge/log.md" && echo "✅ 目錄與日誌" || echo "❌ index.md／log.md"
+grep -q "\[\[core-rules\]\]" "$H/knowledge/topics/"*.md 2>/dev/null && echo "❌ 還有連到 vault 外面的 [[core-rules]]" || echo "✅ 沒有斷掉的連結"
+test -d "$H/knowledge/.obsidian" && echo "✅ Obsidian 打開過了" || echo "➖ Obsidian 之後再裝（不影響）"
 ```
 ```powershell
 # Windows
@@ -536,12 +634,14 @@ if (Select-String -Path "$H\knowledge\CLAUDE.md" -Pattern "@AGENTS.md" -Quiet) {
 if ((Get-ChildItem "$H\raw" -File -EA SilentlyContinue).Count -gt 0) { "✅ raw/ 有原料" } else { "❌ raw/ 是空的" }
 if ((Get-ChildItem "$H\knowledge\topics" -File -EA SilentlyContinue).Count -gt 0) { "✅ topics/ 有知識頁" } else { "❌ knowledge\topics\ 是空的" }
 if (Select-String -Path "$H\core-rules.md" -Pattern "tt:kit-05" -Quiet) { "✅ 規矩有定期健檢" } else { "❌ core-rules.md 沒有 tt:kit-05" }
+if ((Test-Path "$H\knowledge\index.md") -and (Test-Path "$H\knowledge\log.md")) { "✅ 目錄與日誌" } else { "❌ index.md／log.md" }
+if (Test-Path "$H\knowledge\.obsidian") { "✅ Obsidian 打開過了" } else { "➖ Obsidian 之後再裝（不影響）" }
 ```
 
 全綠 → 跟他說「✅ 第 05 包裝好了」＋Section D。有 ❌ → 修，不要問他。
 最後更新 `[AGENT_HOME]/onboarding.md`：這一包那行打勾、寫一句做到哪；「我學到什麼」加兩條：
 
-> - **第 05 包**：LLM Wiki 三層——`raw/` 原料、`knowledge/` 整理過的、`knowledge/AGENTS.md` 定義怎麼組織（schema）。第三層就是「專案規矩」套在知識庫上。
+> - **第 05 包**：第二大腦＝LLM Wiki：我整理、你用 Obsidian 看。三層——`raw/` 原料、`knowledge/` 整理過的、`knowledge/AGENTS.md` 定義怎麼組織（schema）。第三層就是「專案規矩」套在知識庫上。
 > - **第 05 包**：收料要帶自己的看法——「內容重點」誰都查得到，「你的看法」只有你有。知識庫會爛掉而且不會報錯，所以要定期健檢，「記憶檔停超過 7 天」最要命。
 
 他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
@@ -549,7 +649,8 @@ if (Select-String -Path "$H\core-rules.md" -Pattern "tt:kit-05" -Quiet) { "✅ �
 ## 踩坑紀錄（給 Tim）
 
 - **schema 一定要在第一頁知識之前建**。順序反過來，第一頁就會長成隨手寫的樣子，之後每一頁都在遷就它。
-- **Obsidian 移到回家裝**。課堂上裝它只會看到一張白紙，還吃掉十分鐘。記進待辦、往下走。
+- **v3.2：Obsidian 從第 07 包搬回來**。第二大腦要搭 Obsidian 才看得到，拆在兩包學員會以為是兩件事。放在第一頁做完之後（B-7），打開才不是白紙；Obsidian 的外接工具（MCP）改成選做、預設不裝——Agent 本來就讀得到檔案，Node 22 是整份懶人包最容易斷的一步。
+- **補 `index.md`／`log.md`**：LLM Wiki 原版就有，頁數一多沒有目錄 Agent 會越找越慢。順手修掉第一頁 `[[core-rules]]` 連到 vault 外面的斷鏈。
 - **健檢第一項排在最前面是刻意的**。記憶檔壞掉不會報錯，只會讓 Agent 慢慢變笨；它排第二第三就會被跳過。
 - **「他的看法」允許填「待補」**。舊版逼他當場講出想法，講不出來的人會卡住整段；給一個「待補」的出口，流程不會停。
 - **原料一次一份**。讀檔案是整趟最耗用量的動作，一次丟二十份會讓他第一次就對成本有陰影。
