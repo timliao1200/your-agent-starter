@@ -94,10 +94,11 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/upgra
 | `CLAUDE.md` 跟 `AGENTS.md` **兩份內容不一樣** | 已經分岔了 | 合併進 `core-rules.md`，兩段之間留標記，請他之後看一眼 |
 | `core-rules.md` 存在但入口不是指過去 | 做了一半 | 只補入口 |
 | 根目錄有 `daily/`（不是 `memory/daily/`） | 用過舊版的日誌習慣 | 搬進 `memory/daily/` |
+| 家的路徑在雲端硬碟同步資料夾裡（`CloudStorage`、`Google Drive`、`OneDrive`、`Dropbox`、`iCloud`） | 舊版第 09 包的做法 | 先不動；升級完建議跑第 09 包，它會先把家搬回本機再存到 GitHub |
 | 有 `memory/` 但沒有 `MEMORY.md`／`todo.md` | 記憶層做了一半 | 補檔，不動日誌 |
 | `knowledge/` 只有 `CLAUDE.md` | 舊版 schema 檔名 | 改名 `AGENTS.md`＋一行 `CLAUDE.md` |
 | 有 `notes/`、`docs/`、`raw/` 以外放素材的資料夾 | 他自己的分類 | **不要搬**，之後在規則檔加一行索引就好 |
-| 有 `.git/` | 他有版本控制 | 不動；提醒他升級後 commit 一次 |
+| 有 `.git/` | 他有版本控制 | 不動；升級後幫他存一版（沒有 `.gitignore` 的話照第 09 包 C-1 補上，先給他看會上傳什麼） |
 | 中文資料夾名 | 之後可能出問題 | 提一句，**不改名**（改了他的東西會找不到） |
 | `~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md` 有內容但**沒指到這裡** | 全域是別人寫的 | 備份，內容唸給他聽，問要不要併進 `core-rules.md` |
 
@@ -111,10 +112,11 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/upgra
 | `tools/.venv` | 04 |
 | `knowledge/AGENTS.md`（舊版只有 `knowledge/CLAUDE.md` 也算） | 05 |
 | `skills/daily-log/` | 06 |
-| `workflows/` 有流程，或 MCP 清單裡有 youtube | 07 |
+| `workflows/video-summary.md` 存在，**且** MCP 清單裡有 youtube | 07 |
 | `projects/*/handoff.md` | 08 |
+| 有 `.git` 而且有遠端倉庫（`git remote get-url origin`） | 09 |
 
-盤點完自己心裡有數：哪幾包等於做過、哪幾包做了一半、哪幾包完全沒有。**跳過 09**——跨電腦沒有固定檔案痕跡，不列進補勾判斷。
+盤點完自己心裡有數：哪幾包等於做過、哪幾包做了一半、哪幾包完全沒有。
 
 **0-5 開口**：
 

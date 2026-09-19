@@ -1,6 +1,6 @@
 # 健檢 · 你的分身健不健康 by tt
 
-> **ver 3.1** ｜ 約 20 分鐘 ｜ 前提：無（任何狀態都能跑：剛建好、做到一半、自己改過、壞掉、別人的結構都可以）
+> **ver 3.2** ｜ 約 20 分鐘 ｜ 前提：無（任何狀態都能跑：剛建好、做到一半、自己改過、壞掉、別人的結構都可以）
 > tt 是 Tim 派到你電腦裡的駐點 Agent 工程師。這一包做完，你會知道你的分身現在健不健康、哪裡該整理，而且亂掉的地方已經照你同意的方式修好了。
 
 ## 你可能遇過的問題
@@ -151,12 +151,25 @@ PY
 | # | 檢查 | ok | warn | bad |
 |---|---|---|---|---|
 | T1 | 根目錄項目數（檔案＋資料夾，不含隱藏的） | 15 個以內 | 16–25 個 | 超過 25 個 |
-| T2 | 根目錄散落的檔案：不在官方清單上的**檔案**（官方根目錄只有 `core-rules.md`、`CLAUDE.md`、`AGENTS.md`、`onboarding.md`、`tt-script.md`） | 沒有 | 1–5 個 | 超過 5 個 |
+| T2 | 根目錄散落的檔案：不在官方清單上的**檔案**（官方根目錄只有 `core-rules.md`、`CLAUDE.md`、`AGENTS.md`、`onboarding.md`、`tt-script.md`、`local.md`；點開頭的 `.gitignore`、`.gitattributes` 也是官方的） | 沒有 | 1–5 個 | 超過 5 個 |
 | T3 | 備份、重複、暫存檔：檔名有 `.bak`、`copy`、`副本`、`未命名`、`Untitled`、`(1)`、`~$`、`-old`、`-final` | 沒有 | 有 1–5 個 | 超過 5 個 |
 | T4 | 空資料夾 | 沒有（官方的 `raw/`、`workflows/`、`projects/` 空著不算） | 有 | — |
 | T5 | `core-rules.md` 長度 | 250 行以內 | 251–400 行（它每次開場都要讀完，他自己也看不完） | 超過 400 行 |
 | T6 | 同一件事住兩個地方：例如根目錄有 `daily/` 又有 `memory/daily/`、有 `knowledge/` 又有 `知識庫/`、兩個 `todo` | 沒有 | 有一組 | 有兩組以上 |
 | T7 | 資料夾名字：官方資料夾用英文小寫；他自己加的資料夾名字有空白、全形符號，或看不出在做什麼（`新資料夾`、`test2`） | 沒有 | 有 | — |
+
+**🧳 帶得走（家裡有 `.git` 才查；不算燈——有問題就列進建議，排在最前面）**
+
+| # | 檢查 | 怎麼查 | 有問題的話 |
+|---|---|---|---|
+| G1 | 倉庫是私人的 | `gh repo view --json visibility -q .visibility` 是 `PRIVATE` | **是 PUBLIC 就是最嚴重的一條**：他的日記和規矩全世界看得到，建議第一條就修 |
+| G2 | 都存好、都傳上去了 | `git status --porcelain` 是空的；`git log @{u}..HEAD --oneline` 是空的 | 「有 [N] 個變更還沒存」／「存了但還沒傳上去」 |
+| G3 | 不該上傳的沒被上傳 | `git ls-files .joylearn local.md tools/.venv` 是空的；`git ls-files` 裡沒有超過 20MB 的檔 | 「你的登入資料被存進倉庫了」→ 建議從倉庫移除（檔案本身留著） |
+| G4 | 家不在雲端同步資料夾裡 | 路徑不含 `CloudStorage`、`Google Drive`、`OneDrive`、`Dropbox`、`iCloud` | 「存檔資料放在同步資料夾裡會壞」→ 建議跑第 09 包搬回本機 |
+| G5 | 沒有合併到一半的檔 | `git grep -n '^<<<<<<< '` 是空的；沒有 `(1)`、`衝突` 這類雲端副本 | 「[檔名] 裡有兩個版本擠在一起」→ 建議唸給他聽兩邊差在哪再合併 |
+| G6 | 這台電腦的設定 | `local.md` 存在，裡面的家的位置跟現在一樣 | 「這台還沒有 local.md」→ 建議跑第 09 包的新電腦報到 |
+
+沒有 `.git` 的家不查這一節，報告最後一行寫：「🧳 還沒存到 GitHub——想換電腦也帶得走，跑第 09 包」。
 
 **🔖 版本（不算燈，放在報告最後一行）**
 
@@ -184,8 +197,10 @@ V1：讀 `[AGENT_HOME]/tt-script.md` 第 3 行附近的 `tt-version`，再抓一
 ├─ core-rules.md          ← 規矩本尊：你是誰、我怎麼幫你
 ├─ CLAUDE.md · AGENTS.md  ← 兩個薄入口，都指回 core-rules.md
 ├─ onboarding.md          ← 九包進度表＋體檢紀錄
+├─ local.md               ← 這台電腦自己的設定（不上傳；做過第 09 包才有）
+├─ .gitignore             ← 不上傳清單（做過第 09 包才有）
 ├─ memory/                ← 記憶：MEMORY.md（摘要）、todo.md、daily/（每天一篇）
-├─ knowledge/             ← 知識庫：AGENTS.md（收料規則）、topics/
+├─ knowledge/             ← 第二大腦：AGENTS.md（收料規則）、index.md（目錄）、log.md（日誌）、topics/
 ├─ raw/                   ← 原料：還沒整理的東西先丟這
 ├─ workflows/             ← 流程：寫成步驟的事
 ├─ skills/                ← 招式：說一句話就會自己跑的事
@@ -289,7 +304,7 @@ robocopy "[AGENT_HOME]" $D /E /XD .venv venv node_modules .tt-backup .git | Out-
 > 最後一件事：要不要把這份健檢報告傳給 Tim？
 > 他會看全班的報告，看大家卡在哪、哪裡最容易亂，決定下一堂課怎麼帶你。
 >
-> 會傳的是：四個燈、我的建議、你選了修還是保留，還有**資料夾與檔案的名字**（樹狀圖）。
+> 會傳的是：四個燈、我的建議、你選了修還是保留、你在 `onboarding.md` 記下的「卡住的地方」，還有**資料夾與檔案的名字**（樹狀圖）。
 > **不會傳任何檔案的內容**，也不會傳你的日誌或規矩全文。報告只有你跟 Tim 看得到，你隨時可以到「我的學習」刪掉。
 
 選項題：
@@ -326,7 +341,7 @@ robocopy "[AGENT_HOME]" $D /E /XD .venv venv node_modules .tt-backup .git | Out-
   "os": "mac",
   "tt_version": "v3.0",
   "lights": { "identity": "ok", "memory": "warn", "hands": "ok", "tidy": "bad" },
-  "report_md": "B 節講給他聽的三段報告全文（markdown），最後加一段「他的選擇」：每條建議他選了修／保留／不要",
+  "report_md": "B 節講給他聽的三段報告全文（markdown），最後加一段「他的選擇」：每條建議他選了修／保留／不要；再附上 onboarding.md「卡住的地方」那一節（沒有就省略）",
   "data": {
     "findings": [ { "id": "T2", "light": "tidy", "status": "bad", "saw": "根目錄 9 個散落檔" } ],
     "suggestions": [ { "title": "根目錄的散落檔", "choice": "fixed" } ],
