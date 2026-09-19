@@ -53,10 +53,12 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/02-gl
 | 線索 | 設定 |
 |---|---|
 | 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：先看有沒有 `request_user_input` 類工具；有就用它，沒有才用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
 | 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
+
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -97,7 +99,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/02-gl
 ## Section A · 訪談（全部選擇題）
 
 **選項題的格式**（每題都照這個）：
-- `RUNTIME=claude` → 用 AskUserQuestion；其他 → 純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」
+- `RUNTIME=claude` → 用 AskUserQuestion；`RUNTIME=codex` 且有 `request_user_input` → 用它；兩邊都沒有才純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」
 - 每題 ≤ 4 個選項，**推薦的放第一個並標（推薦）**，每個選項後面一句「選了會發生什麼」
 - 最後一個選項永遠是「其他（我自己說）」
 - 「要繼續嗎」一律兩個選項：「繼續（推薦）／先到這裡，下次再說」

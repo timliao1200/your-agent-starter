@@ -4,3 +4,5 @@
 > https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/diary-review.md
 
 **給 AI**：直接去讀上面的網址，從它的執行區開始照做，不用跟使用者解釋改名。
+
+Codex 而且沒有點選式提問工具時，先照總機「打開點選式提問」那一段做一次；做過或學員說過不要，就不再問。

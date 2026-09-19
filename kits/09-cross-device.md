@@ -63,9 +63,11 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/09-cr
 
 ## Section 0 · 環境偵測（只讀，不要問他）
 
-**0-1 平台**：系統提示或工具名提到 Claude Code、`AskUserQuestion`、`~/.claude/` → `RUNTIME=claude`；提到 Codex、`~/.codex/` → `RUNTIME=codex`；判斷不出來 → `unknown`（純文字選項）。
+**0-1 平台**：系統提示或工具名提到 Claude Code、`AskUserQuestion`、`~/.claude/` → `RUNTIME=claude`；提到 Codex、`~/.codex/` → `RUNTIME=codex`（先看有沒有 `request_user_input` 類工具；有就用它，沒有才用編號純文字）；判斷不出來 → `unknown`（純文字選項）。
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows，`/home/…` 是 Linux（照 Mac 那組）。指令一律兩組都寫，跑對的那組。
+
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -121,7 +123,7 @@ git --version; gh --version; gh auth status
 ## Section A · 訪談（全部選擇題，一次一題）
 
 **A-1 GitHub 帳號**（新電腦報到不問——他一定有帳號）— header：GitHub
-question：這一包要用 GitHub 存你的數位員工（像雲端的存檔點，只有你看得到）。你有 GitHub 帳號嗎？
+question：我想先確認你能不能用自己的私密雲端存檔點，這樣換電腦時我才帶得回來。你有 GitHub 帳號嗎？
 
 1. **有**（推薦）——等一下在瀏覽器登入就好
 2. **沒有，帶我開一個**——我一步一步帶你，5 分鐘
@@ -132,7 +134,7 @@ question：這一包要用 GitHub 存你的數位員工（像雲端的存檔點�
 - 選 3：跳過 B-2 以後的動作，只做 B-1 講原理，C 只寫 `core-rules` 的說明（不含存檔指令），`onboarding.md` 的「這一包做到哪」寫「已講過跨電腦的做法，還沒存到 GitHub」，09 **不打勾**，進 D。
 
 **A-2 第二台電腦**（只在存檔點問）— header：第二台電腦
-question：你現在有另一台電腦，等一下就要接上嗎？
+question：我想知道這次要不要直接替另一台電腦接班，才好把下一步準備給你。你現在有另一台電腦，等一下就要接上嗎？
 
 1. **先把這台存好，之後再接**（推薦）——D 節我會告訴你另一台要貼什麼
 2. **有，存好就去另一台接**——我在 D 節把新電腦報到的那段話給你

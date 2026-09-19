@@ -55,10 +55,12 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 | 線索 | 設定 |
 |---|---|
 | 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `CLAUDE.md`** |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：先看有沒有 `request_user_input` 類工具；有就用它，沒有才用編號純文字；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），這個平台實際讀的是 `AGENTS.md`** |
 | 判斷不出來 | `RUNTIME=unknown`：純文字選項；**兩個入口都建（`CLAUDE.md`＋`AGENTS.md`），哪個會被讀看之後開在哪個平台** |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
+
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -103,10 +105,10 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 ## Section A · 訪談（全部選擇題）
 
 **選項題的格式**（每題都照這個）：
-- `RUNTIME=claude` → 用 AskUserQuestion；其他 → 純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」
+- `RUNTIME=claude` → 用 AskUserQuestion；`RUNTIME=codex` 且有 `request_user_input` → 用它；兩邊都沒有才純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」
 - 每題 ≤ 4 個選項，**推薦的放第一個並標（推薦）**，每個選項後面一句「選了會發生什麼」
 - 最後一個選項永遠是「其他（我自己說）」
-- 開放題要附「答不出來就選一個」的 fallback 選項
+- 答不出來時，要讓他知道可說「還不確定，之後再補」
 - 「要繼續嗎」一律兩個選項：「繼續（推薦）／先到這裡，下次再說」
 - **每題他答完，先用一句話接住他再往下做**（不要只回「收到」）：把他的答案跟接下來要發生的事連起來，例如他說「想找可以馬上用在工作上的做法」→「那我整理的時候會把可執行的步驟往前排，理論的部分縮成一兩行。」
 
@@ -166,7 +168,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 ### A-2 第一題：第一份原料用哪個
 
 - header：第一份原料
-- question：知識庫現在是空的。第一份要讀什麼？
+- question：我想先用一份你在意的東西認識你的工作，之後才能真的幫你記住。第一份要讀什麼？
 - options：
   1. **這門課第一堂的回顧（推薦）**——老師寫的，讀完你的分身就是一個「懂這門課」的 Agent，你問它「全域跟專案差在哪」它答得出來，而且用課堂上的講法
   2. **我自己帶的一份**——我貼路徑或把檔案拖進來（PDF、文章、報告都行）
@@ -179,7 +181,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 ### A-3 第二題：你為什麼想讀它
 
 - header：你想拿到什麼
-- question：你為什麼想讀它？想從它拿到什麼？
+- question：我想知道你希望從它帶走什麼，整理時才會把對你有用的放前面。你為什麼想讀它？
 - options（他可以直接打字，這些只是給他一個起點）：
   1. **想搞懂整套怎麼運作（推薦）**——之後我回答你問題，會優先用「架構」的角度講
   2. **想找可以馬上用在工作上的做法**——我整理時會偏重可執行的步驟
@@ -193,7 +195,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 **這一題最重要，他講什麼逐字記下來，不要改寫成書面語。**
 
 - header：你的看法
-- question：你自己已經有的想法——你覺得哪裡最有用、哪裡還是不懂？就算只有一句「我覺得這個講得太理想化」也算
+- question：我也想聽你的看法，因為那是別人整理不出來、只有我跟你合作時才該記住的部分。你覺得哪裡最有用、哪裡還是不懂？
 - options：
   1. **我有想法，我直接說（推薦）**——你講，我一個字不改地記下來
   2. **我覺得某個地方最有用**——講哪一個就好，我補上下文

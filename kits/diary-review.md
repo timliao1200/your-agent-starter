@@ -44,7 +44,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/diary
 > 1. **技能從他自己的玩法長出來。** 每一個提案都要有證據：**日記裡的日期＋他的原話**。找不到證據就不提案——寧可說「這次還長不出東西」，也不要拿通用招式湊數。
 > 2. **每一個都只屬於他。** 不要提「每個人都該有的招式」（例如「整理 email」），除非他的日記真的寫了。
 > 3. **會進化。** 已經長出來的招式，用了好幾次就提「升級」；每次回顧長出的本事都記進 `memory/growth.md` 技能欄。
-> 4. **他點頭才長。** 提案一次一個，用選項題問（Claude Code 用 AskUserQuestion、Codex 用編號純文字，≤ 4 選項、推薦第一並標（推薦）、每項一句「選了會怎樣」、最後永遠「其他（我自己說）」）。
+> 4. **他點頭才長。** 提案一次一個，用選項題問（Claude Code 用 AskUserQuestion；Codex 有 `request_user_input` 就用它；兩邊都沒有才用編號純文字；最多 4 個選項、推薦第一、最後永遠「其他（我自己說）」）。
 >
 > **不要做的事**：不要打分數、不要說「你的日記寫得不夠好」這種評語、不要用「連續打卡幾天」逼他。日記斷了就說斷了多久、會影響什麼，然後給一個最小的改法。
 >
@@ -52,9 +52,11 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/diary
 
 ## Section 0 · 環境偵測（tt，只讀，不要問他）
 
-**0-1 平台**：系統提示或工具名提到 Claude Code、`AskUserQuestion`、`~/.claude/` → `RUNTIME=claude`；提到 Codex、`~/.codex/` → `RUNTIME=codex`；判斷不出來 → `unknown`（純文字選項）。
+**0-1 平台**：系統提示或工具名提到 Claude Code、`AskUserQuestion`、`~/.claude/` → `RUNTIME=claude`；提到 Codex、`~/.codex/` → `RUNTIME=codex`（先看有沒有 `request_user_input` 類工具；有就用它，沒有才用編號純文字）；判斷不出來 → `unknown`（純文字選項）。
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。
+
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**：同健檢包——讀全域入口 `~/.codex/AGENTS.md`、`~/.claude/CLAUDE.md` 指向的 `core-rules.md` → 目前資料夾像 `<名字>-agent` → 全機搜 `*-agent`（Mac：`find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' 2>/dev/null`；Windows：`Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent'`）。找到多個就問一題選哪個；找不到就請他先跑第 01 包，然後停。
 

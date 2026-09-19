@@ -15,7 +15,7 @@
 
 1. **不能為了讓一邊更好用，把另一邊弄壞。** 改完要說得出這次改動在四格各是什麼結果；只測了一邊，就標「另一邊待實測」，不要假設沒事。
 2. **平台差異一律寫成分支，不刪另一邊。**
-   - 選項題：Claude Code 用 AskUserQuestion；Codex 用編號純文字（「回我數字，或直接打字」）。
+   - 選項題：Claude Code 用 AskUserQuestion；Codex 有 `request_user_input` 就用它；兩邊都沒有才用編號純文字（「回我數字，或直接打字也可以」）。每題最多 4 個選項，推薦第一，最後永遠「其他（我自己說）」。
    - 入口：Claude Code 讀 `CLAUDE.md`（會展開 `@`）；Codex 讀 `AGENTS.md`（**不會**展開 `@`，要寫成一句話「先讀 xxx」）。兩個都建，本尊只有一份。
    - 外接服務：`claude mcp add --scope user …` 與 `codex mcp add …` 兩行都寫；手貼設定時 JSON（`~/.claude.json`）與 TOML（`~/.codex/config.toml`）兩份都給。
    - 招式：Claude Code 有 `/skill-creator`；Codex 沒有，就手寫 `skills/<名字>/SKILL.md`。
@@ -83,10 +83,12 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 | 線索 | 設定 |
 |---|---|
 | 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；兩個入口都建，這個平台實際讀的是 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；兩個入口都建，這個平台實際讀的是 `AGENTS.md` |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：先看有沒有 `request_user_input` 類工具；有就用它，沒有才用編號純文字；兩個入口都建，這個平台實際讀的是 `AGENTS.md` |
 | 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
+
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -123,7 +125,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 ## Section A · 訪談（全部選擇題）
 
 **選項題的格式**（每題都照這個）：
-- `RUNTIME=claude` → 用 AskUserQuestion；其他 → 純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」
+- `RUNTIME=claude` → 用 AskUserQuestion；`RUNTIME=codex` 且有 `request_user_input` → 用它；兩邊都沒有才純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」
 - 每題 ≤ 4 個選項，**推薦的放第一個並標（推薦）**，每個選項後面一句「選了會發生什麼」
 - 最後一個選項永遠是「其他（我自己說）」
 - 開放題（只有稱呼、目標這種）要附「答不出來就選一個」的 fallback 選項

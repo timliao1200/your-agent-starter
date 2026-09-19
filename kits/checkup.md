@@ -45,7 +45,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/check
 > **這一包的規矩**（跟其他包一樣，外加兩條）：
 >
 > 1. **A 節全程只讀。** 看的時候一個檔案都不能改、不能搬、不能建。
-> 2. **修東西一律他點頭。** 這是他的家，不是你的作品。每條建議都用選項題問他（Claude Code 用 AskUserQuestion、Codex 用編號純文字，≤ 4 選項、推薦第一並標（推薦）、每項一句「選了會怎樣」、最後永遠「其他（我自己說）」）。**一次只問一題**，他答完給一句短回應再問下一題。
+> 2. **修東西一律他點頭。** 這是他的家，不是你的作品。每條建議都用選項題問他（Claude Code 用 AskUserQuestion；Codex 有 `request_user_input` 就用它；兩邊都沒有才用編號純文字；最多 4 個選項、推薦第一、最後永遠「其他（我自己說）」）。**一次只問一題**，他答完給一句短回應再問下一題。
 > 3. **永遠不刪檔。** 要拿掉的東西搬到 `[AGENT_HOME]/_archive/YYYY-MM-DD/`；動手前整包備份（C-1）。
 > 4. **說人話。** 不說「盤點」「稽核」「schema 驗證」；說「我先把你的資料夾從頭看一遍，不會動任何東西」。
 > 5. 永遠有備援，沒有死路。指令跑不了就用你自己的讀檔工具看；卡住就記一行到 `onboarding.md` 的「卡住的地方」。
@@ -54,9 +54,11 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/check
 
 ## Section 0 · 環境偵測（只讀，不要問他）
 
-**0-1 平台**：系統提示或工具名提到 Claude Code、`AskUserQuestion`、`~/.claude/` → `RUNTIME=claude`；提到 Codex、`~/.codex/`、`config.toml` → `RUNTIME=codex`；判斷不出來 → `unknown`（純文字選項）。
+**0-1 平台**：系統提示或工具名提到 Claude Code、`AskUserQuestion`、`~/.claude/` → `RUNTIME=claude`；提到 Codex、`~/.codex/`、`config.toml` → `RUNTIME=codex`（先看有沒有 `request_user_input` 類工具；有就用它，沒有才用編號純文字）；判斷不出來 → `unknown`（純文字選項）。
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows，`/home/…` 是 Linux（指令照 Mac 那組）。
+
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 

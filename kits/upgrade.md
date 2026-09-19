@@ -58,10 +58,12 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/upgra
 | 線索 | 設定 |
 |---|---|
 | 提到 Claude Code、`AskUserQuestion`、`~/.claude/` | `RUNTIME=claude`：選項題用 AskUserQuestion；兩個入口都建，這個平台實際讀的是 `CLAUDE.md` |
-| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：選項題用編號純文字；兩個入口都建，這個平台實際讀的是 `AGENTS.md` |
+| 提到 Codex、`~/.codex/`、`config.toml` | `RUNTIME=codex`：先看有沒有 `request_user_input` 類工具；有就用它，沒有才用編號純文字；兩個入口都建，這個平台實際讀的是 `AGENTS.md` |
 | 判斷不出來 | `RUNTIME=unknown`：純文字選項；兩個入口都建 |
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
+
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停；跟其他包一樣，只是結果的處理不同）：
 
@@ -128,7 +130,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/upgra
 
 ## Section A · 體檢報告與升級計畫（選項題）
 
-**選項題的格式**：`RUNTIME=claude` → 用 AskUserQuestion；其他 → 純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」；每題 ≤ 4 個選項，推薦的放第一個並標（推薦）。
+**選項題的格式**：`RUNTIME=claude` → 用 AskUserQuestion；`RUNTIME=codex` 且有 `request_user_input` → 用它；兩邊都沒有才純文字列「1. 2. 3.」，結尾寫「回我數字，或直接打字也可以」。每題最多 4 個選項，推薦放第一個，最後永遠「其他（我自己說）」；答不出來可說「還不確定，之後再補」。
 
 ### A-1 體檢報告（講給他聽，白話、三欄，不要列一長串檔名）
 
@@ -169,7 +171,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/upgra
 
 ### A-3 問他（選項題）
 
-question：這幾條可以照做嗎？
+question：我已經把會動到的地方和備份方式講清楚了，現在只想確認你願不願意讓我開始整理。這幾條可以照做嗎？
 
 1. **全部照做**（推薦）——照列的順序整理，做完我會列出動了什麼、備份在哪
 2. **有幾條先不要動**——你說是哪幾條（講編號就好），其他照做
