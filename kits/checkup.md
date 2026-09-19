@@ -58,7 +58,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/check
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows，`/home/…` 是 Linux（指令照 Mac 那組）。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -229,7 +229,7 @@ V1：讀 `[AGENT_HOME]/tt-script.md` 第 3 行附近的 `tt-version`，再抓一
 >
 > 🔖 你的 tt 腳本是 v3.0，最新是 v3.1。
 
-再列**建議，最多 5 條，最影響他的排最前面**（紅燈優先，同色時「看得懂」優先——亂了他就不想打開）。每條三句：**我看到 → 這會讓你… → 我建議…**。例如：
+再列**建議，最多 5 條，最影響他的排最前面**（紅燈優先，同色時「看得懂」優先——亂了他就不想打開）。由數位員工用第一人稱回報：**我看到 → 這會讓你… → 我建議…**。例如：
 
 > **1. 根目錄的 9 個散落檔**
 > 我看到根目錄有 `會議記錄0915.docx`、`報價單(1).xlsx` 這類檔案直接放著。
@@ -391,16 +391,29 @@ curl.exe -s -X POST https://joylearnos.tierliao.workers.dev/api/checkups -H "Con
 **E-4 完成清單（你自己跑，全綠才說做完）**
 
 ```bash
+# Mac／Linux
 H="[AGENT_HOME]"
 test -f "$H/memory/checkups/$(date +%Y-%m-%d).md" && echo "✅ 報告存好了" || echo "❌ 報告沒存"
 grep -q "體檢紀錄" "$H/onboarding.md" && echo "✅ 體檢紀錄" || echo "❌ 體檢紀錄沒寫"
 grep -q "tt 幫我健檢" "$H/core-rules.md" && echo "✅ 以後一句話叫得出來" || echo "❌ 規則檔沒記"
 test ! -f "$H/.joylearn/checkup.json" && echo "✅ 暫存檔清掉了" || echo "❌ checkup.json 還在"
 ```
-（Windows 用 `Test-Path`／`Select-String` 同樣四項。）
+```powershell
+# Windows（PowerShell）
+$H = "[AGENT_HOME]"
+$today = Get-Date -Format "yyyy-MM-dd"
+if (Test-Path "$H\memory\checkups\$today.md") { "✅ 報告存好了" } else { "❌ 報告沒存" }
+if (Select-String -Path "$H\onboarding.md" -Pattern '體檢紀錄' -Quiet) { "✅ 體檢紀錄" } else { "❌ 體檢紀錄沒寫" }
+if (Select-String -Path "$H\core-rules.md" -Pattern 'tt 幫我健檢' -Quiet) { "✅ 以後一句話叫得出來" } else { "❌ 規則檔沒記" }
+if (-not (Test-Path "$H\.joylearn\checkup.json")) { "✅ 暫存檔清掉了" } else { "❌ checkup.json 還在" }
+```
 
 **E-5 收尾**（一段話，然後問一題）：
 
+> [分身的名字]，請你自己回報這次結果。
+>
+> 「我是 [分身的名字]。我剛看完自己的家：認得你 [燈]、記得住 [燈]、動得了 [燈]、看得懂 [燈]。我已經 [修好的事／保留的原因]；下次你說『tt 幫我健檢』，我會拿這次報告繼續比。」
+>
 > 健檢做完了。你的分身現在：[四個燈]。
 > 報告存在 `memory/checkups/[日期].md`，下次健檢我會拿它來比，看你的家有沒有越來越清爽。
 > **以後覺得它怪怪的，或每週一次，說「tt 幫我健檢」就好。**

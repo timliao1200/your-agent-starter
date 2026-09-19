@@ -56,7 +56,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/diary
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**：同健檢包——讀全域入口 `~/.codex/AGENTS.md`、`~/.claude/CLAUDE.md` 指向的 `core-rules.md` → 目前資料夾像 `<名字>-agent` → 全機搜 `*-agent`（Mac：`find ~ -maxdepth 6 -type d -name '*-agent' -not -path '*/Library/*' 2>/dev/null`；Windows：`Get-ChildItem $env:USERPROFILE -Directory -Recurse -Depth 5 -Filter '*-agent'`）。找到多個就問一題選哪個；找不到就請他先跑第 01 包，然後停。
 
@@ -230,13 +230,23 @@ description: [什麼時候用——他說「…」「…」的時候。這一行
 **E-4 完成清單（你自己跑，全綠才說做完）**
 
 ```bash
+# Mac／Linux
 H="[AGENT_HOME]"
 test -f "$H/memory/growth.md" && echo "✅ 技能欄" || echo "❌ growth.md"
 grep -q "回顧日記" "$H/core-rules.md" && echo "✅ 以後一句話叫得出來" || echo "❌ 規則檔沒記"
 test "$(grep -c 'tt:grow START' "$H/core-rules.md")" -le 1 && echo "✅ 標記沒有重複" || echo "❌ tt:grow 標記重複"
 grep -q "日記體檢紀錄" "$H/memory/growth.md" && echo "✅ 體檢有記" || echo "❌ 體檢沒記"
 ```
-（Windows 用 `Test-Path`／`Select-String` 同樣四項。這次長出來的每一招，再各檢查一次 `SKILL.md` 有 `name:` 和 `description:`。）
+```powershell
+# Windows（PowerShell）
+$H = "[AGENT_HOME]"
+if (Test-Path "$H\memory\growth.md") { "✅ 技能欄" } else { "❌ growth.md" }
+if (Select-String -Path "$H\core-rules.md" -Pattern '回顧日記' -Quiet) { "✅ 以後一句話叫得出來" } else { "❌ 規則檔沒記" }
+if ((Select-String -Path "$H\core-rules.md" -Pattern 'tt:grow START').Count -le 1) { "✅ 標記沒有重複" } else { "❌ tt:grow 標記重複" }
+if (Select-String -Path "$H\memory\growth.md" -Pattern '日記體檢紀錄' -Quiet) { "✅ 體檢有記" } else { "❌ 體檢沒記" }
+```
+
+這次長出來的每一招，再各檢查一次 `SKILL.md` 有 `name:` 和 `description:`。
 
 ## Section F · 要不要讓 Tim 看到這次回顧（tt）
 
@@ -273,7 +283,9 @@ curl -s -X POST https://joylearnos.tierliao.workers.dev/api/checkups -H "Content
 
 回應 `ok:true` → 照 `next` 跟他說，刪掉 `grow.json`。401 → 刪 token 重登；「缺少 course_id」→ 問他哪一門課，加 `"course_id"` 再送。
 
-**收尾**（tt，一段話）：
+**收尾**（先由分身回報，再由 tt 收尾）：
+
+> 「我是 [分身的名字]。我剛讀完最近的日記，這次從 [日期與原話] 學會了 [本事]；我會在 [情境] 主動用上它。還有 [種子／沒有把握的事]，我會等看到更多證據再提，不會硬湊。」
 
 > 這次日記回顧完成了。你的分身現在多了：[列出這次長的，一行一個]。
 > 技能欄在 `memory/growth.md`——打開看一眼，每一個都寫著它是從你哪一天、哪一句話長出來的。

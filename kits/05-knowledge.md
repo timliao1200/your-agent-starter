@@ -60,7 +60,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/05-kn
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -646,7 +646,7 @@ if (Test-Path "$H\knowledge\.obsidian") { "✅ Obsidian 打開過了" } else { "
 > - **第 05 包**：第二大腦＝LLM Wiki：我整理、你用 Obsidian 看。三層——`raw/` 原料、`knowledge/` 整理過的、`knowledge/AGENTS.md` 定義怎麼組織（schema）。第三層就是「專案規矩」套在知識庫上。
 > - **第 05 包**：收料要帶自己的看法——「內容重點」誰都查得到，「你的看法」只有你有。知識庫會爛掉而且不會報錯，所以要定期健檢，「記憶檔停超過 7 天」最要命。
 
-他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
+他選接下一包 → 重新讀懶人包入口 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

@@ -60,7 +60,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/04-to
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -272,7 +272,7 @@ tools\.venv\Scripts\python.exe tools\verify_core.py
 
 1. `winget` 不行 → 改用 PowerShell 那行 `irm ... | iex`（不需要管理員）
 2. 兩個都不行 → 用系統的 Python。Mac 通常有 `python3`；Windows 到 **python.org** 下載安裝，**安裝時勾 Add python.exe to PATH**，裝完關掉終端機重開
-3. 連 Python 都裝不了（被公司鎖） → **記進 `onboarding.md` 的「卡住的地方」，並在 `[AGENT_HOME]/tools/SKIPPED.md` 寫一行為什麼跳過**（例如「2026-09-13 公司電腦鎖住安裝權限，`uv` 與 python.org 都裝不了」）——**總機看到這個檔就不會再叫你跑 04**——然後往下走，跟他說：「工具這段回去用自己的電腦再裝，其他包不需要它。裝好之後把 `tools/SKIPPED.md` 刪掉，我就會重跑這一包。」
+3. 連 Python 都裝不了（被公司鎖） → **記進 `onboarding.md` 的「卡住的地方」，並在 `[AGENT_HOME]/tools/SKIPPED.md` 寫一行為什麼跳過**（例如「2026-09-13 公司電腦鎖住安裝權限，`uv` 與 python.org 都裝不了」）——**懶人包入口看到這個檔就不會再叫你跑 04**——然後往下走，跟他說：「工具這段回去用自己的電腦再裝，其他包不需要它。裝好之後把 `tools/SKIPPED.md` 刪掉，我就會重跑這一包。」
 
 用系統 Python 的做法：
 
@@ -496,7 +496,7 @@ if (Select-String -Path core-rules.md -Pattern 'tt:kit-04' -Quiet) { "✅ 規則
 
 > - **第 04 包**：Agent 叫代理，是因為它有手腳——讀、處理、抓、產出。工具裝在 `tools/`，一台電腦裝一次。貼路徑比塞檔案便宜。大動作先列計畫、只搬不刪。
 
-他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
+他選接下一包 → 重新讀懶人包入口 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

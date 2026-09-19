@@ -67,7 +67,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/09-cr
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows，`/home/…` 是 Linux（照 Mac 那組）。指令一律兩組都寫，跑對的那組。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -99,7 +99,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/09-cr
 | 找到家，家裡**有** `.git` 但**沒有遠端倉庫**（`git remote get-url origin` 沒東西） | **存檔點**（他自己用過 git，但還沒存到 GitHub；B-5 跳過 `git init`） |
 | 找到家，家裡**有** `.git`、有遠端倉庫、**沒有** `local.md`，而且這台的全域入口（`~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md`）**沒有**指到這個家 | **新電腦報到**（這台是剛從 GitHub 拿下來的，還沒設定） |
 | 找到家，家裡**有** `.git`、有遠端倉庫、**沒有** `local.md`，但全域入口**已經**指到這個家 | 這就是第一台電腦，只是還沒有 `local.md`（例如升級包留下的 `.git`）→ 走**存檔點**，但跳過已經做好的步驟：只補 C-1～C-4 缺的檔，再從 B-5 的安全檢查開始 |
-| 找不到家 | **對話裡他剛說過「在別台做過、存到 GitHub 了」（例如從新人報到選了那一項）就不要再問，直接走新電腦報到。** 沒說過才問一題（選項）：「這台電腦還沒有你的數位員工。你是在另一台電腦做過、而且存到 GitHub 了嗎？ 1. 對，我存過了（推薦）——我幫你接過來 2. 沒有，這是我第一次用——請先跑新人報到 3. 其他」→ 1 走**新電腦報到**；2 就給總機網址 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 然後停 |
+| 找不到家 | **對話裡他剛說過「在別台做過、存到 GitHub 了」（例如從新人報到選了那一項）就不要再問，直接走新電腦報到。** 沒說過才問一題（選項）：「這台電腦還沒有你的數位員工。你是在另一台電腦做過、而且存到 GitHub 了嗎？ 1. 對，我存過了（推薦）——我幫你接過來 2. 沒有，這是我第一次用——請先跑新人報到 3. 其他」→ 1 走**新電腦報到**；2 就給懶人包入口網址 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 然後停 |
 | 他一開口就說「回到昨天的版本」「把某個檔還原」 | 找到家之後直接跳 **Section R · 還原**，不跑其他節 |
 
 **0-3b 看家在不在同步資料夾裡**（只讀）：`AGENT_HOME` 的路徑含 `CloudStorage`、`Google Drive`、`GoogleDrive`、`我的雲端硬碟`、`OneDrive`、`Dropbox`、`iCloud`、`Mobile Documents` 任何一個 → 記下 `IN_SYNC=yes`（舊版第 09 包教過把家搬進雲端硬碟；**GitHub 的存檔資料放在同步資料夾裡會壞掉**，B-2 要先搬回本機）。

@@ -58,7 +58,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/02-gl
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -265,7 +265,7 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude","$env:USERP
 
 `[AGENT_HOME]` 換成完整絕對路徑（例如 `/Users/ming/ming-agent`、`D:\ming-agent`），**不要留 `~`、不要留方括號**。
 
-**Windows 路徑全部用反斜線 `\`**（例 `@D:\ming-agent\core-rules.md`），不要留範本裡的 `/`。
+Windows 的這份 Markdown 入口可用完整路徑（例如 `D:\ming-agent\core-rules.md`），**不要加 `@`**——那是 Claude Code 的匯入寫法，Codex 不會自動展開。只有之後真的在 TOML／JSON 設定檔裡填路徑時，才一律用 `/`，避免反斜線被當成跳脫字元。
 
 ### 驗證：你自己驗，不要叫他去別的對話測
 
@@ -385,7 +385,7 @@ foreach ($f in @("$env:USERPROFILE\.claude\CLAUDE.md", "$env:USERPROFILE\.codex\
 
 > - **02 包**：每家 AI 公司都在我電腦的隱藏資料夾放自己的 `.md`。我在那兩個隱藏資料夾各放一個薄入口指回 `core-rules.md`，身份收回自己手上。全域＋專案兩層會疊加＝一個「在這個案子上班的員工」。
 
-他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
+他選接下一包 → 重新讀懶人包入口 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

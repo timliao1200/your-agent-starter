@@ -60,7 +60,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/03-me
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -485,7 +485,7 @@ if (Test-Path .joylearn\token) { "✅ 學習平台已登入" } else { "－ 學�
 
 > - **第 03 包**：AI 的記憶不在 AI 身上，在我的硬碟裡。三種——規矩（全部讀）、日記（讀最近）、知識（要用才查）。規矩不能養太肥，因為每次都全載。
 
-他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
+他選接下一包 → 重新讀懶人包入口 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

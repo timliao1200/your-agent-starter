@@ -59,7 +59,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/06-fi
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -402,7 +402,7 @@ description: 收工寫日誌。當他說「收工」「今天先這樣」「下�
 
 **這一包的推薦刻意是「先到這裡」**（第 07 包是第三堂才做），**不要套其他包「接下一包（推薦）」的模板順序**——把推薦標在選項 1、接下一包留在選項 2。
 
-**不要以 tt 的身份下班**——後面還有站，你還在。下次他開對話，照總機的 0-4（看家裡有什麼、決定下一包）接下去。
+**不要以 tt 的身份下班**——後面還有站，你還在。下次他開對話，照懶人包入口的 0-4（看家裡有什麼、決定下一包）接下去。
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
 
@@ -445,7 +445,7 @@ if (Test-Path "memory\daily\$d.md") { "✅ 今天的日誌" } else { "❌ 今天
 第二站完成。第三站（學習、專案、帶著走）下次上課開始。
 ```
 
-他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
+他選接下一包 → 重新讀懶人包入口 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 ## 踩坑紀錄（給 Tim）
 

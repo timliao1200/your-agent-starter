@@ -88,7 +88,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 
 **0-2 系統**：路徑 `/Users/…` 是 Mac，`C:` 開頭是 Windows。指令一律兩組都寫，跑對的那組。
 
-**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照總機「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
+**Codex 而且沒有點選式提問工具** → 找到 `AGENT_HOME` 後，照懶人包入口「打開點選式提問」那一段做一次；`onboarding.md` 已記做過或他說不要，就不再問。
 
 **0-3 找他的家**（三個線索依序看，找到就停）：
 
@@ -166,7 +166,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 >
 > 明天的作業：{{一件事，20 分鐘內}}。下一包是 **第 {{NN+1}} 包 · {{名字}}**：{{一句}}。
 >
-> 1. 現在就接下一包（推薦）——我會先回總機重新盤點一次家裡有什麼，再抓下一包
+> 1. 現在就接下一包（推薦）——我會先回懶人包入口看一眼家裡有什麼，再抓下一包
 > 2. 先到這裡，下次再說
 
 ## Section E · 完成清單（AI 自己跑，全綠才說裝好）
@@ -182,7 +182,7 @@ https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/kits/{{NN-
 
 全綠 → 跟他說「✅ 第 {{NN}} 包裝好了」＋Section D。有 ❌ → 修，不要問他。
 最後更新 `[AGENT_HOME]/onboarding.md`：這一包那行打勾、寫一句做到哪；「我學到什麼」加一條：{{原 station 那句}}。
-他選接下一包 → 重新讀總機 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
+他選接下一包 → 重新讀懶人包入口 `https://raw.githubusercontent.com/timliao1200/your-agent-starter/main/AGENTS.md` 的 0-4 盤點，再抓下一包；不要憑記憶續講。
 
 下一包對照：01→02 到處都認得你、02→03 讓它記得、03→04 基礎辦公工具、04→05 第二大腦、05→06 收工一句話、06→07 YouTube 學習、07→08 專案員工、08→09 跨電腦。
 
