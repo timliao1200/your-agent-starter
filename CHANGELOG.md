@@ -1,5 +1,10 @@
 # tt 版本紀錄
 
+## v3.6.1 · 全場景班的懶人包搬家
+
+- `start/01-first-meet.md`（初次見面）和 `start/02-find-scenes.md`（找場景）搬到獨立的公開 repo **[ai-scenarios-kits](https://github.com/timliao1200/ai-scenarios-kits)** 的 `kits/`。那條線還在實驗、會常改，分開才不會影響 tt 九包。搬家時還沒有學員用過舊網址。
+- 這個 repo 回到只放 tt 九包、健檢、日記回顧與升級包。
+
 ## v3.6.0 · 找場景 kit-02
 
 - **新檔 `start/02-find-scenes.md`**：全場景班第一天下午用。數位員工先讀 `AGENTS.md` 和最近的日記，走一遍你的一週（三題、選項照你的工作寫）、先提 6–8 個點子（寫／整理／查／盯）、先替你打分（高頻、耗時、可標準化、影響力），前三名寫成場景卡。
